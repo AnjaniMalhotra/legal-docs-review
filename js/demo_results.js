@@ -25,7 +25,7 @@ Demos.results = (() => {
         </div>
         <div class="res-stats">${STATS.map(([n, l, s, c]) => `<div class="card res-stat ${c}"><b>${n}</b><span>${l}</span><small class="mono">${s}</small></div>`).join("")}</div>
       </div>
-      <div class="note res-note">Tuned on these same 5 contracts, so expect lower on a new client's paper. Next: a held-out set, run once.</div>`;
+      <div class="note res-note">Lesson: these 5 contracts were also used to tune the system, so a contract it has never seen may score lower.</div>`;
     },
     async enter() {
       $$(".res-bar", root).forEach((b) => (b.style.width = "0%"));
