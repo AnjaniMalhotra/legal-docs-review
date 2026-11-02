@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PayNest Contract Copilot</title>
+<link rel="stylesheet" href="css/deck.css?v=3">
+<link rel="stylesheet" href="css/demos.css?v=3">
+</head>
+<body>
+<!-- Icon set: inline, so the deck never fetches anything. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></symbol>
+  <symbol id="i-stack" viewBox="0 0 24 24"><path d="M7 3h10v4H7zM5 7h14v4H5zM3 11h18v10H3z"/><path d="M7 15h10M7 18h6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.5-10A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M2 21h20M9 21v-4h6v4M8 8h1M15 8h1M8 12h1M15 12h1"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h1M4 12h1M4 18h1"/></symbol>
+  <symbol id="i-marker" viewBox="0 0 24 24"><path d="M15 4l5 5-9 9H6v-5z"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M3 21c3-1 5-1 7 0s4 1 6 0M14 4l6 6-8 8-4 0 0-4z"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4M10 10h4v4h-4z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6h7a3 3 0 0 1 0 6H10a3 3 0 0 0 0 6h7"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14M10 3L8 21M16 3l-2 18"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 9a15 15 0 0 1 20 0M5 13a10 10 0 0 1 14 0M8.5 16.5a5 5 0 0 1 7 0M12 20h.01"/></symbol>
+</svg>
+
+<div class="stage"><div class="deck" id="deck">
+  <div class="progress" id="progress"></div>
+  <aside class="rail">
+    <button class="menu-btn" id="menu" aria-label="All slides (O)"><i></i></button>
+    <div class="rail-num" id="rail-num">01</div>
+    <div class="rail-label" id="rail-label"></div>
+  </aside>
+  <div class="netbadge" id="netbadge" title="Real count: resources this page loaded from outside this machine">
+    <span class="dot"></span><span>EXTERNAL REQUESTS</span><b id="net-count">0</b>
+  </div>
+
+  <!-- 01 Title -->
+  <section class="slide" data-label="Matter opened">
+    <div class="kicker"><span>§ 00</span>Matter · contract review</div>
+    <h1 style="margin-top:26px">PayNest<br>Contract <em>Copilot</em></h1>
+    <p class="lede">An AI that reviews client contracts in minutes, and never leaves the building.</p>
+    <div class="title-chips reveal">
+      <span class="chip"><b>10</b> contracting standards</span>
+      <span class="chip"><b>3</b> local models</span>
+      <span class="chip"><b>0</b> bytes to the cloud</span>
+    </div>
+    <div class="hero-doc" aria-hidden="true">
+      <div class="paper-page">
+        <div class="pp-head">MASTER SERVICES AGREEMENT</div>
+        <div class="pp-lines"></div>
+        <div class="scan-beam"></div>
+      </div>
+      <div class="stamp hero-stamp">Air-gapped</div>
+    </div>
+  </section>
+
+  <!-- 02 Problem -->
+  <section class="slide" data-label="The problem">
+    <div class="kicker"><span>§ 01</span>The problem</div>
+    <h2>The client writes the contract. <em>PayNest</em> carries the risk.</h2>
+    <div class="body problem">
+      <div class="prob-cards reveal">
+        <div class="card prob"><div class="icon navy"><svg><use href="#i-stack"/></svg></div><b>Client paper</b><span>Long, one-sided, every client different</span></div>
+        <div class="card prob"><div class="icon amber"><svg><use href="#i-clock"/></svg></div><b>Slow review</b><span>Lawyers read every clause by hand</span></div>
+        <div class="card prob"><div class="icon"><svg><use href="#i-flag"/></svg></div><b>One miss</b><span>Can mean unlimited liability</span></div>
+      </div>
+      <div class="redline card">
+        <div class="tag">CareWell · Clause 15.1</div>
+        <p class="typed" data-text="Notwithstanding anything to the contrary in this Agreement, the Service Provider's liability for any Data Breach shall be unlimited."></p>
+        <div class="stamp redline-stamp">Never accept</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Promise -->
+  <section class="slide" data-label="The promise">
+    <div class="kicker"><span>§ 02</span>The promise</div>
+    <h2>“Your data never leaves <em>PayNest</em>.”</h2>
+    <p class="lede">So the AI can't go out. It has to come in.</p>
+    <div class="body split-sketch">
+      <figure class="sketch" data-src="images/05-air-gap.png" data-prompt="Air-gap"></figure>
+      <div class="caps reveal">
+        <div class="cap"><svg class="cap-ico"><use href="#i-lock"/></svg><p><b>Everything inside.</b> Contract, model and vectors live on one machine.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-cloud"/></svg><p><b>Nothing outside.</b> No internet, no external API, no cloud AI.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-route"/></svg><p><b>Data only moves</b> between parts that sit inside the fence.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Features -->
+  <section class="slide" data-label="What it does">
+    <div class="kicker"><span>§ 03</span>What it does</div>
+    <h2>Upload a contract. Get a <em>negotiation plan</em>.</h2>
+    <div class="body features reveal">
+      <div class="feat card"><div class="icon navy"><svg><use href="#i-doc"/></svg></div><b>Plain-English summary</b><small>Key terms, each with its clause</small></div>
+      <div class="feat card"><div class="icon navy"><svg><use href="#i-chat"/></svg></div><b>Ask the contract</b><small>Answers cite the page, or say “Not found”</small></div>
+      <div class="feat card"><div class="icon"><svg><use href="#i-scale"/></svg></div><b>10-standard review</b><small>OK · Acceptable · Not acceptable · Missing</small></div>
+      <div class="feat card"><div class="icon amber"><svg><use href="#i-marker"/></svg></div><b>Highlights in the PDF</b><small>Colour-coded, linked to each issue</small></div>
+      <div class="feat card"><div class="icon ok"><svg><use href="#i-pen"/></svg></div><b>Lawyer sign-off</b><small>Risky findings wait for a human</small></div>
+      <div class="feat card"><div class="icon ok"><svg><use href="#i-send"/></svg></div><b>Issues List</b><small>Formal amendments, ready to send</small></div>
+    </div>
+  </section>
+
+  <!-- 05 Tech stack (sketch) -->
+  <section class="slide" data-label="Tech stack">
+    <div class="kicker"><span>§ 04</span>Tech stack</div>
+    <h2>Every part runs <em>locally</em>.</h2>
+    <div class="body split-sketch">
+      <figure class="sketch" data-src="images/01-tech-stack.png" data-prompt="Prompt 1 · Tech stack"></figure>
+      <div class="stack-list reveal">
+        <div><span class="tag">UI</span>HTML · CSS · JS</div>
+        <div><span class="tag">API</span>FastAPI</div>
+        <div><span class="tag">Workflow</span>LangGraph</div>
+        <div><span class="tag">Vectors</span>Chroma</div>
+        <div><span class="tag">Models</span>Ollama</div>
+        <div><span class="tag">Gateway</span>Bifrost</div>
+        <div><span class="tag">Tracing</span>Langfuse</div>
+        <div><span class="tag">Evals</span>Ragas</div>
+        <p class="cap-line">Eight layers, one laptop. The cloud is crossed out.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Architecture (sketch) -->
+  <section class="slide" data-label="Architecture">
+    <div class="kicker"><span>§ 05</span>Architecture</div>
+    <h2>One machine. Two zones. <em>Zero exits.</em></h2>
+    <div class="body split-sketch">
+      <figure class="sketch" data-src="images/02-architecture.png" data-prompt="Prompt 2 · Architecture"></figure>
+      <div class="caps reveal">
+        <div class="cap"><svg class="cap-ico"><use href="#i-user"/></svg><p><b>Lawyer → app.</b> Upload, chat, review in the browser.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-route"/></svg><p><b>App → Bifrost → Ollama.</b> Every model call through one gate.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-eye"/></svg><p><b>Dotted lines = traces</b> to Langfuse, on the same machine.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-x"/></svg><p><b>The wall.</b> Internet only for the one-time model download.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 LIVE air-gap -->
+  <section class="slide" data-label="Live · air-gap" data-demo="airgap">
+    <div class="kicker"><span>§ 06</span>Live demo · <span class="live">simulated flow, real routes</span></div>
+    <h2>Watch the packets. <em>None</em> leave.</h2>
+    <div class="body" id="airgap"></div>
+  </section>
+
+  <!-- 08 Pipeline (sketch) -->
+  <section class="slide" data-label="Pipeline">
+    <div class="kicker"><span>§ 07</span>The pipeline</div>
+    <h2>From PDF to <em>signed-off</em> review.</h2>
+    <div class="body pipe">
+      <figure class="sketch pipe-sketch" data-src="images/03-pipeline.png" data-prompt="Prompt 3 · Pipeline"></figure>
+      <div class="pipe-notes reveal">
+        <div class="cap"><svg class="cap-ico"><use href="#i-search"/></svg><p><b>1–4 · Find.</b> Cut the PDF into clauses, embed, pick the best 6 per standard.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-chip"/></svg><p><b>5 · Read.</b> The model labels one standard at a time.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-shield"/></svg><p><b>6–8 · Decide.</b> Python verifies and scores; a lawyer signs.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 LIVE ingest -->
+  <section class="slide" data-label="Live · ingest" data-demo="ingest">
+    <div class="kicker"><span>§ 08</span>Live demo · upload</div>
+    <h2>A contract becomes <em>clauses</em>.</h2>
+    <div class="body" id="ingest"></div>
+  </section>
+
+  <!-- 10 Standards -->
+  <section class="slide" data-label="The standards" data-demo="standards">
+    <div class="kicker"><span>§ 09</span>The yardstick</div>
+    <h2>Ten <em>standards</em>. Click one.</h2>
+    <div class="body" id="standards"></div>
+  </section>
+
+  <!-- 11 LLM reads, Python decides -->
+  <section class="slide" data-label="Reads vs decides" data-demo="split">
+    <div class="kicker"><span>§ 10</span>The core rule</div>
+    <h2>The model <em>reads</em>. Python <em>decides</em>.</h2>
+    <div class="body" id="split"></div>
+  </section>
+
+  <!-- 12 LIVE review -->
+  <section class="slide" data-label="Live · review" data-demo="review">
+    <div class="kicker"><span>§ 11</span>Live replay · CareWell Hospitals</div>
+    <h2>One click. <em>Ten verdicts.</em></h2>
+    <div class="body" id="review"></div>
+  </section>
+
+  <!-- 12b Safety layers -->
+  <section class="slide" data-label="Safety layers">
+    <div class="kicker"><span>§ 12</span>Safety nets</div>
+    <h2>Four nets. <em>One direction.</em></h2>
+    <div class="body safety">
+      <figure class="sketch tall" data-src="images/06-safety-layers.png" data-prompt="Safety layers"></figure>
+      <div class="caps reveal">
+        <div class="cap"><svg class="cap-ico"><use href="#i-shield"/></svg><p><b>Quote checked.</b> Not in the PDF? A lawyer decides.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-flag"/></svg><p><b>Walk-away words.</b> “Unlimited”, “at any time” trip an alarm.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-clock"/></svg><p><b>Days &amp; percent.</b> Python reads the number, not the model.</p></div>
+        <div class="cap"><svg class="cap-ico"><use href="#i-pause"/></svg><p><b>Lawyer review.</b> Risky findings wait for a human.</p></div>
+        <div class="note">Every net can only make a verdict <b>stricter</b>. Never milder.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 LIVE grounding -->
+  <section class="slide" data-label="Live · grounding" data-demo="grounding">
+    <div class="kicker"><span>§ 13</span>Safety net 1 · grounding guard</div>
+    <h2>No quote, no <em>claim</em>.</h2>
+    <div class="body" id="grounding"></div>
+  </section>
+
+  <!-- 14 LIVE numbers + red flags -->
+  <section class="slide" data-label="Live · checks" data-demo="checks">
+    <div class="kicker"><span>§ 14</span>Safety net 2 · stricter-only checks</div>
+    <h2>Python double-checks the <em>numbers</em>.</h2>
+    <div class="body" id="checks"></div>
+  </section>
+
+  <!-- 15 Prompt injection -->
+  <section class="slide" data-label="Prompt injection" data-demo="inject">
+    <div class="kicker"><span>§ 15</span>Planted attack · Northstar Bank</div>
+    <h2>The contract tried to <em>instruct</em> the AI.</h2>
+    <div class="body" id="inject"></div>
+  </section>
+
+  <!-- 16 LIVE score -->
+  <section class="slide" data-label="Live · score" data-demo="score">
+    <div class="kicker"><span>§ 16</span>Live calculator</div>
+    <h2>Risk is <em>arithmetic</em>, not vibes.</h2>
+    <div class="body" id="score"></div>
+  </section>
+
+  <!-- 17 Human gate -->
+  <section class="slide" data-label="Human gate" data-demo="gate">
+    <div class="kicker"><span>§ 17</span>Live demo · LangGraph interrupt</div>
+    <h2>High risk? A <em>lawyer</em> signs.</h2>
+    <div class="body" id="gate"></div>
+  </section>
+
+  <!-- 18 Observability -->
+  <section class="slide" data-label="Observability">
+    <div class="kicker"><span>§ 18</span>Observability</div>
+    <h2>See every step. <em>Locally.</em></h2>
+    <div class="body split-sketch">
+      <figure class="sketch" data-src="images/04-observability.png" data-prompt="Prompt 4 · Observability"></figure>
+      <div class="obs reveal">
+        <div class="card obs-row"><div class="icon navy"><svg><use href="#i-route"/></svg></div><div><b>Bifrost</b><span>Which model? How long? Allowed?</span></div></div>
+        <div class="card obs-row"><div class="icon"><svg><use href="#i-eye"/></svg></div><div><b>Langfuse</b><span>Which clauses, which prompt, which answer</span></div></div>
+        <div class="card obs-row"><div class="icon ok"><svg><use href="#i-check"/></svg></div><div><b>Ragas</b><span>Is the answer faithful to the contract?</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 Results -->
+  <section class="slide" data-label="Results" data-demo="results">
+    <div class="kicker"><span>§ 19</span>Evaluation · 5 synthetic contracts</div>
+    <h2>Tested. <em>Honestly.</em></h2>
+    <div class="body" id="results"></div>
+  </section>
+
+  <!-- 20 Close -->
+  <section class="slide" data-label="Takeaways" data-demo="close">
+    <div class="kicker"><span>§ 20</span>Takeaways</div>
+    <h2>Five ideas to take <em>home</em>.</h2>
+    <div class="body" id="close"></div>
+  </section>
+
+  <div class="hint">← → navigate · O overview · F fullscreen</div>
+  <nav class="nav">
+    <button class="back" id="back">‹ Back</button>
+    <span class="count" id="count">1 / 20</span>
+    <button class="next" id="next">Next ›</button>
+  </nav>
+  <div class="overview" id="overview"><h3>ALL SLIDES · press O to close</h3><div class="ov-grid" id="ov-grid"></div></div>
+</div></div>
+
+<script src="js/data.js?v=3"></script>
+<script src="js/deck.js?v=3"></script>
+<script src="js/demo_airgap.js?v=3"></script>
+<script src="js/demo_ingest.js?v=3"></script>
+<script src="js/demo_standards.js?v=3"></script>
+<script src="js/demo_review.js?v=3"></script>
+<script src="js/demo_guards.js?v=3"></script>
+<script src="js/demo_score.js?v=3"></script>
+<script src="js/demo_gate.js?v=3"></script>
+<script src="js/demo_results.js?v=3"></script>
+</body>
+</html>
