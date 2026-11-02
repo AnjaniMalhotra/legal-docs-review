@@ -1,0 +1,22 @@
+# Secrets: every machine creates its own (see SETUP.md, step 4)
+.env
+.env.local
+**/.env
+**/.env.local
+
+# Confidential runtime data: uploaded contracts, vectors, reviews, reports
+copilot/data/
+
+# Local logs (Bifrost request logs can contain contract text)
+infra/bifrost/logs/
+*.db
+*.db-*
+
+# Python and tools
+.venv*/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+.claude/settings.local.json

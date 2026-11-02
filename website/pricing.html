@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pricing — PayNest private payroll</title>
+  <meta name="description" content="Simple per-employee pricing for private payroll. Estimate your monthly cost with the PayNest pricing calculator.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2 35 8v11c0 9.4-6.4 16.6-15 19-8.6-2.4-15-9.6-15-19V8z' fill='%230f766e'/%3E%3Ccircle cx='20' cy='15' r='4' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body data-page="pricing">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="container center">
+        <div class="breadcrumb"><a href="index.html">Home</a> / Pricing</div>
+        <span class="eyebrow">Pricing</span>
+        <h1>Simple pricing. Private by default.</h1>
+        <p class="lead">Pay per employee, per month. Every plan runs on PayNest's own infrastructure, so privacy is never an add-on.</p>
+        <div class="billing-toggle" data-billing role="group" aria-label="Billing period">
+          <button type="button" data-mode="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" data-mode="annual" aria-pressed="false">Annual <span class="save">save 10%</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="plans">
+          <div class="card plan reveal">
+            <h3>Essential</h3>
+            <p class="plan__desc">Core payroll and statutory compliance for growing organisations.</p>
+            <div class="plan__price"><strong data-price="60">₹60</strong></div>
+            <div class="plan__sub" data-billing-note>per employee / month, billed monthly</div>
+            <ul class="checklist">
+              <li>Monthly payroll processing</li>
+              <li>Payslips and Form 16</li>
+              <li>TDS, PF, ESI and professional tax</li>
+              <li>Email support from PayNest staff</li>
+              <li>Data stored only in PayNest DCs</li>
+            </ul>
+            <a class="btn btn--ghost btn--block" href="contact.html?plan=essential">Choose Essential</a>
+          </div>
+
+          <div class="card plan plan--featured reveal">
+            <span class="plan__tag">MOST POPULAR</span>
+            <h3>Professional</h3>
+            <p class="plan__desc">The complete platform for hospitals, firms and multi-location employers.</p>
+            <div class="plan__price"><strong data-price="80">₹80</strong></div>
+            <div class="plan__sub" data-billing-note>per employee / month, billed monthly</div>
+            <ul class="checklist">
+              <li>Everything in Essential</li>
+              <li>Attendance, shifts and leave</li>
+              <li>Reimbursements and flexible benefits</li>
+              <li>Employee self-service app</li>
+              <li>Direct host-to-host bank disbursement</li>
+              <li>Phone support and onboarding manager</li>
+            </ul>
+            <a class="btn btn--primary btn--block" href="contact.html?plan=professional">Choose Professional</a>
+          </div>
+
+          <div class="card plan reveal">
+            <h3>Enterprise</h3>
+            <p class="plan__desc">For regulated institutions and large employers with custom needs.</p>
+            <div class="plan__price"><strong>Custom</strong></div>
+            <div class="plan__sub">typically from ₹110 per employee / month</div>
+            <ul class="checklist">
+              <li>Everything in Professional</li>
+              <li>Multi-entity and multi-state payroll</li>
+              <li>Dedicated account manager</li>
+              <li>Custom integrations with your HRMS or ERP</li>
+              <li>Annual on-site audit support</li>
+              <li>Priority incident response line</li>
+            </ul>
+            <a class="btn btn--ghost btn--block" href="contact.html?plan=enterprise">Talk to sales</a>
+          </div>
+        </div>
+        <p class="center" style="color:var(--muted);font-size:.9rem;margin-top:24px">Minimum 50 employees. Prices exclude GST. One-time setup fee applies (shown in the calculator below).</p>
+      </div>
+    </section>
+
+    <!-- Calculator -->
+    <section class="section section--white" id="calculator">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">Calculator</span>
+          <h2>Estimate your cost</h2>
+          <p class="lead">Move the slider or type your headcount. The estimate updates instantly and is calculated in your browser; nothing is sent anywhere.</p>
+        </div>
+
+        <form class="card calc reveal" id="calc" onsubmit="return false" aria-label="Pricing calculator">
+          <div class="calc__inputs">
+            <div class="field">
+              <label for="calc-employees">Number of employees</label>
+              <div style="display:flex;align-items:center;gap:16px">
+                <input type="range" id="calc-employees" min="50" max="10000" step="10" value="500" style="flex:1">
+                <input type="number" id="calc-employees-num" min="50" max="20000" value="500" aria-label="Number of employees" style="width:110px">
+              </div>
+              <span class="hint">50 – 20,000 employees. Over 10,000? Type the number.</span>
+            </div>
+
+            <div class="field">
+              <span class="label" id="plan-label">Plan</span>
+              <div class="seg" role="radiogroup" aria-labelledby="plan-label">
+                <input type="radio" name="calc-plan" id="cp-ess" value="essential"><label for="cp-ess">Essential</label>
+                <input type="radio" name="calc-plan" id="cp-pro" value="professional" checked><label for="cp-pro">Professional</label>
+                <input type="radio" name="calc-plan" id="cp-ent" value="enterprise"><label for="cp-ent">Enterprise</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <span class="label" id="billing-label">Billing</span>
+              <div class="seg" role="radiogroup" aria-labelledby="billing-label" style="grid-template-columns:1fr 1fr">
+                <input type="radio" name="calc-billing" id="cb-m" value="monthly" checked><label for="cb-m">Monthly</label>
+                <input type="radio" name="calc-billing" id="cb-a" value="annual"><label for="cb-a">Annual (−10%)</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc__result" aria-live="polite">
+            <h3>Your estimate</h3>
+            <span><span id="calc-plan">Professional</span> · <span id="calc-count">500</span> employees</span>
+            <div class="calc__big" id="calc-monthly">₹40,000</div>
+            <span>per month, excluding GST</span>
+            <ul class="calc__lines">
+              <li><span>Rate</span><strong id="calc-rate">₹80 × 500</strong></li>
+              <li><span>Annual subscription</span><strong id="calc-annual">₹4,80,000</strong></li>
+              <li><span>One-time setup</span><strong id="calc-setup">₹50,000</strong></li>
+              <li><span>First-year total</span><strong id="calc-first">₹5,30,000</strong></li>
+            </ul>
+            <a class="btn btn--light" id="calc-cta" href="contact.html">Get a formal quote</a>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2>Pricing questions</h2>
+        </div>
+        <div class="faq">
+          <div class="faq__item"><button class="faq__q" aria-expanded="false" aria-controls="pf1">Why is PayNest priced above some cloud payroll tools?</button><div class="faq__a" id="pf1"><div>Because we own and run our infrastructure: two data centres, our own security team and our own support staff. You're paying for a payroll chain with exactly one company in it.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false" aria-controls="pf2">How is the employee count measured?</button><div class="faq__a" id="pf2"><div>We bill on the number of employees processed in each monthly payroll run, including employees who joined or left during the month.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false" aria-controls="pf3">What does the setup fee cover?</button><div class="faq__a" id="pf3"><div>Configuration of your salary structures, migration of historical data by PayNest engineers, a parallel payroll run and reconciliation before go-live.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false" aria-controls="pf4">What are the payment terms?</button><div class="faq__a" id="pf4"><div>Invoices are raised monthly (or annually on annual billing) and are payable within 30 days.</div></div></div>
+          <div class="faq__item"><button class="faq__q" aria-expanded="false" aria-controls="pf5">Can we leave if it doesn't work out?</button><div class="faq__a" id="pf5"><div>Yes. You can terminate with 90 days' notice. We return your data in a standard format and delete it within 30 days of exit.</div></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>

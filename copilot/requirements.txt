@@ -1,0 +1,12 @@
+# Config
+pyyaml>=6.0
+
+# Models (OpenAI-compatible client pointed at local Bifrost)
+openai>=1.40
+
+# Tracing (self-hosted Langfuse only)
+langfuse>=3.0
+
+# Tests and notebooks
+pytest>=8.0
+jupyterlab>=4.0

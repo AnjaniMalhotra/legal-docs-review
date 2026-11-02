@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PayNest — Private payroll. Your data never leaves us.</title>
+  <meta name="description" content="PayNest runs payroll for India's most privacy-conscious organisations on its own servers, in its own data centres, with zero third-party processors.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2 35 8v11c0 9.4-6.4 16.6-15 19-8.6-2.4-15-9.6-15-19V8z' fill='%230f766e'/%3E%3Ccircle cx='20' cy='15' r='4' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body data-page="home">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="site-header"></div>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div>
+          <span class="pill"><b>NEW</b> Pune disaster-recovery site now live</span>
+          <h1>Payroll that <em>never leaves</em> our building.</h1>
+          <p class="lead">PayNest runs payroll for hospitals, banks, law firms and large employers on our own servers, in our own data centres, operated by our own people. No public cloud. No outsourced support. No vendor's vendor.</p>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="contact.html">Book a private demo</a>
+            <a class="btn btn--ghost" href="security.html">How we keep data in</a>
+          </div>
+          <div class="hero__note">
+            <span>ISO 27001 certified</span>
+            <span>Data stored only in India</span>
+            <span>24-hour breach commitment</span>
+          </div>
+        </div>
+
+        <div class="mock" aria-label="Example PayNest payroll dashboard">
+          <div class="mock__bar"><i></i><i></i><i></i></div>
+          <div class="mock__head">
+            <h4>October payroll · CareWell Hospitals</h4>
+            <span class="badge badge--ok">● Running</span>
+          </div>
+          <div class="mock__stats">
+            <div class="mock__stat"><small>Employees</small><strong>9,120</strong></div>
+            <div class="mock__stat"><small>Gross payout</small><strong>₹41.6 Cr</strong></div>
+            <div class="mock__stat"><small>TDS deducted</small><strong>₹4.4 Cr</strong></div>
+          </div>
+          <small data-progress-label style="color:var(--muted);font-size:.8rem">Importing attendance…</small>
+          <div class="mock__progress"><i data-progress></i></div>
+          <div class="mock__rows">
+            <div class="mock__row"><span>Payslips generated</span><span>9,120 / 9,120</span><span class="badge badge--ok">Done</span></div>
+            <div class="mock__row"><span>PF &amp; ESI challans</span><span>Due 15 Nov</span><span class="badge badge--info">Ready</span></div>
+            <div class="mock__row"><span>Bank file (direct link)</span><span>Encrypted</span><span class="badge badge--warn">Queued</span></div>
+          </div>
+          <div class="mock__float">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>
+            <div><strong>Processed in Bengaluru DC-1</strong><br><span style="color:#9fb3c8">0 external requests</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logos -->
+    <section class="section--tight section--white" aria-label="Clients">
+      <div class="container center">
+        <span class="eyebrow">Trusted by 400+ organisations that can't afford a leak</span>
+        <div class="logos">
+          <span>CareWell Hospitals</span><span>Northstar Co-op Bank</span><span>Lexmore &amp; Associates</span>
+          <span>BrightRetail</span><span>Orbit Analytics</span><span>Sahyadri Textiles</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section section--dark">
+      <div class="container">
+        <div class="stats">
+          <div class="stat"><strong data-count="400" data-suffix="+">0</strong><span>client organisations</span></div>
+          <div class="stat"><strong data-count="200000" data-suffix="+">0</strong><span>employees paid every month</span></div>
+          <div class="stat"><strong data-count="0">0</strong><span>third-party data processors</span></div>
+          <div class="stat"><strong data-count="99.5" data-suffix="%">0</strong><span>monthly uptime commitment</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why private -->
+    <section class="section">
+      <div class="container split">
+        <div class="reveal">
+          <span class="eyebrow">Why private payroll</span>
+          <h2>Most payroll leaks don't start at your payroll provider.</h2>
+          <p class="lead">They start at <em>their</em> vendors: the cloud host, the backup company, the file-transfer tool, the outsourced call centre. Every extra company in the chain is another place your employees' salaries, bank accounts and PAN numbers can escape.</p>
+          <p>PayNest was built to remove the chain entirely. Your data goes from your HR team to our servers and to your bank, and nowhere else.</p>
+          <a class="btn btn--ghost" href="about.html">Read our story</a>
+        </div>
+        <div class="diagram reveal" aria-label="Diagram: data flow stays inside PayNest">
+          <div class="diagram__node">Your HR team<small>uploads attendance &amp; changes</small></div>
+          <div class="diagram__arrow">↓ encrypted</div>
+          <div class="diagram__zone">
+            <small>PayNest-owned infrastructure</small>
+            <div class="diagram__row">
+              <div class="diagram__node diagram__node--brand">DC-1 Bengaluru<small>primary</small></div>
+              <div class="diagram__node">Payroll engine<small>own servers</small></div>
+              <div class="diagram__node diagram__node--brand">DC-2 Pune<small>backup</small></div>
+            </div>
+            <div class="diagram__row">
+              <div class="diagram__node">Support desk<small>PayNest staff</small></div>
+              <div class="diagram__node">Employee app<small>self-hosted</small></div>
+              <div class="diagram__node">Audit logs<small>retained 1 yr</small></div>
+            </div>
+          </div>
+          <div class="diagram__arrow">↓ direct bank link</div>
+          <div class="diagram__node">Your bank<small>salaries credited</small></div>
+          <div class="diagram__blocked">✕ No public cloud · no outsourced BPO · no file-transfer middlemen</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section section--white">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">The platform</span>
+          <h2>Everything payroll needs. Nothing it doesn't.</h2>
+          <p class="lead">One platform for salaries, statutory compliance, attendance and employee self-service, all running inside PayNest.</p>
+        </div>
+        <div class="grid grid--3">
+          <a class="card reveal" href="platform.html#payroll" style="color:inherit;text-decoration:none">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12M6 9h12M6 4h3a5 5 0 0 1 0 10H6l8 7"/></svg></div>
+            <h3>Payroll processing</h3>
+            <p>Monthly runs for 50 to 20,000 employees, with arrears, bonuses, loans and full-and-final settlements.</p>
+          </a>
+          <a class="card reveal" href="platform.html#tax" style="color:inherit;text-decoration:none">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div>
+            <h3>Tax &amp; statutory</h3>
+            <p>TDS under old and new regimes, Form 16, PF, ESI, professional tax and labour welfare fund, filed on time.</p>
+          </a>
+          <a class="card reveal" href="platform.html#attendance" style="color:inherit;text-decoration:none">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+            <h3>Attendance &amp; leave</h3>
+            <p>Shift rosters for 24×7 hospitals, biometric imports and leave policies that feed straight into payroll.</p>
+          </a>
+          <a class="card reveal" href="platform.html#reimbursements" style="color:inherit;text-decoration:none">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+            <h3>Reimbursements</h3>
+            <p>Travel, meal and phone claims with approval workflows and receipts stored on our own servers.</p>
+          </a>
+          <a class="card reveal" href="platform.html#selfservice" style="color:inherit;text-decoration:none">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+            <h3>Employee app</h3>
+            <p>Payslips, tax declarations and Form 16 downloads for every employee, hosted by PayNest, not an app store backend.</p>
+          </a>
+          <a class="card reveal" href="platform.html#disbursement" style="color:inherit;text-decoration:none">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"/></svg></div>
+            <h3>Salary disbursement</h3>
+            <p>Encrypted salary files sent over a direct link to your bank. No third-party file-transfer service in between.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">The difference</span>
+          <h2>Cloud payroll vs. PayNest</h2>
+        </div>
+        <div class="table-wrap reveal">
+          <table class="compare">
+            <thead>
+              <tr><th scope="col">Question</th><th scope="col">Typical cloud payroll</th><th scope="col" class="is-us">PayNest</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Where are servers hosted?</td><td>A public cloud provider</td><td class="is-us">Our own data centres in Bengaluru &amp; Pune</td></tr>
+              <tr><td>How many companies can touch your data?</td><td>Often 10–30 sub-processors</td><td class="is-us"><span class="yes">Just one: PayNest</span></td></tr>
+              <tr><td>Who answers employee queries?</td><td>Outsourced call centre</td><td class="is-us">PayNest staff, in PayNest offices</td></tr>
+              <tr><td>Data stored outside India?</td><td><span class="no">Sometimes</span></td><td class="is-us"><span class="yes">Never</span></td></tr>
+              <tr><td>Staff allowed to paste data into public AI tools?</td><td>Varies</td><td class="is-us"><span class="yes">Prohibited by policy</span></td></tr>
+              <tr><td>Breach notification commitment</td><td>"Without undue delay"</td><td class="is-us">Within 24 hours of confirmation</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Industries -->
+    <section class="section section--white">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Who we serve</span>
+          <h2>Built for organisations where trust is the product.</h2>
+        </div>
+        <div class="grid grid--2">
+          <div class="industry reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14M10 21v-5h4v5M12 8v5M9.5 10.5h5"/></svg></div>
+            <div><h3>Hospitals &amp; healthcare</h3><p style="color:var(--muted)">24×7 shift rosters, doctor fee splits and nursing allowances, with staff data kept as carefully as patient data.</p></div>
+          </div>
+          <div class="industry reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"/></svg></div>
+            <div><h3>Banks &amp; co-operatives</h3><p style="color:var(--muted)">Strict audit trails, maker-checker approvals and annual audit support for regulated institutions.</p></div>
+          </div>
+          <div class="industry reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></svg></div>
+            <div><h3>Law &amp; professional firms</h3><p style="color:var(--muted)">Partner draws, associate bonuses and confidentiality built in, because your own clients expect it of you.</p></div>
+          </div>
+          <div class="industry reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1"/></svg></div>
+            <div><h3>Large employers</h3><p style="color:var(--muted)">Multi-state compliance, multiple entities and up to 20,000 employees on a single private platform.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head center reveal">
+          <span class="eyebrow">What clients say</span>
+          <h2>Peace of mind, every payday.</h2>
+        </div>
+        <div class="grid grid--3">
+          <figure class="card quote reveal">
+            <blockquote>"Our auditors asked where staff salary data lives. For the first time, the answer fit on one line: PayNest's Bengaluru data centre."</blockquote>
+            <figcaption class="quote__who"><div class="avatar">RM</div><div><strong>R. Menon</strong><span>Head of HR, CareWell Hospitals</span></div></figcaption>
+          </figure>
+          <figure class="card quote reveal">
+            <blockquote>"We promise our clients absolute confidentiality. We needed a payroll partner that makes the same promise and can prove it."</blockquote>
+            <figcaption class="quote__who"><div class="avatar">AS</div><div><strong>A. Sharma</strong><span>Managing Partner, Lexmore &amp; Associates</span></div></figcaption>
+          </figure>
+          <figure class="card quote reveal">
+            <blockquote>"Moving 3,800 employees took six weeks. Payroll has gone out on time every month since, without a single escalation."</blockquote>
+            <figcaption class="quote__who"><div class="avatar">PK</div><div><strong>P. Kulkarni</strong><span>CFO, Northstar Co-operative Bank</span></div></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section--tight" style="padding-bottom:88px">
+      <div class="container">
+        <div class="cta reveal">
+          <div>
+            <h2>See private payroll in action.</h2>
+            <p>A 30-minute walkthrough with our team, on demo data only. Nothing of yours is uploaded.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn--light" href="contact.html">Book a demo</a>
+            <a class="btn btn--outline-light" href="pricing.html">See pricing</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>
