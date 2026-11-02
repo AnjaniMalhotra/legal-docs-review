@@ -20,3 +20,40 @@ models:
     temperature: 0
     max_tokens: 700
     timeout_s: 600            # 7B on an 8 GB laptop is slow; allow for model loading
+  embed:
+    model: nomic-embed-text
+    base_url_env: EMBED_BASE_URL               # defaults to BIFROST_URL if unset
+    document_prefix: "search_document: "       # nomic-embed-text task prefixes
+    query_prefix: "search_query: "
+
+retrieval:
+  top_k_chat: 5
+  chat_candidates: 20       # semantic candidates re-ranked by the question's own words (hybrid retrieval)
+  chat_opening_chunks: 2    # parties and recitals are always given to chat: names, addresses, headcount, dates
+  min_term_length: 4        # question words shorter than this are ignored when re-ranking
+  preamble_heading: Cover page, parties and recitals   # label for text before the first numbered clause
+  top_k_rule: 6
+  rule_candidates: 12       # semantic candidates re-ranked by the rule's look_for terms (hybrid retrieval)
+  keyword_boost: 0.06       # similarity bonus per look_for term found in a clause
+  chunk_max_chars: 1200
+  chunk_overlap_chars: 150
+  min_chunk_chars: 40
+  ignore_line_patterns:     # page furniture removed before chunking (regex, case-insensitive)
+    - '^page \d+ of \d+$'
+    - '^.*page \d+ of \d+'                     # running footer (extraction may glue it to the next line)
+    - '^privileged and confidential\b.*$'      # running header
+    - '^\d+$'
+
+summary:                    # plain-English key-terms summary (separate from the standards review)
+  top_k_per_section: 2
+  max_chars_per_clause: 600 # keeps the single summary prompt within a small model's context
+  sections:
+    - {name: Parties and purpose, opening_pages: 2}   # parties and recitals open every agreement
+    - {name: Term and renewal, query: "commencement, initial term, renewal, duration of the agreement"}
+    - {name: Services, query: "services to be provided, scope of services, description of services"}
+    - {name: Fees and payment, query: "fees, invoices, payment terms, price revision"}
+    - {name: Service levels, query: "availability, service levels, service credits"}
+    - {name: Data protection and security, query: "data protection, information security, security incident, confidentiality"}
+    - {name: Liability and indemnity, query: "limitation of liability, indemnify, insurance"}
+    - {name: Termination and exit, query: "termination, convenience, return and deletion of data"}
+    - {name: Governing law and disputes, query: "governing law, jurisdiction, courts, dispute resolution"}

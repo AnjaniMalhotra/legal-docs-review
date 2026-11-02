@@ -1,13 +1,16 @@
 # PayNest Contract Copilot — common commands (run natively; see README).
 RUN = ./scripts/run.sh
 
-.PHONY: install setup gateway test lines smoke notebook
+.PHONY: install setup up gateway test lines smoke notebook
 
 install:          ## one-time: Python environment
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 
 setup:            ## one-time: pull the models (the only step that uses the internet)
 	./scripts/pull_models.sh
+
+up:               ## run the app → http://localhost:8000
+	$(RUN)
 
 gateway:          ## Option B: start Langfuse + Bifrost in Docker (see ../infra/README.md)
 	cd ../infra/langfuse && docker compose up -d

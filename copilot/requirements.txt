@@ -1,5 +1,15 @@
+# API + UI server
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+pydantic>=2.7
+
 # Config
 pyyaml>=6.0
+
+# Ingest + retrieval
+pypdf>=4.2
+chromadb>=0.5
 
 # Models (OpenAI-compatible client pointed at local Bifrost)
 openai>=1.40
