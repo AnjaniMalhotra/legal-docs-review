@@ -1,4 +1,4 @@
-"""Deterministic risk scoring. No LLM involved (decision D6).
+"""Deterministic risk scoring. No LLM involved.
 
 Weights and if_silent come from the standards; gap factors, bands, floor and
 gate conditions come from settings.yaml. Same findings -> same score, always.
@@ -21,6 +21,7 @@ def resolve_status(llm_status: str, rule: dict) -> str:
 
 
 def _band_for(score: int) -> str:
+    """The band a score falls in."""
     for step in settings()["scoring"]["bands"]:
         if score <= step["max"]:
             return step["band"]
@@ -28,14 +29,13 @@ def _band_for(score: int) -> str:
 
 
 def _band_rank(band: str) -> int:
+    """A band's position, so bands can be compared."""
     return [b["band"] for b in settings()["scoring"]["bands"]].index(band)
 
 
-def compute(findings: list[dict]) -> dict:
-    """findings: [{rule_id, status}] -> score, band, floor info and the w*g table."""
-    cfg = settings()["scoring"]
+def _weighted_table(findings: list[dict], cfg: dict) -> tuple[list[dict], float, int]:
+    """The w*g row for each finding, plus the totals (excluded statuses are left out)."""
     weights = {r["id"]: r["weight"] for r in standards()}
-    critical = {r["id"] for r in standards() if r["critical"]}
     table, total_wg, total_w = [], 0.0, 0
     for f in findings:
         if f["status"] in cfg["excluded_statuses"]:
@@ -44,6 +44,14 @@ def compute(findings: list[dict]) -> dict:
         table.append({"rule_id": f["rule_id"], "weight": w, "status": f["status"], "gap": g, "wg": w * g})
         total_wg += w * g
         total_w += w
+    return table, total_wg, total_w
+
+
+def compute(findings: list[dict]) -> dict:
+    """findings: [{rule_id, status}] -> score, band, floor info and the w*g table."""
+    cfg = settings()["scoring"]
+    critical = {r["id"] for r in standards() if r["critical"]}
+    table, total_wg, total_w = _weighted_table(findings, cfg)
     score = math.floor(100 * total_wg / total_w + 0.5) if total_w else 0
     raw_band = band = _band_for(score)
     floor_rules = [f["rule_id"] for f in findings

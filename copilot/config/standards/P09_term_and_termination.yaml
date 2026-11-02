@@ -48,7 +48,7 @@ look_for: [termination, terminate, convenience, notice period, refund, suspensio
 
 red_flags: [full refund, refund of all fees]   # walk-away phrases: tripwire escalates if the model misses them
 
-numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter
   unit: "days' notice (termination for convenience)"
   pattern: '\(?(\d+)\)?\s*days\W*(?:prior\s+)?(?:written\s+)?notice'
   pick: min

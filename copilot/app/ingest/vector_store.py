@@ -13,6 +13,7 @@ from app.core.config import data_dir, settings
 
 @lru_cache
 def _client() -> chromadb.ClientAPI:
+    """The local Chroma database, with telemetry off."""
     return chromadb.PersistentClient(
         path=str(data_dir("chroma")),
         settings=Settings(anonymized_telemetry=False, allow_reset=False),
@@ -20,15 +21,18 @@ def _client() -> chromadb.ClientAPI:
 
 
 def _collection(doc_id: str):
+    """One collection per document, compared by cosine similarity."""
     return _client().get_or_create_collection(name=doc_id, metadata={"hnsw:space": "cosine"})
 
 
 def _prefix(kind: str) -> str:
+    """The task prefix nomic-embed-text expects for documents and queries."""
     return settings()["models"]["embed"].get(f"{kind}_prefix", "")
 
 
 def add_chunks(doc_id: str, chunks: list[dict]) -> None:
     # Embed the clause with its section heading so short sub-clauses keep their context.
+    """Embed clause chunks and store them in the document's collection."""
     vectors = gateway.embed([f"{_prefix('document')}{c['heading']}: {c['text']}" for c in chunks])
     _collection(doc_id).add(
         ids=[c["chunk_id"] for c in chunks],
@@ -58,10 +62,3 @@ def opening(doc_id: str, n: int) -> list[dict]:
     hits = [{"chunk_id": cid, "text": text, "page": meta["page"], "heading": meta["heading"], "distance": 0.0}
             for cid, text, meta in zip(res["ids"], res["documents"], res["metadatas"])]
     return sorted(hits, key=lambda h: h["chunk_id"])
-
-
-def delete(doc_id: str) -> None:
-    try:
-        _client().delete_collection(doc_id)
-    except Exception:  # already gone
-        pass

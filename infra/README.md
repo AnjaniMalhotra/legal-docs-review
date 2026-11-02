@@ -1,4 +1,4 @@
-# Local infrastructure (Stage A): Bifrost + Langfuse on this Mac
+# Local infrastructure: Bifrost + Langfuse
 
 The app and Ollama run natively (Ollama uses the Mac GPU); Bifrost and Langfuse run in Docker (Colima).
 
@@ -40,12 +40,3 @@ docker run -d --name paynest-bifrost --restart unless-stopped --network langfuse
   -p 127.0.0.1:8080:8080 --add-host=host.docker.internal:host-gateway --env-file .env \
   -v "$PWD:/app/data" maximhq/bifrost:latest
 ```
-
-## Findings from the Stage A test (30 Oct 2026)
-
-- Bifrost denies all models by default (`models: []`) and blocks private IPs unless `allow_private_network` is set.
-- Bifrost does not pass `response_format: json_object` through to Ollama; replies arrive in ```json fences.
-  The classifier's JSON extraction handles this.
-- Langfuse v4 runs in events-only mode: list traces with `GET /api/public/v2/observations`, not `/traces`.
-- About 80% of stored observations are Bifrost `plugin.*` spans; consider the OTel `plugin_span_filter`.
-- To do: pin `maximhq/bifrost` to a release at least two weeks old; run the no-egress check with Wi-Fi off.

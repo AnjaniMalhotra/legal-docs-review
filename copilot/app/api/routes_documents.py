@@ -31,12 +31,14 @@ async def upload(file: UploadFile) -> dict:
 
 @router.get("/documents/{doc_id}")
 def get_document(doc_id: str) -> dict:
+    """Page text for the contract viewer."""
     doc = doc_store.load_document(doc_id)
     return {k: doc[k] for k in ("doc_id", "file_name", "uploaded_at", "pages")}
 
 
 @router.get("/documents/{doc_id}/summary")
 def get_summary(doc_id: str) -> dict:
+    """Key-terms summary, generated on first request."""
     return summariser.summarise(doc_id)
 
 
@@ -47,4 +49,5 @@ class Question(BaseModel):
 
 @router.post("/ask")
 def ask(q: Question) -> dict:
+    """Answer a typed question about the contract."""
     return answer(q.doc_id, q.question)

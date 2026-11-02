@@ -30,6 +30,7 @@ def _gather(doc_id: str, pages: list[str], cfg: dict) -> list[dict]:
 
 
 def _evidence(sections: list[dict], max_chars: int) -> str:
+    """Format the clauses found for each summary section into the prompt."""
     blocks = []
     for s in sections:
         clauses = "\n".join(f"[{h['heading'] or 'untitled'}, p.{h['page']}] {h['text'][:max_chars]}" for h in s["hits"])
@@ -38,6 +39,7 @@ def _evidence(sections: list[dict], max_chars: int) -> str:
 
 
 def _parse(raw: str) -> dict:
+    """Read the model's JSON reply, or fail loudly if there is no overview."""
     match = re.search(r"\{.*\}", raw, re.S)
     try:
         data = json.loads(match.group(0)) if match else {}
@@ -50,6 +52,7 @@ def _parse(raw: str) -> dict:
 
 @traced("summary")
 def summarise(doc_id: str) -> dict:
+    """Plain-English summary of key terms; generated once, then cached."""
     cached = doc_store.load_summary(doc_id)
     if cached:
         return cached

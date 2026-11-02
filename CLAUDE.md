@@ -21,7 +21,7 @@ provider whose promise is *"your data never leaves PayNest"*, and this tool keep
 
 ## Golden rules (do not break)
 
-1. **Max 120 lines per file.** Split by responsibility instead. A hook checks this after every edit; `make lines` checks all.
+1. **Max 120 lines per file.** Split by responsibility instead. A hook checks this after every edit.
 2. **No hardcoded tunables.** Numbers, thresholds, weights, bands, model names, prompts and URLs live in
    `copilot/config/settings.yaml`, `copilot/config/standards/*.yaml`, `copilot/prompts/*.md` or `.env`.
    Only the *status vocabulary* (`LLM_STATUSES`, `ALL_STATUSES` in `app/policy/scoring.py`) is fixed in code.
@@ -45,7 +45,6 @@ make setup   # one-time model download with `ollama pull` (egress allowed only h
 make up      # run the app natively → http://localhost:8000 (Ollama direct, or Bifrost if .env.local sets the gateway profile)
 make gateway # Option B: start Langfuse + Bifrost in Docker
 make test    # unit tests (.venv, no models)
-make lines   # 120-line check
 make smoke   # one prompt per role
 make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--skip-ragas"
 ```
@@ -87,7 +86,7 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 
 Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (61 passing).
 Contracting Standards v1.0: one YAML per provision in `copilot/config/standards/`. The app shows plain-English labels (OK / Acceptable / Not acceptable / Missing / Not mentioned (fine) / Doesn't apply / Needs a lawyer's check) over the fixed internal status codes; the outgoing Issues List keeps formal legal wording.
-Runs as Option B (D36): app and Ollama native on the Mac (GPU), Bifrost + Langfuse in Docker via `infra/`; full-Docker packaging and voice removed.
-Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models (D32), per-contract evals: 76% rules exact, 5/5 risk bands, 0 risky clauses marked OK (D35).
+Runs as Option B: app and Ollama native on the Mac (GPU), Bifrost + Langfuse in Docker via `infra/`; full-Docker packaging and voice removed.
+Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 5/5 risk bands, 0 risky clauses marked OK.
 Next: no-egress check (Wi-Fi off); Bifrost allowlist test; a held-out set of new contracts run once (no tuning on it).
 Open: demo machine specs, deadline, judge at review time.

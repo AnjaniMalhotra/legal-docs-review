@@ -52,7 +52,7 @@ look_for: [limitation of liability, aggregate liability, shall not exceed, unlim
 
 red_flags: [unlimited, uncapped, without limit, without any limit]   # walk-away phrases: tripwire escalates if the model misses them
 
-numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter
   unit: "months of Fees (cap)"
   pattern: '\(?(\d+)\)?\s*months'
   pick: max

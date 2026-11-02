@@ -12,6 +12,7 @@ NOT_FOUND = "Not found in the document."
 
 @traced("answer")
 def answer(doc_id: str, question: str) -> dict:
+    """Answer a question from retrieved clauses only, with citations or "Not found"."""
     doc_store.load_document(doc_id)  # raises NotFoundError for an unknown document
     chunks = retriever.for_question(doc_id, question)
     prompt = render("chat_answer", clauses=format_clauses(chunks), question=question)

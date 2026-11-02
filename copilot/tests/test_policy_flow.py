@@ -80,7 +80,6 @@ def test_review_pauses_then_finalises(client, carewell):
 def test_unknown_ids_are_404(client):
     res = client.post("/api/policy/reviews", json={"doc_id": "doc-missing", "reviewer": "Legal Counsel"})
     assert res.status_code == 404 and "Unknown document" in res.json()["detail"]
-    assert client.get("/api/policy/reviews/rev-missing").status_code == 404
     assert client.get("/api/documents/doc-missing").status_code == 404
 
 

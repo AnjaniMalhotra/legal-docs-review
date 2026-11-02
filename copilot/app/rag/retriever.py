@@ -13,9 +13,11 @@ from app.ingest import vector_store
 
 
 def _rerank(candidates: list[dict], terms: list[str], keep: int) -> list[dict]:
+    """Boost candidates containing the search terms, then keep the best."""
     boost = settings()["retrieval"]["keyword_boost"]
 
     def score(hit: dict) -> float:
+        """Similarity plus a bonus for each term found."""
         text = hit["text"].lower()
         return (1 - hit["distance"]) + boost * sum(term in text for term in terms)
 
@@ -35,6 +37,7 @@ def for_question(doc_id: str, question: str) -> list[dict]:
 
 @traced("retrieve.rule")
 def for_rule(doc_id: str, rule: dict) -> list[dict]:
+    """The clauses most relevant to one standard: by meaning, then re-ranked by its look_for terms."""
     cfg = settings()["retrieval"]
     query = f"{rule['title']}. {', '.join(rule['look_for'])}. {rule['preferred']}"
     candidates = vector_store.search(doc_id, query, cfg["rule_candidates"])

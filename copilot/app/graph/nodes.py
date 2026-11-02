@@ -30,24 +30,27 @@ class ReviewState(TypedDict, total=False):
 
 
 def _classify_one(doc_id: str, rule: dict, pages: list[str]) -> dict:
+    """Judge one standard, then verify its quote and numbers; a failed answer goes to a lawyer."""
     try:
         finding = classifier.classify(doc_id, rule)
     except ClassificationError as exc:  # bad JSON twice: worst case, a human decides
         finding = {"rule_id": rule["id"], "title": rule["title"], "weight": rule["weight"],
                    "llm_status": "Not found", "status": scoring.NEEDS_REVIEW, "evidence_quote": "",
-                   "page": None, "clause_ref": "", "reason": "The AI could not give a clear answer for this standard, so a lawyer must check it. "
-                             f"(Technical detail: {exc})", "grounded": False}
+                   "page": None, "clause_ref": "", "grounded": False,
+                   "reason": f"The AI could not give a clear answer for this standard, so a lawyer must check it. (Technical detail: {exc})"}
         return finding
     return checks.numbers(grounding.apply_guard(finding, pages), rule)   # numbers only on verified quotes
 
 
 def classify_all(state: ReviewState) -> dict:
+    """Step 1: judge every standard (the only step that calls the model)."""
     doc = doc_store.load_document(state["doc_id"])
     findings = [_classify_one(state["doc_id"], r, doc["pages"]) for r in standards()]
     return {"findings": findings, "file_name": doc["file_name"]}
 
 
 def score(state: ReviewState) -> dict:
+    """Step 2: compute the risk score and decide whether a lawyer must approve."""
     result = scoring.compute(state["findings"])
     return {
         "system_result": result,
@@ -66,6 +69,7 @@ def human_gate(state: ReviewState) -> dict:
 
 
 def finalize(state: ReviewState) -> dict:
+    """Step 4: re-score with the lawyer's decisions and save the report."""
     final = scoring.compute(state["findings"])
     meta = {k: state.get(k) for k in ("review_id", "doc_id", "file_name", "reviewer", "matter", "trace_id")}
     built = report.build(meta, state["findings"], state["system_result"], final, state.get("audit", []))

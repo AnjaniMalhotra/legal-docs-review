@@ -27,6 +27,7 @@ for error_class in HTTP_STATUS:
 
 @app.get("/api/health")
 def health() -> dict:
+    """Liveness check; the UI also reads the standards version from here."""
     return {"status": "ok", "standards_version": settings()["app"]["standards_version"]}
 
 

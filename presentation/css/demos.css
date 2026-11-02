@@ -33,16 +33,7 @@
 .redline-stamp { position: absolute; right: 30px; top: -22px; }
 
 /* 03 promise */
-.promise { display: grid; grid-template-columns: 1fr 120px 1.4fr; align-items: center; gap: 30px; }
 .icon.big { width: 120px; height: 120px; border-radius: 30px; } .icon.big svg { width: 64px; height: 64px; }
-.promise-cloud { display: flex; flex-direction: column; align-items: center; gap: 16px; font: 700 22px var(--sans); position: relative; opacity: .7; }
-.promise-cloud .stamp { position: absolute; top: -46px; right: -10px; font-size: 18px; }
-.promise-wall { height: 360px; display: grid; place-items: center; background: repeating-linear-gradient(0deg, var(--seal) 0 26px, #8e2a20 26px 30px); border: 2.5px solid var(--ink); border-radius: 10px; box-shadow: var(--shadow); color: #fff; }
-.promise-wall svg { width: 50px; height: 50px; stroke: currentColor; fill: none; stroke-width: 2; background: var(--seal); padding: 6px; border-radius: 8px; }
-.promise-home { padding: 34px; display: flex; flex-direction: column; align-items: center; gap: 22px; } .promise-home > b { font-size: 24px; }
-.home-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-.mini { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border: 2px solid var(--ink); border-radius: 12px; font-weight: 700; background: var(--paper); }
-.mini svg { width: 22px; height: 22px; stroke: var(--seal); fill: none; stroke-width: 2; }
 
 /* 04 features */
 .features { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 24px; }
@@ -55,19 +46,10 @@
 .stack-list { display: grid; gap: 10px; align-content: center; }
 .stack-list div { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 19px; padding: 8px 12px; background: var(--card); border: 2px solid var(--ink); border-radius: 12px; }
 .stack-list .tag { width: 96px; text-align: center; }
-.zones { display: grid; gap: 20px; align-content: center; }
-.zone { padding: 20px 22px; } .zone p { margin: 10px 0 0; font-size: 21px; font-weight: 700; }
-.zone.dashed { border-style: dashed; box-shadow: none; background: transparent; }
 .obs { display: grid; gap: 18px; align-content: center; }
 .obs-row { display: flex; gap: 16px; align-items: center; padding: 18px; }
 .obs-row b { display: block; font-size: 22px; } .obs-row span { color: var(--ink-2); font-size: 16px; }
 .pipe { display: grid; grid-template-rows: 1fr auto; gap: 22px; }
-.pipe-strip { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; }
-.pipe-strip div { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; border: 2px solid var(--ink); border-radius: 14px; background: var(--card); font-weight: 750; font-size: 15px; animation: lit 8s infinite; }
-.pipe-strip svg { width: 28px; height: 28px; stroke: var(--seal); fill: none; stroke-width: 2; }
-.pipe-strip div:nth-child(2) { animation-delay: 1s; } .pipe-strip div:nth-child(3) { animation-delay: 2s; } .pipe-strip div:nth-child(4) { animation-delay: 3s; }
-.pipe-strip div:nth-child(5) { animation-delay: 4s; } .pipe-strip div:nth-child(6) { animation-delay: 5s; } .pipe-strip div:nth-child(7) { animation-delay: 6s; } .pipe-strip div:nth-child(8) { animation-delay: 7s; }
-@keyframes lit { 0%, 12% { background: var(--ink); color: #fff; box-shadow: 4px 4px 0 var(--seal); transform: translateY(-4px); } 14%, 100% { background: var(--card); color: var(--ink); box-shadow: none; transform: none; } }
 
 /* 07 air-gap */
 .ag-wrap { display: grid; grid-template-columns: 1fr 380px; gap: 22px; height: 100%; }

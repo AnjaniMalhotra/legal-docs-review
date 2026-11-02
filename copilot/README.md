@@ -51,11 +51,9 @@ make smoke                         # one prompt per role: check it appears in La
 
 ```bash
 make test                            # 56 unit tests, about 1 second, no models needed
-make lines                           # 120-line limit per file
 make evals                           # all 5 sample contracts, printed one by one (~1-2 h on 8 GB)
 make evals ARGS="--contract lexmore" # one contract
 make evals ARGS="--skip-ragas"       # without the judge model
-make purge                           # retention job (30 days uploads, 365 days reports)
 ```
 
 ## Where things live
@@ -71,7 +69,7 @@ web/          HTML / CSS / JS UI
 config/       settings.yaml (every number + role → model), profiles/gateway.yaml, standards/
 prompts/      prompt templates
 evals/        golden set, per-contract runner, metrics + Ragas
-scripts/      run, model pull, smoke test, retention, line-limit check
+scripts/      run, model pull, system check, policy document
 tests/        unit tests
 sample_contracts/  8 synthetic contract PDFs (5 in the answer key, 3 kept unseen)
 ```

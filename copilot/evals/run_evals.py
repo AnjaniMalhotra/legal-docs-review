@@ -3,7 +3,6 @@
 Usage:  make evals                                   (all five contracts)
         make evals ARGS="--contract lexmore"         (one contract)
         make evals ARGS="--skip-ragas"               (no judge model)
-        make evals ARGS="--golden /path/holdout.json" (a held-out answer key)
 Uses the SAME pipeline as the UI: ingest -> policy graph -> chat. Results are printed per
 contract as soon as each finishes, then summed up. Ragas scores are also pushed to Langfuse.
 """
@@ -11,7 +10,6 @@ import argparse
 import json
 import subprocess
 import time
-from pathlib import Path
 
 from app.core import tracing
 from app.core.config import ROOT, data_dir, settings
@@ -30,6 +28,7 @@ def _unload(role: str) -> None:
 
 
 def _review(c: dict, doc_id: str) -> dict:
+    """Run the review and pair each verdict with its expected label."""
     review = policy_service.start(doc_id, REVIEWER)
     done = review["state"] != "awaiting_review"
     findings = review["report"]["findings"] if done else review["findings"]
@@ -40,6 +39,7 @@ def _review(c: dict, doc_id: str) -> dict:
 
 
 def _chat(questions: list[dict], doc_id: str) -> list[dict]:
+    """Ask the contract's golden questions and check the cited pages."""
     chats = []
     for q in questions:
         res = answer(doc_id, q["question"])
@@ -80,13 +80,12 @@ def evaluate(c: dict, questions: list[dict], skip_ragas: bool) -> dict:
 
 
 def main() -> None:
+    """Run each contract, print its result, then check the targets."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--contract", help="id of one golden contract, e.g. lexmore")
     parser.add_argument("--skip-ragas", action="store_true")
-    parser.add_argument("--golden", default=str(ROOT / "evals" / "golden_set.json"),
-                        help="answer key to use, e.g. a held-out set kept outside the repo")
     args = parser.parse_args()
-    golden = json.loads(Path(args.golden).read_text(encoding="utf-8"))
+    golden = json.loads((ROOT / "evals" / "golden_set.json").read_text(encoding="utf-8"))
     contracts = [c for c in golden["contracts"] if args.contract in (None, c["id"])]
     runs = []
     for c in contracts:

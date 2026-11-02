@@ -13,6 +13,7 @@ ACTIONS = ("approve", "override", "note")
 
 
 def validate(decisions: list[dict], flagged: list[str]) -> None:
+    """Reject missing or incomplete decisions before the graph resumes."""
     seen = {d.get("rule_id") for d in decisions}
     missing = [r for r in flagged if r not in seen]
     if missing:

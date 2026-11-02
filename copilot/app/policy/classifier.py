@@ -29,11 +29,13 @@ class NotFoundFallback(ValueError):
 
 
 def _hedged(status: str) -> bool:
+    """True for a double answer such as "Not found | N/A"."""
     parts = {p.strip() for p in status.split("|")}
     return len(parts) > 1 and "Not found" in parts and parts <= {"Not found", "N/A"}
 
 
 def _parse(raw: str, rule_id: str) -> dict:
+    """Read and validate the model's JSON reply; raises if it must be retried."""
     match = re.search(r"\{.*\}", raw, re.S)
     if not match:
         raise ValueError("no JSON object in response")
@@ -58,15 +60,8 @@ def _parse(raw: str, rule_id: str) -> dict:
     }
 
 
-@traced("classify.rule")
-def classify(doc_id: str, rule: dict) -> dict:
-    chunks = retriever.for_rule(doc_id, rule)
-    prompt = render(
-        "classify_rule",
-        rule_id=rule["id"], title=rule["title"], preferred=rule["preferred"],
-        fallback=rule["fallback"], walk_away=rule["walk_away"], na_when=rule["na_when"],
-        clauses=format_clauses(chunks),
-    )
+def _ask_model(prompt: str, rule: dict) -> dict:
+    """Call the analyst, retrying with the reason if the reply is rejected."""
     cfg = settings()["classifier"]
     last_error, attempt = None, prompt
     for _ in range(cfg["max_retries"] + 1):
@@ -81,6 +76,20 @@ def classify(doc_id: str, rule: dict) -> dict:
         if not isinstance(last_error, NotFoundFallback):
             raise ClassificationError(f"{rule['id']}: {last_error}")
         finding = _parse(json.dumps({**last_error.data, "status": "Not found"}), rule["id"])
+    return finding
+
+
+@traced("classify.rule")
+def classify(doc_id: str, rule: dict) -> dict:
+    """Judge one standard: find its clauses, ask the model, apply if_silent and the red-flag check."""
+    chunks = retriever.for_rule(doc_id, rule)
+    prompt = render(
+        "classify_rule",
+        rule_id=rule["id"], title=rule["title"], preferred=rule["preferred"],
+        fallback=rule["fallback"], walk_away=rule["walk_away"], na_when=rule["na_when"],
+        clauses=format_clauses(chunks),
+    )
+    finding = _ask_model(prompt, rule)
     finding["status"] = resolve_status(finding["llm_status"], rule)
     finding["title"] = rule["title"]
     finding["weight"] = rule["weight"]

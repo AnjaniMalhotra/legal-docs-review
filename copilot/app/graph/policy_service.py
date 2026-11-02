@@ -20,6 +20,7 @@ from app.policy import review
 
 @lru_cache
 def policy_graph():
+    """Build the graph once: classify -> score -> human_gate -> finalize."""
     g = StateGraph(nodes.ReviewState)
     g.add_node("classify", nodes.classify_all)
     g.add_node("score", nodes.score)
@@ -35,6 +36,7 @@ def policy_graph():
 
 
 def _config(review_id: str) -> dict:
+    """LangGraph finds a saved review by its thread id."""
     return {"configurable": {"thread_id": review_id}}
 
 
@@ -70,6 +72,7 @@ def start(doc_id: str, reviewer: str, matter: dict | None = None) -> dict:
 
 @traced("policy_check.resume")
 def resume(review_id: str, decisions: list[dict]) -> dict:
+    """Apply the lawyer's decisions and finish the paused review."""
     current = status(review_id)
     if current["state"] != "awaiting_review":
         raise DecisionError("This review is already final.")

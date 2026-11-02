@@ -5,7 +5,7 @@ argument-hint: <what the module does>
 
 New module: $ARGUMENTS
 
-1. Pick the right package under `copilot/app/` (core, ingest, rag, policy, graph, voice, api) or `copilot/web/js/`.
+1. Pick the right package under `copilot/app/` (core, ingest, rag, policy, graph, api) or `copilot/web/js/`.
    If none fits, propose a new folder first and explain why.
 2. Name the file after its single responsibility (e.g. `issues_list_formatter.py`, not `utils.py`).
 3. Start with a module docstring (Python) or a top comment (JS) explaining why the file exists.

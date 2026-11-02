@@ -20,6 +20,7 @@ def accuracy(pairs: list[tuple[str, str]]) -> float:
 
 
 def confusion(pairs: list[tuple[str, str]]) -> dict[str, dict[str, int]]:
+    """Count expected vs predicted statuses."""
     matrix: dict[str, Counter] = {}
     for true, pred in pairs:
         matrix.setdefault(true, Counter())[pred] += 1
@@ -44,6 +45,7 @@ def citation_hit(answer: str, expected_pages: list[int] | None) -> bool | None:
 
 
 def ratio(values: list[bool | None]) -> float | None:
+    """Share of True values, ignoring None."""
     known = [v for v in values if v is not None]
     return sum(known) / len(known) if known else None
 
@@ -61,6 +63,7 @@ def check_targets(actual: dict, targets: dict) -> list[dict]:
 # ---- Ragas (chat answer quality) ------------------------------------------
 
 def _judge():
+    """The judge model and embeddings, wrapped for Ragas."""
     from langchain_openai import ChatOpenAI, OpenAIEmbeddings
     from ragas.embeddings import LangchainEmbeddingsWrapper
     from ragas.llms import LangchainLLMWrapper
