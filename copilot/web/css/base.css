@@ -1,0 +1,67 @@
+/* Design tokens, typefaces, reset and form controls. System fonts only: nothing is downloaded. */
+:root {
+  /* Surfaces and ink */
+  --canvas: #f2f1ed;
+  --surface: #ffffff;
+  --sunken: #f8f7f4;
+  --ink: #1b1f27;
+  --text: #3a404b;
+  --muted: #7a808c;
+  --line: #e4e2dc;
+  --line-strong: #d3d0c7;
+
+  /* Brand accent: deep indigo ink */
+  --accent: #2b3a67;
+  --accent-hover: #22305a;
+  --accent-soft: #e9ecf5;
+
+  /* Severity (chips, card edges and highlights in the agreement) */
+  --red: #b3261e;    --red-bg: #fbe9e7;    --red-mark: #f7d3ce;
+  --amber: #9a5b00;  --amber-bg: #fdf1dc;  --amber-mark: #fbe2b4;
+  --green: #2e6b45;  --green-bg: #e6f2ea;  --green-mark: #cfe8d7;
+  --blue: #2f55c9;   --blue-bg: #e8eefc;   --blue-mark: #d6e0fb;
+  --grey-bg: #efeee9;
+
+  /* Type */
+  --ui: "Avenir Next", "Avenir", "Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --doc: "Charter", "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(27, 31, 39, .05), 0 2px 8px rgba(27, 31, 39, .04);
+  --shadow-lg: 0 18px 50px rgba(27, 31, 39, .18);
+  --topbar: 56px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body { margin: 0; font: 400 14.5px/1.55 var(--ui); color: var(--text); background: var(--canvas); }
+h1, h2, h3 { margin: 0 0 .4em; color: var(--ink); font-weight: 600; line-height: 1.25; letter-spacing: -.01em; }
+p { margin: 0 0 .8em; }
+[hidden] { display: none !important; }
+
+.eyebrow { margin: 0 0 6px; font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.muted { color: var(--muted); }
+.placeholder { padding: 56px 24px; text-align: center; color: var(--muted); }
+
+input, select, textarea, button { font: inherit; color: inherit; }
+input[type="text"], select {
+  width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: 8px;
+  background: var(--surface); color: var(--ink); transition: border-color .15s, box-shadow .15s;
+}
+input[type="text"]:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; padding: 0 16px;
+  border: 1px solid transparent; border-radius: 8px; font-weight: 600; font-size: .88rem; cursor: pointer;
+  white-space: nowrap; transition: background .15s, border-color .15s;
+}
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn--primary { background: var(--accent); color: #fff; }
+.btn--primary:not(:disabled):hover { background: var(--accent-hover); }
+.btn--quiet { background: transparent; border-color: var(--line-strong); color: var(--ink); }
+.btn--quiet:hover { background: var(--surface); }
+.link-btn { padding: 0; border: 0; background: none; color: var(--accent); font-weight: 600; font-size: .82rem; cursor: pointer; }
+.link-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+.icon-btn { padding: 2px 8px; border: 0; border-radius: 6px; background: transparent; font-size: 1.4rem; line-height: 1; cursor: pointer; color: inherit; }

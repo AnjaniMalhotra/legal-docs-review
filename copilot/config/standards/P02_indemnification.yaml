@@ -1,0 +1,50 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P2. Owner: General Counsel. Review cycle: annual.
+
+id: P2
+title: Indemnification
+category: Risk Allocation
+weight: 5
+critical: true
+if_silent: ok          # no indemnity clause = no indemnity obligation beyond general law
+na_when: Never.
+
+rationale: >
+  Indemnities shift third-party claims between the Parties. Payroll errors frequently originate
+  in Client-supplied master data (attendance, joining and exit records). A broad, fault-blind
+  indemnity would make PayNest the insurer of the Client's own processes.
+
+preferred: >
+  Mutual indemnities limited to third-party claims to the extent caused by the indemnifying Party's
+  proven breach of the Agreement, negligence or wilful misconduct, subject to the limitation of
+  liability, with customary conduct-of-claims provisions (prompt notice, control of defence,
+  reasonable co-operation, duty to mitigate).
+
+fallback: >
+  A one-way indemnity from PayNest limited to named heads of claim (third-party intellectual
+  property infringement; data breach caused by PayNest's breach of its security obligations),
+  capped at the data-protection super-cap.
+
+walk_away: >
+  Indemnity for "any and all claims" arising out of or relating to the Services regardless of
+  fault; uncapped indemnity; indemnity covering losses caused by the Client's own negligence,
+  instructions or data; or indemnity for regulatory fines levied on the Client.
+
+standard_clause: >
+  "Each Party (the Indemnifying Party) shall indemnify the other Party against losses arising from
+  any third-party claim to the extent caused by the Indemnifying Party's breach of this Agreement,
+  negligence or wilful misconduct, subject always to Clause 14 (Limitation of Liability)."
+
+proposed_amendment: >
+  Make the indemnity mutual and fault-based, limit it to third-party claims caused by the
+  indemnifying Party's breach, negligence or wilful misconduct, and subject it expressly to the
+  limitation of liability.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: General Counsel
+
+look_for: [indemnify, indemnification, hold harmless, defend, any and all claims, third-party claims,
+           losses arising]
+
+red_flags: [any and all claims, regardless of fault, howsoever arising]   # walk-away phrases: tripwire escalates if the model misses them

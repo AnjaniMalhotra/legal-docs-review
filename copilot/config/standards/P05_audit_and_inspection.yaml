@@ -1,0 +1,57 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P5. Owner: Legal Counsel with the Chief Information Security Officer.
+
+id: P5
+title: Audit and Inspection Rights
+category: Data Protection
+weight: 3
+critical: false
+if_silent: ok          # no audit clause = no contractual audit obligation
+na_when: The agreement involves no live Client Personal Data.
+
+rationale: >
+  PayNest's data centres host the data of more than four hundred clients. Unrestricted on-site
+  access by one client's auditors risks exposure of other clients' environments and disrupts
+  operations. PayNest maintains ISO/IEC 27001 certification and an annual independent audit
+  precisely so that clients can rely on assurance reports.
+
+preferred: >
+  On-site audit no more than once in any twelve (12) month period, on not less than thirty (30)
+  days' written notice, during business hours, at the Client's cost, by an auditor bound by
+  confidentiality who is not a competitor of PayNest; or, at PayNest's election, provision of its
+  current ISO/IEC 27001 certificate and most recent independent audit report in lieu.
+
+fallback: >
+  Up to two (2) audits in any twelve (12) month period, or a notice period of not less than
+  fifteen (15) days, with all other preferred conditions retained.
+
+walk_away: >
+  Unannounced or "at any time" audits; unlimited frequency; audits by a competitor of PayNest;
+  or access to premises, systems or records holding the data of PayNest's other clients.
+
+standard_clause: >
+  "The Client may, not more than once in any twelve (12) month period and on not less than thirty
+  (30) days' written notice, audit the Service Provider's compliance with this Agreement, provided
+  that such audit shall not extend to systems or records relating to the Service Provider's other
+  customers."
+
+proposed_amendment: >
+  Limit audits to once in any twelve (12) month period on thirty (30) days' written notice, during
+  business hours, and offer PayNest's ISO/IEC 27001 certificate and annual audit report in lieu.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: General Counsel and Chief Information Security Officer
+
+look_for: [audit, inspection, inspect, on-site, access to premises, records, auditor, regulator]
+
+red_flags: [at any time, without notice, without prior notice, unannounced]   # walk-away phrases: tripwire escalates if the model misses them
+
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+  unit: "days' notice (audit)"
+  pattern: '\(?(\d+)\)?\s*days\W*(?:prior\s+)?(?:written\s+)?notice'
+  pick: min
+  bands:
+    - {max: 14, status: Conflicting}
+    - {max: 29, status: Partial}
+    - {status: Compliant}

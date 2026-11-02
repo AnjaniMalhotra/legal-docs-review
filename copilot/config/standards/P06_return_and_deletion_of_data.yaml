@@ -1,0 +1,58 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P6. Owner: Legal Counsel with the Chief Information Security Officer.
+
+id: P6
+title: Return and Deletion of Client Data
+category: Data Protection
+weight: 3
+critical: false
+if_silent: ok          # PayNest's Data Retention Policy (30 days) applies by default
+na_when: The agreement involves no live Client Personal Data.
+
+rationale: >
+  A complete export of a client's payroll history requires reconciliation and verification, and
+  PayNest's encrypted backups are purged on a fixed rotation cycle. Deadlines shorter than the
+  rotation cycle cannot be met without manual intervention in shared backup media, which itself
+  creates risk for other clients.
+
+preferred: >
+  On termination or expiry, PayNest returns Client Data in a standard, machine-readable format and
+  deletes it from production systems within thirty (30) days, with backup copies purged in the
+  next scheduled rotation; a certificate of deletion is provided on written request. Statutory
+  records may be retained for the period required by applicable law.
+
+fallback: >
+  Return and deletion within eight (8) to twenty-nine (29) days of termination, with backup purge
+  in the next scheduled rotation preserved.
+
+walk_away: >
+  Return and deletion within seven (7) days or less, or "immediately"; immediate deletion from all
+  backup media; or any right for the Client to access PayNest's databases or backup systems
+  directly.
+
+standard_clause: >
+  "Within thirty (30) days after termination or expiry, the Service Provider shall return Client
+  Data in a standard machine-readable format and delete it from its production systems; backup
+  copies shall be deleted in the ordinary course of the Service Provider's backup rotation."
+
+proposed_amendment: >
+  Extend the return-and-deletion period to thirty (30) days after termination, with backup copies
+  purged in the next scheduled rotation and a certificate of deletion on written request.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: General Counsel and Chief Information Security Officer
+
+look_for: [return of data, deletion, delete, destruction, termination assistance, exit, backups,
+           certificate of deletion]
+
+red_flags: [immediately upon termination, direct access to]   # walk-away phrases: tripwire escalates if the model misses them
+
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+  unit: "days (return and deletion)"
+  pattern: '\(?(\d+)\)?\s*(?:business\s+)?days'
+  pick: min
+  bands:
+    - {max: 7, status: Conflicting}
+    - {max: 29, status: Partial}
+    - {status: Compliant}

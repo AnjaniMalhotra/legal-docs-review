@@ -1,0 +1,58 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P9. Owner: Legal Counsel.
+
+id: P9
+title: Term and Termination
+category: Commercial
+weight: 2
+critical: false
+if_silent: risk        # without termination rights, neither exit nor suspension is regulated
+na_when: Never.
+
+rationale: >
+  Onboarding a client (configuration, data migration and a parallel payroll run) represents
+  several months of unrecovered PayNest effort. Very short convenience-termination periods with
+  refunds make that investment unrecoverable and invite opportunistic exit.
+
+preferred: >
+  Termination for convenience by the Client on not less than ninety (90) days' written notice;
+  termination by either Party for uncured material breach after thirty (30) days' notice; no refund
+  of Fees for Services already performed; and PayNest's right to suspend or terminate for
+  persistent non-payment.
+
+fallback: >
+  Termination for convenience on thirty (30) to eighty-nine (89) days' written notice, with all
+  other preferred conditions retained.
+
+walk_away: >
+  Termination for convenience on less than thirty (30) days' notice; any refund of Fees for
+  Services already performed; or the absence of any PayNest right to suspend or terminate for
+  non-payment.
+
+standard_clause: >
+  "The Client may terminate this Agreement for convenience on not less than ninety (90) days'
+  written notice to the Service Provider. Fees for Services performed up to the effective date of
+  termination shall remain payable and shall not be refunded."
+
+proposed_amendment: >
+  Set termination for convenience at ninety (90) days' written notice (fallback: thirty (30)
+  days), exclude refunds for Services performed, and preserve PayNest's suspension right for
+  non-payment.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: General Counsel
+
+look_for: [termination, terminate, convenience, notice period, refund, suspension, expiry,
+           material breach]
+
+red_flags: [full refund, refund of all fees]   # walk-away phrases: tripwire escalates if the model misses them
+
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+  unit: "days' notice (termination for convenience)"
+  pattern: '\(?(\d+)\)?\s*days\W*(?:prior\s+)?(?:written\s+)?notice'
+  pick: min
+  bands:
+    - {max: 29, status: Conflicting}
+    - {max: 89, status: Partial}
+    - {status: Compliant}

@@ -1,17 +1,19 @@
-"""FastAPI entry point: JSON API under /api (the web UI arrives in step 3).
+"""FastAPI entry point: JSON API under /api, HTML/CSS/JS UI served from web/.
 
 Run:  uvicorn app.main:app --host 127.0.0.1 --port 8000
 """
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
-from app.api import routes_documents
-from app.core.config import settings
+from app.api import routes_documents, routes_policy
+from app.core.config import ROOT, settings
 from app.core.errors import HTTP_STATUS
 
 app = FastAPI(title=settings()["app"]["name"], docs_url="/api/docs", redoc_url=None)
 
 app.include_router(routes_documents.router)
+app.include_router(routes_policy.router)
 
 
 def _domain_error(_request: Request, exc: Exception) -> JSONResponse:
@@ -27,3 +29,6 @@ for error_class in HTTP_STATUS:
 def health() -> dict:
     return {"status": "ok", "standards_version": settings()["app"]["standards_version"]}
 
+
+# Mounted last so /api routes take priority. html=True serves web/index.html at "/".
+app.mount("/", StaticFiles(directory=ROOT / "web", html=True), name="web")

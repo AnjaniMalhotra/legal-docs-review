@@ -1,0 +1,83 @@
+/* Shared components: intake form, dropzone, status line, status pills, risk band. */
+.intake { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; margin-bottom: 20px; }
+.intake label { display: grid; gap: 6px; font-size: .78rem; font-weight: 600; color: var(--text); }
+.intake .span-2 { grid-column: span 2; }
+
+.dropzone {
+  display: grid; justify-items: center; gap: 4px; padding: 26px 16px; text-align: center; cursor: pointer;
+  border: 1.5px dashed var(--line-strong); border-radius: 12px; background: var(--sunken);
+  transition: border-color .15s, background .15s;
+}
+.dropzone svg { width: 26px; height: 26px; margin-bottom: 6px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.dropzone strong { color: var(--ink); }
+.dropzone span { font-size: .8rem; color: var(--muted); }
+.dropzone:hover, .dropzone.is-over { border-color: var(--accent); background: var(--accent-soft); }
+
+.status { margin: 12px 0 0; font-size: .82rem; color: var(--muted); }
+.status:empty { display: none; }
+.status.is-error { color: var(--red); }
+.status.is-busy::before {
+  content: ""; display: inline-block; width: 11px; height: 11px; margin-right: 8px; vertical-align: -1px;
+  border: 2px solid var(--line-strong); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Status pills: s-<status-slug>. Severity groups share colours. */
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px; border-radius: 999px;
+  font-size: .72rem; font-weight: 600; white-space: nowrap;
+}
+.pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.s-conflicting, .s-missing { background: var(--red-bg); color: var(--red); }
+.s-partial { background: var(--amber-bg); color: var(--amber); }
+.s-compliant, .s-silent-ok, .s-n-a { background: var(--green-bg); color: var(--green); }
+.s-needs-review { background: var(--blue-bg); color: var(--blue); }
+
+.band { display: inline-flex; height: 24px; align-items: center; padding: 0 10px; border-radius: 6px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.b-low { background: var(--green-bg); color: var(--green); }
+.b-medium { background: var(--amber-bg); color: var(--amber); }
+.b-high { background: var(--red-bg); color: var(--red); }
+.b-critical { background: var(--red); color: #fff; }
+
+@media (max-width: 600px) { .intake { grid-template-columns: 1fr; } .intake .span-2 { grid-column: auto; } }
+
+/* Contract Q&A: a floating assistant docked bottom-right; it lifts above the approval bar when shown. */
+.chat-launcher {
+  position: fixed; right: 24px; bottom: 24px; z-index: 40; display: inline-flex; align-items: center; gap: 8px;
+  height: 44px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--ink); color: #fff;
+  font-weight: 600; font-size: .86rem; box-shadow: var(--shadow-lg); cursor: pointer;
+}
+.chat-launcher svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+.chat-launcher:hover { background: var(--accent); }
+
+.chat-panel {
+  position: fixed; right: 24px; bottom: 24px; z-index: 41; display: flex; flex-direction: column; overflow: hidden;
+  width: min(420px, calc(100vw - 32px)); height: min(600px, calc(100vh - 100px));
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow-lg);
+}
+.chat-panel__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+.chat-panel__head strong { display: block; color: var(--ink); }
+.chat-panel__head small { display: block; font-size: .76rem; color: var(--muted); }
+
+.chat-log { flex: 1; overflow-y: auto; display: grid; align-content: start; gap: 12px; padding: 18px; background: var(--sunken); }
+.chat-hint { display: grid; justify-items: start; gap: 8px; }
+.chat-hint span { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.chip { padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--surface);
+  font-size: .84rem; text-align: left; color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+
+.msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: .88rem; line-height: 1.55; }
+.msg--user { justify-self: end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+.msg--bot { background: var(--surface); border: 1px solid var(--line); color: var(--ink); border-bottom-left-radius: 4px; }
+.msg--pending { color: var(--muted); font-style: italic; }
+.msg--error { background: var(--red-bg); color: var(--red); }
+.cite { margin: 0 2px; padding: 1px 7px; border: 0; border-radius: 999px; background: var(--accent-soft);
+  font: 600 .74rem var(--ui); color: var(--accent); cursor: pointer; }
+.cite:hover { background: var(--accent); color: #fff; }
+
+.chat-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+
+/* While the approval bar is shown, the launcher shrinks to an icon in the margin above it. */
+body:has(#signoff:not([hidden])) .chat-launcher { bottom: 96px; width: 44px; padding: 0; justify-content: center; gap: 0; font-size: 0; }
+@media (max-width: 600px) { .chat-launcher, .chat-panel { right: 12px; bottom: 12px; } }
+@media print { .chat-panel, .chat-launcher { display: none !important; } }

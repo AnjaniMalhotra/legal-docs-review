@@ -1,0 +1,56 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P8. Owner: Legal Counsel with the Chief Financial Officer.
+
+id: P8
+title: Fees, Invoicing and Payment
+category: Commercial
+weight: 2
+critical: false
+if_silent: risk        # without payment terms, there is no enforceable due date or remedy for non-payment
+na_when: A free (unpaid) pilot.
+
+rationale: >
+  PayNest runs payroll on fixed monthly dates regardless of when the Client pays. Extended or
+  conditional payment terms convert PayNest into a source of working capital for the Client and
+  remove its leverage to suspend services for persistent non-payment.
+
+preferred: >
+  Invoices issued monthly in advance and payable within thirty (30) days of the invoice date;
+  interest on overdue amounts at the rate permitted by law; and a right for PayNest to suspend the
+  Services on written notice where undisputed amounts remain unpaid sixty (60) days after the due
+  date.
+
+fallback: >
+  Payment within thirty-one (31) to sixty (60) days of the invoice date, with the suspension right
+  preserved.
+
+walk_away: >
+  Payment terms exceeding sixty (60) days; payment conditional on the Client's satisfaction or
+  acceptance; or a right for the Client to withhold or set off payment indefinitely.
+
+standard_clause: >
+  "The Client shall pay each undisputed invoice within thirty (30) days of the invoice date.
+  Where any undisputed amount remains unpaid sixty (60) days after its due date, the Service
+  Provider may suspend the Services on not less than ten (10) Business Days' written notice."
+
+proposed_amendment: >
+  Reduce the payment term to thirty (30) days from the invoice date (fallback: sixty (60) days)
+  and include PayNest's right to suspend the Services for undisputed amounts outstanding beyond
+  sixty (60) days.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: Chief Financial Officer
+
+look_for: [payment, invoice, fees, due, days, withhold, set-off, late payment, interest]
+
+red_flags: [satisfaction of the client, client's satisfaction, withhold payment]   # walk-away phrases: tripwire escalates if the model misses them
+
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+  unit: "days (payment)"
+  pattern: '\(?(\d+)\)?\s*(?:business\s+)?days'
+  pick: max
+  bands:
+    - {max: 30, status: Compliant}
+    - {max: 60, status: Partial}
+    - {status: Conflicting}

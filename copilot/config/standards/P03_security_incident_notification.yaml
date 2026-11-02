@@ -1,0 +1,60 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P3. Owner: General Counsel with the Chief Information Security Officer.
+
+id: P3
+title: Security Incident Notification
+category: Data Protection
+weight: 5
+critical: true
+if_silent: ok          # PayNest's Incident Response Policy (24h) applies by default
+na_when: The agreement involves no live Client Personal Data (for example a pilot on synthetic data).
+
+rationale: >
+  PayNest's Incident Response Policy confirms and scopes a suspected incident within 24 hours.
+  An undefined or sub-12-hour deadline places PayNest in breach of contract from the moment an
+  investigation begins, and premature notice risks inaccurate statements to the Client
+  (cf. Air India / SITA, 2021, where affected-data details took weeks to establish).
+
+preferred: >
+  Notice to the Client without undue delay and in any event within twenty-four (24) hours of
+  PayNest confirming a Security Incident affecting Client Personal Data, followed by a written
+  incident report within seventy-two (72) hours describing the nature of the incident, categories
+  of data and data principals affected, and remedial measures.
+
+fallback: >
+  A fixed notification window of twelve (12) to less than twenty-four (24) hours from
+  confirmation, or twenty-four (24) hours from discovery rather than confirmation.
+
+walk_away: >
+  "Immediately", "forthwith", "without any delay" or any other undefined deadline; any window of
+  less than twelve (12) hours; or an obligation on PayNest to notify the Client's employees,
+  regulators or other third parties directly on the Client's behalf.
+
+standard_clause: >
+  "The Service Provider shall notify the Client without undue delay, and in any event within
+  twenty-four (24) hours of confirming a Security Incident affecting Client Personal Data, and
+  shall provide a written incident report within seventy-two (72) hours of such notification."
+
+red_flag_context: [security incident, data breach, personal data breach]   # red flags count only in these sentences
+
+proposed_amendment: >
+  Replace "immediately" with notification within twenty-four (24) hours of confirmation of a
+  Security Incident, with a written incident report to follow within seventy-two (72) hours.
+
+approval:
+  fallback: Legal Counsel with Chief Information Security Officer
+  walk_away: General Counsel
+
+look_for: [security incident, personal data breach, notify, notification, hours, immediately,
+           forthwith, without delay]
+
+red_flags: [immediately, forthwith, without any delay]   # walk-away phrases: tripwire escalates if the model misses them
+
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+  unit: "hours (notification window)"
+  pattern: '\(?(\d+)\)?\s*hours'
+  pick: min
+  bands:
+    - {max: 11, status: Conflicting}
+    - {max: 23, status: Partial}
+    - {status: Compliant}

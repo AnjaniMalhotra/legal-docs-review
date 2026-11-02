@@ -1,0 +1,22 @@
+{
+  "_note": "Golden labels for the 5 sample contracts. Pages confirmed against the built PDFs with grounding.locate_quote.",
+  "contracts": [
+    {"id": "carewell", "file": "sample_contracts/01_carewell_hospitals.pdf", "expected_score": 49, "expected_band": "High", "labels": {"P1": "Conflicting", "P2": "Partial", "P3": "Conflicting", "P4": "Partial", "P5": "Compliant", "P6": "Partial", "P7": "Compliant", "P8": "Partial", "P9": "Compliant", "P10": "Compliant"}},
+    {"id": "northstar", "file": "sample_contracts/02_northstar_bank.pdf", "expected_score": 43, "expected_band": "Medium", "labels": {"P1": "Partial", "P2": "Compliant", "P3": "Partial", "P4": "Compliant", "P5": "Conflicting", "P6": "Compliant", "P7": "Conflicting", "P8": "Partial", "P9": "Partial", "P10": "Partial"}},
+    {"id": "lexmore", "file": "sample_contracts/03_lexmore_associates.pdf", "expected_score": 3, "expected_band": "Low", "labels": {"P1": "Compliant", "P2": "Compliant", "P3": "Compliant", "P4": "Silent (OK)", "P5": "Silent (OK)", "P6": "Compliant", "P7": "Compliant", "P8": "Partial", "P9": "Compliant", "P10": "Compliant"}},
+    {"id": "brightretail", "file": "sample_contracts/04_brightretail_stores.pdf", "expected_score": 29, "expected_band": "High", "labels": {"P1": "Missing", "P2": "Silent (OK)", "P3": "Compliant", "P4": "Compliant", "P5": "Silent (OK)", "P6": "Compliant", "P7": "Compliant", "P8": "Missing", "P9": "Partial", "P10": "Missing"}},
+    {"id": "orbit", "file": "sample_contracts/05_orbit_analytics_pilot.pdf", "expected_score": 18, "expected_band": "Low", "labels": {"P1": "Compliant", "P2": "Partial", "P3": "N/A", "P4": "N/A", "P5": "N/A", "P6": "N/A", "P7": "Compliant", "P8": "Compliant", "P9": "Partial", "P10": "Compliant"}}
+  ],
+  "questions": [
+    {"contract": "carewell", "question": "What's our liability if there's a data breach?", "expected_answer": "Unlimited liability for any data breach (Clause 15.1).", "expected_pages": [6], "answerable": true},
+    {"contract": "carewell", "question": "How fast must we tell them about a breach?", "expected_answer": "Immediately upon becoming aware of a security incident (Clause 9.3).", "expected_pages": [5], "answerable": true},
+    {"contract": "carewell", "question": "How many days do we have to delete their data after exit?", "expected_answer": "Within fifteen days of termination or expiry (Clause 18.2).", "expected_pages": [7], "answerable": true},
+    {"contract": "northstar", "question": "When can the bank audit us?", "expected_answer": "At any time without prior notice.", "expected_pages": [5], "answerable": true},
+    {"contract": "northstar", "question": "Do we have to share our security reports with anyone?", "expected_answer": "Yes, with the bank's technology service providers on request.", "expected_pages": [6], "answerable": true},
+    {"contract": "lexmore", "question": "What uptime do we have to guarantee?", "expected_answer": "Not found in the document.", "expected_pages": [], "answerable": false},
+    {"contract": "lexmore", "question": "When must they pay our invoices?", "expected_answer": "Within 45 days.", "expected_pages": [3], "answerable": true},
+    {"contract": "brightretail", "question": "What is the cap on our liability?", "expected_answer": "Not found in the document.", "expected_pages": [], "answerable": false},
+    {"contract": "brightretail", "question": "Which court handles disputes?", "expected_answer": "Not found in the document.", "expected_pages": [], "answerable": false},
+    {"contract": "orbit", "question": "Will we receive real employee data during the pilot?", "expected_answer": "No, only synthetic test data supplied by the client.", "expected_pages": [3], "answerable": true}
+  ]
+}

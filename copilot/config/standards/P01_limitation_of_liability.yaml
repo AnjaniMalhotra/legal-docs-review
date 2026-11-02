@@ -1,0 +1,62 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P1. Owner: General Counsel. Review cycle: annual.
+
+id: P1
+title: Limitation of Liability
+category: Risk Allocation
+weight: 5
+critical: true
+if_silent: risk        # without an express cap, PayNest's exposure is not contractually limited
+na_when: Never. Every client agreement must allocate liability.
+
+rationale: >
+  A payroll outage or security incident affects every employee of a client at once, and claims
+  aggregate quickly (cf. Kronos/UKG, 2021). PayNest's professional indemnity and cyber insurance
+  are sized to a liability cap of twelve months' fees. Uncapped exposure on a single agreement can
+  exceed the lifetime value of the relationship and is not insurable.
+
+preferred: >
+  Each Party's aggregate liability arising out of or in connection with the Agreement is capped at
+  the Fees paid or payable in the twelve (12) months preceding the event giving rise to the claim.
+  Neither Party is liable for indirect, special or consequential loss, or for loss of profit,
+  revenue, goodwill or anticipated savings. Standard carve-outs (fraud, wilful misconduct, death or
+  personal injury caused by negligence) apply without limit.
+
+fallback: >
+  A separate, higher cap ("super-cap") for breach of the data protection and confidentiality
+  obligations, not exceeding twenty-four (24) months' Fees, with the general cap remaining at twelve
+  (12) months' Fees and the exclusion of indirect loss preserved.
+
+walk_away: >
+  Unlimited or uncapped liability (generally or for data breach); any cap exceeding twenty-four (24)
+  months' Fees; deletion of the exclusion of indirect and consequential loss; or liability for loss
+  of profit of the Client's own customers or employees.
+
+standard_clause: >
+  "Subject to Clause 14.3, the aggregate liability of each Party arising out of or in connection
+  with this Agreement, whether in contract, tort (including negligence), breach of statutory duty
+  or otherwise, shall not exceed the total Fees paid or payable in the twelve (12) months
+  immediately preceding the event giving rise to the claim."
+
+proposed_amendment: >
+  Delete the unlimited-liability wording and insert PayNest's standard cap of twelve (12) months'
+  Fees. If required to close, offer a data-protection super-cap of up to twenty-four (24) months'
+  Fees and retain the exclusion of indirect and consequential loss.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: General Counsel and Chief Financial Officer
+
+look_for: [limitation of liability, aggregate liability, shall not exceed, unlimited, uncapped,
+           consequential loss, indirect loss, notwithstanding]
+
+red_flags: [unlimited, uncapped, without limit, without any limit]   # walk-away phrases: tripwire escalates if the model misses them
+
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+  unit: "months of Fees (cap)"
+  pattern: '\(?(\d+)\)?\s*months'
+  pick: max
+  bands:
+    - {max: 12, status: Compliant}
+    - {max: 24, status: Partial}
+    - {status: Conflicting}

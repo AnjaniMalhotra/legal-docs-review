@@ -57,3 +57,29 @@ summary:                    # plain-English key-terms summary (separate from the
     - {name: Liability and indemnity, query: "limitation of liability, indemnify, insurance"}
     - {name: Termination and exit, query: "termination, convenience, return and deletion of data"}
     - {name: Governing law and disputes, query: "governing law, jurisdiction, courts, dispute resolution"}
+
+classifier:
+  json_mode: true           # ask the gateway for a JSON object response
+  max_retries: 1            # one retry if the JSON is invalid
+
+scoring:
+  gap_factors:
+    Compliant: 0
+    Partial: 0.5
+    Conflicting: 1
+    Missing: 1
+    Silent (OK): 0
+    Needs review: 1         # provisional worst case until a reviewer resolves it
+  excluded_statuses: [N/A]
+  bands:                    # upper bound (inclusive) -> band
+    - {max: 20, band: Low}
+    - {max: 45, band: Medium}
+    - {max: 70, band: High}
+    - {max: 100, band: Critical}
+  floor:
+    statuses: [Missing, Conflicting]
+    min_band: High
+
+gate:
+  bands: [High, Critical]
+  statuses: [Conflicting, Needs review]

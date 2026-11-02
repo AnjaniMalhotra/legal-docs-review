@@ -1,0 +1,45 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P10. Owner: Legal Counsel.
+
+id: P10
+title: Governing Law and Dispute Resolution
+category: Legal
+weight: 2
+critical: false
+if_silent: risk        # without a clause, forum and applicable law are open to dispute
+na_when: Never.
+
+rationale: >
+  PayNest is incorporated in Bengaluru and all its operations, data and personnel are in India.
+  Litigating or arbitrating abroad, or in a distant Indian forum, materially increases cost and
+  management time for a mid-size company.
+
+preferred: >
+  The Agreement is governed by the laws of India, and the courts at Bengaluru have exclusive
+  jurisdiction; or disputes are referred to arbitration under the Arbitration and Conciliation Act,
+  1996, seated in Bengaluru, before a sole arbitrator, in English.
+
+fallback: >
+  Indian law with arbitration or court jurisdiction seated elsewhere in India (for example Mumbai
+  or New Delhi).
+
+walk_away: >
+  Any foreign governing law, or a foreign court or arbitral seat.
+
+standard_clause: >
+  "This Agreement shall be governed by and construed in accordance with the laws of India. Subject
+  to Clause 20.2, the courts at Bengaluru shall have exclusive jurisdiction over any dispute
+  arising out of or in connection with this Agreement."
+
+proposed_amendment: >
+  Provide for Indian law with exclusive jurisdiction of the courts at Bengaluru, or arbitration
+  seated in Bengaluru under the Arbitration and Conciliation Act, 1996.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: General Counsel
+
+look_for: [governing law, jurisdiction, courts, arbitration, seat, venue, disputes,
+           dispute resolution]
+
+red_flags: [laws of singapore, laws of england, courts of london, new york]   # walk-away phrases: tripwire escalates if the model misses them

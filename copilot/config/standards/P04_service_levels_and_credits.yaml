@@ -1,0 +1,57 @@
+# PayNest Contracting Standards v1.0 — Client Agreements (Sell-Side)
+# Rule P4. Owner: Legal Counsel with the Head of Service Delivery.
+
+id: P4
+title: Service Levels and Service Credits
+category: Performance
+weight: 4
+critical: false
+if_silent: ok          # no contractual service level = PayNest's published targets apply
+na_when: There is no live production service (for example a pilot or proof of concept).
+
+rationale: >
+  PayNest operates its own data centres with an engineering target of 99.5% monthly availability,
+  excluding scheduled maintenance. Service credits are a liquidated, capped remedy; uncapped
+  penalties or damages layered on top of credits make every incident a litigation event.
+
+preferred: >
+  99.5% Availability measured monthly, excluding Scheduled Maintenance notified at least
+  seventy-two (72) hours in advance; service credits are the Client's sole and exclusive remedy
+  for failure to meet the Availability target and are capped at ten percent (10%) of the monthly
+  Fees.
+
+fallback: >
+  Availability of up to 99.9%, or a service-credit cap of up to twenty percent (20%) of the
+  monthly Fees, provided credits remain the sole and exclusive remedy.
+
+walk_away: >
+  Availability above 99.9%; uncapped penalties or liquidated damages; credits in addition to
+  damages and a right to terminate for a single failure; or penalties for payroll errors caused by
+  Client-supplied data or late approvals.
+
+standard_clause: >
+  "The Service Provider shall make the Platform available 99.5% of each calendar month, excluding
+  Scheduled Maintenance. Service Credits set out in Schedule 3 shall be the Client's sole and
+  exclusive remedy for any failure to meet the Availability target."
+
+proposed_amendment: >
+  Align the Availability target to 99.5% excluding Scheduled Maintenance, cap service credits at
+  ten percent (10%) of monthly Fees, and confirm credits are the sole and exclusive remedy.
+
+approval:
+  fallback: Legal Counsel
+  walk_away: General Counsel and Head of Service Delivery
+
+look_for: [service level, availability, uptime, service credits, penalty, downtime, sole remedy,
+           scheduled maintenance]
+
+red_flags: [99.99%, uncapped penalt, in addition to service credits]   # walk-away phrases: tripwire escalates if the model misses them
+
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+  unit: "% availability"
+  pattern: '(9\d(?:\.\d+)?)\s*%'
+  pick: max
+  bands:
+    - {max: 99.5, status: Compliant}
+    - {max: 99.9, status: Partial}
+    - {status: Conflicting}

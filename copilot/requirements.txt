@@ -14,6 +14,10 @@ chromadb>=0.5
 # Models (OpenAI-compatible client pointed at local Bifrost)
 openai>=1.40
 
+# Agent graph + persistent human gate
+langgraph>=0.4
+langgraph-checkpoint-sqlite>=2.0
+
 # Tracing (self-hosted Langfuse only)
 langfuse>=3.0
 

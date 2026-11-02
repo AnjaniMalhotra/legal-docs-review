@@ -1,0 +1,61 @@
+/* Layout: top bar, intake screen, single-column workspace (matter header, one tab bar, views), print. */
+.topbar {
+  position: sticky; top: 0; z-index: 30; height: var(--topbar);
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 28px;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+.brand__mark { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; background: var(--accent); color: #fff; font-size: .9rem; }
+.brand__app { padding-left: 12px; margin-left: 2px; border-left: 1px solid var(--line); font-weight: 500; color: var(--muted); }
+.topbar__right { display: flex; align-items: center; gap: 16px; font-size: .82rem; }
+.secure { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.secure i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+.counsel:not(:empty) { padding-left: 16px; border-left: 1px solid var(--line); color: var(--ink); font-weight: 600; }
+
+.intake-screen { min-height: calc(100vh - var(--topbar)); display: grid; place-items: center; padding: 40px 20px; }
+.intake-card { width: min(620px, 100%); padding: 40px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); }
+.intake-card h1 { font-size: 1.75rem; }
+.lede { color: var(--muted); margin-bottom: 26px; }
+.fineprint { margin: 18px 0 0; font-size: .76rem; color: var(--muted); text-align: center; }
+
+.workspace { width: min(1120px, 100%); margin: 0 auto; padding: 32px 28px 120px; }
+.matter { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.matter h1 { font-size: 1.7rem; margin-bottom: 4px; }
+.matter-meta { margin: 0; font-size: .84rem; color: var(--muted); }
+.matter__side { display: flex; align-items: center; gap: 10px; }
+.matter-status { margin-top: 14px; }
+
+.stage { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border-radius: 999px;
+  font-size: .78rem; font-weight: 600; background: var(--grey-bg); color: var(--text); }
+.stage::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.stage[data-stage="review"] { background: var(--amber-bg); color: var(--amber); }
+.stage[data-stage="approval"] { background: var(--red-bg); color: var(--red); }
+.stage[data-stage="approved"], .stage[data-stage="cleared"] { background: var(--green-bg); color: var(--green); }
+
+.tabs {
+  position: sticky; top: var(--topbar); z-index: 20; display: flex; align-items: center; gap: 4px;
+  margin: 26px 0 0; border-bottom: 1px solid var(--line-strong); background: var(--canvas); overflow-x: auto;
+}
+.tabs [role="tab"] {
+  height: 46px; padding: 0 14px; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  background: transparent; font-size: .88rem; font-weight: 600; color: var(--muted); cursor: pointer; white-space: nowrap;
+}
+.tabs [role="tab"]:hover { color: var(--ink); }
+.tabs [role="tab"][aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tabs .count:not(:empty) { margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: var(--red); color: #fff; font-size: .7rem; }
+.tabs__actions { margin-left: auto; display: flex; gap: 6px; padding-left: 12px; }
+.btn--sm { height: 32px; padding: 0 12px; font-size: .8rem; }
+.view { padding-top: 26px; }
+
+@media (max-width: 760px) {
+  .topbar { padding: 0 16px; } .secure, .brand__app { display: none; }
+  .workspace { padding: 20px 16px 100px; } .intake-card { padding: 28px 22px; }
+  .tabs__actions { display: none; }
+}
+
+@media print {
+  body { background: #fff; }
+  .topbar, .tabs, .matter__side, .filters, .approve-bar, .decision, .chat-launcher, .chat-panel, .memo__tools { display: none !important; }
+  .workspace { width: 100%; padding: 0; }
+  .view[hidden] { display: block !important; break-before: page; }
+}
