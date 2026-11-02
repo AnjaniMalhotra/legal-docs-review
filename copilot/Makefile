@@ -1,7 +1,7 @@
 # PayNest Contract Copilot — common commands (run natively; see README).
 RUN = ./scripts/run.sh
 
-.PHONY: install setup up gateway test lines smoke notebook purge
+.PHONY: install setup up gateway test lines smoke notebook evals purge
 
 install:          ## one-time: Python environment
 	python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
@@ -27,6 +27,9 @@ smoke:            ## one prompt per role
 
 notebook:         ## teaching notebooks (notebooks/) with the app's settings
 	$(RUN) jupyter lab notebooks
+
+evals:            ## golden-set evals; one contract: make evals ARGS="--contract lexmore"
+	$(RUN) python -m evals.run_evals $(ARGS)
 
 purge:            ## retention job
 	$(RUN) python scripts/purge_old_data.py

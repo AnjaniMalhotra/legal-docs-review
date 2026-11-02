@@ -21,6 +21,11 @@ langgraph-checkpoint-sqlite>=2.0
 # Tracing (self-hosted Langfuse only)
 langfuse>=3.0
 
+# Evals
+ragas>=0.2
+langchain-openai>=0.2
+langchain-community<0.4   # ragas 0.4 imports a module removed in langchain-community 0.4
+
 # Tests and notebooks
 pytest>=8.0
 jupyterlab>=4.0
