@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PayNest Contract Copilot</title>
-<link rel="stylesheet" href="css/deck.css?v=4">
-<link rel="stylesheet" href="css/demos.css?v=4">
+<link rel="stylesheet" href="css/deck.css?v=6">
+<link rel="stylesheet" href="css/demos.css?v=6">
+<link rel="stylesheet" href="css/specs.css?v=6">
 </head>
 <body>
 <!-- Icon set: inline, so the deck never fetches anything. -->
@@ -35,6 +36,10 @@
   <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="11" rx="1.5"/><path d="M2 19h20l-2-4H4z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="2.5"/><path d="M7 20h10M7 12.5h.01"/></symbol>
+  <symbol id="i-gpu" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="11" rx="1.5"/><circle cx="9" cy="11.5" r="3"/><circle cx="16" cy="11.5" r="2"/><path d="M5 17v3"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M12 3H5v7l10 10 6-6L11 4z"/><path d="M8 7h.01"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
 </svg>
 
@@ -272,9 +277,52 @@
     <div class="body" id="results"></div>
   </section>
 
-  <!-- 20 Close -->
+  <!-- 20 Hardware -->
+  <section class="slide" data-label="Hardware + pricing">
+    <div class="kicker"><span>§ 20</span>Hardware · what to buy</div>
+    <h2>Memory is the <em>limit</em>.</h2>
+    <div class="body hw">
+      <div class="hw-need reveal">
+        <div class="card hw-row"><div class="icon ok"><svg><use href="#i-chip"/></svg></div><div><b>16 GB+</b><span>Memory</span></div></div>
+        <div class="card hw-row"><div class="icon navy"><svg><use href="#i-bolt"/></svg></div><div><b>GPU</b><span>Apple or NVIDIA</span></div></div>
+        <div class="card hw-row"><div class="icon amber"><svg><use href="#i-db"/></svg></div><div><b>30 GB+</b><span>Free disk</span></div></div>
+      </div>
+      <div class="hw-buy reveal">
+        <div class="os-head"><span class="tag">Mac</span></div>
+        <div class="os-head"><span class="tag">Windows</span></div>
+        <div class="card buy"><div class="icon navy"><svg><use href="#i-box"/></svg></div><div><b>Mac mini M6</b><span>16 GB</span></div><div class="price">$899</div></div>
+        <div class="card buy"><div class="icon amber"><svg><use href="#i-laptop"/></svg></div><div><b>Lenovo LOQ 15</b><span>16 GB · RTX 5060</span></div><div class="price">~$999</div></div>
+        <div class="card buy"><div class="icon navy"><svg><use href="#i-laptop"/></svg></div><div><b>MacBook Air M5</b><span>16 GB</span></div><div class="price">$1,099</div></div>
+        <div class="card buy"><div class="icon amber"><svg><use href="#i-gpu"/></svg></div><div><b>HP Omen PC</b><span>16 GB · RTX 5060 Ti</span></div><div class="price">~$1,100</div></div>
+        <div class="card buy free"><div class="icon ok"><svg><use href="#i-gift"/></svg></div><div><b>One-time hardware cost</b><span>No subscriptions · no recurring costs · free software</span></div><div class="price">$0/mo</div></div>
+      </div>
+      <div class="spec-note">US prices, 2026, from retailers and press. Check before buying.</div>
+    </div>
+  </section>
+
+  <!-- 21 Models, storage, speed -->
+  <section class="slide" data-label="Models + speed">
+    <div class="kicker"><span>§ 21</span>Ollama · storage · speed</div>
+    <h2>Three models. <em>Minutes</em> per review.</h2>
+    <div class="body run">
+      <div class="run-models reveal">
+        <div class="card model"><div class="model-top"><span class="tag">Analyst</span><div class="model-size">4.7 GB</div></div><b>qwen2.5:7b-instruct</b><span>Summary · chat · review</span></div>
+        <div class="card model"><div class="model-top"><span class="tag">Judge</span><div class="model-size">4.9 GB</div></div><b>llama3.1:8b</b><span>Evals only</span></div>
+        <div class="card model"><div class="model-top"><span class="tag">Embed</span><div class="model-size">274 MB</div></div><b>nomic-embed-text</b><span>Uploads · searches</span></div>
+      </div>
+      <div class="run-tiles reveal">
+        <div class="card run-tile"><div class="top"><div class="icon navy"><svg><use href="#i-db"/></svg></div><b>~17 GB</b></div><span>Models 10 · Docker 6 · Python 1</span></div>
+        <div class="card run-tile"><div class="top"><div class="icon ok"><svg><use href="#i-chip"/></svg></div><b>16 GB</b></div><span>Memory</span></div>
+        <div class="card run-tile"><div class="top"><div class="icon amber"><svg><use href="#i-bolt"/></svg></div><b>GPU</b></div><span>Apple or NVIDIA</span></div>
+        <div class="card run-tile"><div class="top"><div class="icon"><svg><use href="#i-clock"/></svg></div><b>~1–2 min</b></div><span>One review (estimate)</span></div>
+      </div>
+      <div class="spec-note">Review time is an estimate for 16 GB + GPU.</div>
+    </div>
+  </section>
+
+  <!-- 22 Close -->
   <section class="slide" data-label="Takeaways" data-demo="close">
-    <div class="kicker"><span>§ 20</span>Takeaways</div>
+    <div class="kicker"><span>§ 22</span>Takeaways</div>
     <h2>Five ideas to take <em>home</em>.</h2>
     <div class="body" id="close"></div>
   </section>
@@ -282,21 +330,21 @@
   <div class="hint">← → navigate · O overview · F fullscreen</div>
   <nav class="nav">
     <button class="back" id="back">‹ Back</button>
-    <span class="count" id="count">1 / 20</span>
+    <span class="count" id="count">1 / 23</span>
     <button class="next" id="next">Next ›</button>
   </nav>
   <div class="overview" id="overview"><h3>ALL SLIDES · press O to close</h3><div class="ov-grid" id="ov-grid"></div></div>
 </div></div>
 
-<script src="js/data.js?v=4"></script>
-<script src="js/deck.js?v=4"></script>
-<script src="js/demo_airgap.js?v=4"></script>
-<script src="js/demo_ingest.js?v=4"></script>
-<script src="js/demo_standards.js?v=4"></script>
-<script src="js/demo_review.js?v=4"></script>
-<script src="js/demo_guards.js?v=4"></script>
-<script src="js/demo_score.js?v=4"></script>
-<script src="js/demo_gate.js?v=4"></script>
-<script src="js/demo_results.js?v=4"></script>
+<script src="js/data.js?v=6"></script>
+<script src="js/deck.js?v=6"></script>
+<script src="js/demo_airgap.js?v=6"></script>
+<script src="js/demo_ingest.js?v=6"></script>
+<script src="js/demo_standards.js?v=6"></script>
+<script src="js/demo_review.js?v=6"></script>
+<script src="js/demo_guards.js?v=6"></script>
+<script src="js/demo_score.js?v=6"></script>
+<script src="js/demo_gate.js?v=6"></script>
+<script src="js/demo_results.js?v=6"></script>
 </body>
 </html>

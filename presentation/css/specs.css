@@ -1,0 +1,32 @@
+/* Hardware and running-cost slides: icon cards with very little text. */
+.hw { display: grid; grid-template-columns: 340px 1fr; gap: 26px; }
+.hw-need { display: grid; gap: 16px; }
+.hw-row { display: flex; align-items: center; gap: 16px; padding: 12px 16px; }
+.hw-row .icon, .run-tile .icon { width: 60px; height: 60px; border-radius: 16px; }
+.hw-row .icon svg, .run-tile .icon svg { width: 32px; height: 32px; }
+.hw-row b { display: block; font-size: 30px; font-weight: 850; letter-spacing: -.02em; }
+.hw-row span { font-size: 16px; color: var(--ink-2); }
+.hw-buy { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr 1fr auto; gap: 12px 16px; }
+.os-head { line-height: 1; }
+.buy { display: flex; align-items: center; gap: 16px; padding: 12px 20px; }
+.buy b { display: block; font-size: 22px; font-weight: 800; }
+.buy span { font-size: 16px; color: var(--ink-2); }
+.buy .price { margin-left: auto; font: 800 30px var(--mono); letter-spacing: -.03em; color: var(--seal); white-space: nowrap; }
+.buy .price.small { font-size: 22px; }
+.free { grid-column: 1 / -1; background: var(--ok-soft); }
+.free .price { color: var(--ok); }
+
+.run { display: grid; grid-template-rows: 1fr 1fr; gap: 20px; }
+.run-models, .run-tiles { display: grid; gap: 18px; }
+.run-models { grid-template-columns: repeat(3, 1fr); }
+.run-tiles { grid-template-columns: repeat(4, 1fr); }
+.model { display: flex; flex-direction: column; justify-content: center; gap: 8px; padding: 14px 22px; }
+.model-top { display: flex; align-items: center; justify-content: space-between; }
+.model-size { font: 800 30px var(--mono); letter-spacing: -.03em; color: var(--seal); }
+.model b { font: 700 20px var(--mono); }
+.model > span { font-size: 17px; color: var(--ink-2); }
+.run-tile { display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 12px 18px; }
+.run-tile .top { display: flex; align-items: center; gap: 12px; }
+.run-tile b { font-size: 29px; font-weight: 850; letter-spacing: -.02em; white-space: nowrap; }
+.run-tile span { font-size: 16px; color: var(--ink-2); }
+.spec-note { position: absolute; left: 0; bottom: -28px; font: 12px var(--mono); color: var(--muted); }
