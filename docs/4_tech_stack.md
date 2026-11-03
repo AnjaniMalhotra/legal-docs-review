@@ -22,15 +22,14 @@ What each tool does, why it was chosen, and where to find it in the code. Every 
 
 ```bash
 cd copilot
-make install   # Python environment (.venv)
-make setup     # pull the 3 models: the only step that uses the internet
-make up        # → http://localhost:8000
-make gateway   # optional: Bifrost + Langfuse in Docker (then set SETTINGS_PROFILE=gateway in .env.local)
-make test      # unit tests, about 1 second, no models needed
+make up       # start every service in Docker → http://localhost:8000
+make setup    # one-time, after make up: pull the 3 models
+make down     # stop every service
+make test     # unit tests, no models needed
 make evals     # run the sample contracts against the answer key
 ```
 
-Ollama runs natively (Docker on a Mac cannot use the GPU); Bifrost and Langfuse run in Docker.
+Everything runs in Docker from `docker-compose.yml`. Docker on a Mac cannot use the GPU, so models run on the CPU there.
 
 ## 3. Where everything lives
 
@@ -48,8 +47,10 @@ copilot/
   evals/         answer key (golden_set.json) · runner · metrics + Ragas
   tests/         unit tests
   sample_contracts/  synthetic contract PDFs
+  Dockerfile     builds the app image · .dockerignore keeps secrets and contracts out
 policies/        PayNest Contracting Standards (generated from config/standards)
-infra/           Bifrost and Langfuse (Docker)
+docker-compose.yml  starts every service
+infra/           Bifrost and Langfuse config
 ```
 
 ## 4. Walkthrough: uploading a contract

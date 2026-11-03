@@ -20,31 +20,19 @@ lawyer sign off the risky findings, and issue the Issues List for negotiation.
 | API | FastAPI (`app/api/`) |
 | Workflow | LangGraph review graph with a SQLite checkpointer (human gate) |
 | Retrieval | Chroma (in-process), clause-level chunks with page numbers, hybrid re-ranking |
-| Models | Ollama, native on the Mac (uses the GPU): `analyst` Qwen 2.5 7B · `judge` Llama 3.1 8B · `embed` nomic-embed-text |
-| Gateway (Option B) | Bifrost in Docker: one OpenAI-compatible endpoint, model allowlist |
-| Tracing (Option B) | Langfuse, self-hosted in Docker |
+| Models | Ollama in Docker (CPU only on a Mac): `analyst` Qwen 2.5 7B · `judge` Llama 3.1 8B · `embed` nomic-embed-text |
+| Gateway | Bifrost in Docker: one OpenAI-compatible endpoint, model allowlist |
+| Tracing | Langfuse, self-hosted in Docker |
 | Evals | Plain-Python accuracy + Ragas (`evals/`) |
 
 ## First run
 
-Needs Python 3.11+, [Ollama](https://ollama.com) and about 8 GB of RAM free.
+Needs Docker and 16 GB of RAM. Create the secrets first: see [../SETUP.md](../SETUP.md).
 
 ```bash
-ollama serve &           # if the Ollama app is not already running
-make install             # Python environment (.venv)
-make setup               # pull the 3 models: the only step that uses the internet
-make up                  # → http://localhost:8000
-```
-
-## Option B: add the gateway and tracing
-
-Bifrost and Langfuse run in Docker; the app and Ollama stay native. One-time setup: [../infra/README.md](../infra/README.md).
-
-```bash
-cp .env.local.example .env.local   # SETTINGS_PROFILE=gateway, Bifrost URL, Langfuse keys
-make gateway                       # start Langfuse + Bifrost
-make up                            # same app, now through Bifrost and traced in Langfuse
-make smoke                         # one prompt per role: check it appears in Langfuse
+make up                  # start every service → http://localhost:8000
+make setup               # one-time: pull the 3 models
+make smoke               # one prompt per role: check it appears in Langfuse
 ```
 
 ## Everyday commands

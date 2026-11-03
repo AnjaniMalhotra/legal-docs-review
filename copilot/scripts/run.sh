@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-# Run the copilot natively (Ollama on the Mac uses the GPU). Option B: add Bifrost + Langfuse
-# from infra/ and set SETTINGS_PROFILE=gateway in .env.local.
-#   ./scripts/run.sh                          → app at http://localhost:8000
-#   ./scripts/run.sh python -m evals.run_evals  → any command with the same environment
-# Requires: `ollama serve` running and the models pulled (`make setup`).
+# Starts the copilot inside its container, or runs any command with the same environment.
+#   ./scripts/run.sh                            → app on port 8000
+#   ./scripts/run.sh python -m evals.run_evals  → any command
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -19,4 +17,4 @@ export PATH="$PWD/.venv/bin:$PATH"
 APP_PORT="${APP_PORT:-8000}"
 
 if [ $# -gt 0 ]; then exec "$@"; fi
-exec uvicorn app.main:app --host 127.0.0.1 --port "$APP_PORT"
+exec uvicorn app.main:app --host "${APP_HOST:-127.0.0.1}" --port "$APP_PORT"

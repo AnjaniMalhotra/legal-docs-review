@@ -20,20 +20,18 @@ optionally through the **Bifrost gateway**, with **Langfuse + Ragas** for observ
 | 6 | **The judge is from a different family** | The eval judge (Llama) is not from the classifier's family (Qwen), so the system never grades its own homework. |
 | 7 | **Fail loudly** | No fallback model. If the analyst fails, the user sees an error rather than a silently weaker answer. |
 
-## 2. How it runs (Option B)
+## 2. How it runs (full Docker)
 
 ```mermaid
 flowchart TB
     subgraph MAC[One machine · no internet after setup]
         direction TB
-        subgraph NATIVE[Native on the Mac]
-            UI[Browser UI<br/>HTML · CSS · JS]
+        UI[Browser UI<br/>HTML · CSS · JS]
+        subgraph DOCKER[Docker]
             APP[FastAPI app<br/>LangGraph review graph]
             CHROMA[(Chroma<br/>in-process vectors)]
             STD[[config/standards/*.yaml<br/>10 standards]]
-            OLL[Ollama · uses the GPU<br/>analyst Qwen 2.5 7B<br/>judge Llama 3.1 8B<br/>embed nomic-embed-text]
-        end
-        subgraph DOCKER[Docker]
+            OLL[Ollama · no published port<br/>analyst Qwen 2.5 7B<br/>judge Llama 3.1 8B<br/>embed nomic-embed-text]
             BIF[Bifrost gateway<br/>OpenAI-style endpoint<br/>model allowlist]
             LF[Langfuse<br/>web · worker · Postgres · ClickHouse · Redis · MinIO]
         end
@@ -46,9 +44,9 @@ flowchart TB
     end
 ```
 
-Without `.env.local` the app calls Ollama directly (same API, no tracing). With `SETTINGS_PROFILE=gateway`
-every call goes through Bifrost and appears in Langfuse. Ollama stays native because Docker on a Mac
-cannot use the Apple GPU.
+`docker-compose.yml` starts every box above except the browser. Every call goes through Bifrost and appears
+in Langfuse, and Ollama publishes no port, so nothing else can reach the models. Docker on a Mac cannot use
+the Apple GPU, so models run on the CPU there; on Linux with an NVIDIA GPU, turn on `gpus: all`.
 
 ## 3. The model roles
 

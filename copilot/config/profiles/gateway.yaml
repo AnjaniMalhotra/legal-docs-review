@@ -1,6 +1,5 @@
-# Gateway profile (Option B): the same models served THROUGH Bifrost (infra/bifrost) and traced
-# in Langfuse. Enable with SETTINGS_PROFILE=gateway and BIFROST_URL=http://127.0.0.1:8080/v1
-# (set in .env.local). Bifrost names models as provider/model.
+# Gateway profile: the models served THROUGH Bifrost (infra/bifrost) and traced in Langfuse.
+# docker-compose.yml turns it on with SETTINGS_PROFILE=gateway. Bifrost names models as provider/model.
 
 models:
   analyst:

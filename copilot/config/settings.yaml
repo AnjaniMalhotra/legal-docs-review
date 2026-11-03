@@ -9,8 +9,7 @@ app:
   max_upload_mb: 25
 
 # Role -> model map. The app asks for a ROLE; only this file names models.
-# By default requests go straight to Ollama (BIFROST_URL=http://localhost:11434/v1).
-# profiles/gateway.yaml routes the same models through Bifrost, traced in Langfuse.
+# profiles/gateway.yaml routes these models through Bifrost, traced in Langfuse (set in docker-compose.yml).
 # No fallbacks: a legal classification is never silently downgraded to another model.
 models:
   analyst:

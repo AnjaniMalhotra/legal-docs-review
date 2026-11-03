@@ -1,0 +1,12 @@
+# Keep secrets, confidential contracts and local tools out of the image.
+.env
+.env.local
+data/
+.venv*/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.db
+*.db-*
+.DS_Store

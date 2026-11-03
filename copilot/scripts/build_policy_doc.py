@@ -2,7 +2,7 @@
 
 The standards YAML in config/standards/ is what the app enforces. This script turns it into
 policies/PayNest_Contracting_Standards.md so lawyers and students read exactly the same rules.
-Run it after changing any standard:  .venv/bin/python scripts/build_policy_doc.py
+Run it after changing any standard:  make policy
 """
 import sys
 from pathlib import Path

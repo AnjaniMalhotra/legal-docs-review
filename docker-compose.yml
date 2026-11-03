@@ -1,0 +1,64 @@
+# Full Docker: every PayNest service from one file. Run from copilot/: make up
+# Every published port is bound to 127.0.0.1, so nothing is reachable from outside this machine.
+name: paynest
+
+include:
+  - infra/langfuse/docker-compose.yml   # Langfuse and its databases; secrets in infra/langfuse/.env
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-models:/root/.ollama
+    # No published port: only Bifrost can reach the models.
+    # Linux with an NVIDIA GPU: uncomment the next line. Docker on a Mac cannot use the Apple GPU.
+    # gpus: all
+
+  bifrost:
+    image: maximhq/bifrost:latest
+    env_file: infra/bifrost/.env
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ./infra/bifrost:/app/data       # config.json, plus logs that stay on this machine
+    depends_on:
+      - ollama
+
+  app:
+    build: copilot
+    env_file: copilot/.env.local        # Langfuse keys; the addresses below take priority over this file
+    environment:
+      SETTINGS_PROFILE: gateway
+      BIFROST_URL: http://bifrost:8080/v1
+      EMBED_BASE_URL: ""
+      LANGFUSE_HOST: http://langfuse-web:3000
+      APP_HOST: 0.0.0.0                 # listen inside the container; the port below stays local
+      APP_PORT: "8000"
+    ports:
+      - 127.0.0.1:8000:8000
+      - 127.0.0.1:8888:8888             # teaching notebooks (make notebook)
+    volumes:
+      - ./copilot/data:/app/data        # uploaded contracts stay outside the image
+      - ./copilot/notebooks:/app/notebooks
+      - ./copilot/config:/app/config:ro  # standards and settings
+      - ./policies:/policies            # make policy writes the policy document here
+    depends_on:
+      - bifrost
+      - langfuse-web
+
+  website:
+    image: nginx:alpine
+    ports:
+      - 127.0.0.1:5500:80
+    volumes:
+      - ./website:/usr/share/nginx/html:ro
+
+  presentation:
+    image: nginx:alpine
+    ports:
+      - 127.0.0.1:5600:80
+    volumes:
+      - ./presentation:/usr/share/nginx/html:ro
+
+volumes:
+  ollama-models:

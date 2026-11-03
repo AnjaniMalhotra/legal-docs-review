@@ -22,13 +22,14 @@ PayNest Technologies, its clients and its contracts are fictional, made for teac
 ## The stack
 
 Ollama (Qwen 2.5 7B, Llama 3.1 8B, nomic-embed-text) · Bifrost gateway · self-hosted Langfuse · LangGraph ·
-Chroma · FastAPI · plain HTML/CSS/JS · Ragas. Everything runs on one machine.
+Chroma · FastAPI · plain HTML/CSS/JS · Ragas. Everything runs in Docker on one machine.
 
 ## Folders
 
 ```
 copilot/       the app: code, settings, prompts, web UI, tests, evals, notebooks, sample contracts
-infra/         Bifrost and Langfuse (Docker)
+docker-compose.yml  starts every service
+infra/         Bifrost and Langfuse config
 docs/          supporting docs
 policies/      PayNest Contracting Standards (generated from copilot/config/standards/)
 presentation/  the teaching deck (published on GitHub Pages)

@@ -15,9 +15,10 @@ provider whose promise is *"your data never leaves PayNest"*, and this tool keep
 | `STEPS.md` | The 4 learning steps (branches `step-1-setup` … `step-4-evals`) | Each step has a notebook in `copilot/notebooks/` |
 | `docs/` | Supporting docs: company and clients, case studies, architecture, tech stack, glossary | Reference only |
 | `policies/` | PayNest Contracting Standards (company policy), generated from `copilot/config/standards/` | Do not edit by hand |
-| `infra/` | Option B: Bifrost + self-hosted Langfuse in Docker (app and Ollama stay native) | See `infra/README.md` |
+| `docker-compose.yml` | Full Docker: starts every service from one file | See `infra/README.md` |
+| `infra/` | Bifrost and self-hosted Langfuse config used by `docker-compose.yml` | See `infra/README.md` |
 | `website/` | PayNest marketing site (static HTML/CSS/JS) | Separate from the copilot |
-| `copilot/` | The product: FastAPI + HTML/CSS UI + LangGraph + Ollama (via Bifrost in Option B) | See `copilot/README.md` |
+| `copilot/` | The product: FastAPI + HTML/CSS UI + LangGraph + Ollama (via Bifrost) | See `copilot/README.md` |
 
 ## Golden rules (do not break)
 
@@ -40,11 +41,12 @@ provider whose promise is *"your data never leaves PayNest"*, and this tool keep
 ## Commands (run from `copilot/`)
 
 ```bash
-make install # one-time Python environment (.venv)
-make setup   # one-time model download with `ollama pull` (egress allowed only here)
-make up      # run the app natively → http://localhost:8000 (Ollama direct, or Bifrost if .env.local sets the gateway profile)
-make gateway # Option B: start Langfuse + Bifrost in Docker
-make test    # unit tests (.venv, no models)
+make up     # start every service in Docker → http://localhost:8000 (first run downloads images)
+make setup  # one-time model download into the Ollama container, after make up (egress allowed only for setup)
+make down   # stop every service
+make logs   # follow the app's log
+make policy # rebuild policies/ from config/standards/
+make test   # unit tests (no models)
 make smoke   # one prompt per role
 make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--skip-ragas"
 ```
@@ -53,7 +55,7 @@ make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--s
 
 | Change | Edit | Then |
 |---|---|---|
-| A standard, weight or `if_silent` | `config/standards/P*.yaml`, then `.venv/bin/python scripts/build_policy_doc.py` | Recompute `expected_score` in `evals/golden_set.json`; run tests |
+| A standard, weight or `if_silent` | `config/standards/P*.yaml`, then `make policy` | Recompute `expected_score` in `evals/golden_set.json`; run tests |
 | Bands, gap factors, floor, gate | `config/settings.yaml` → `scoring` / `gate` | Run `tests/test_scoring.py` |
 | Swap a model | `config/settings.yaml` → `models.<role>.model`, `config/profiles/gateway.yaml` **and** the `models` allowlist in `infra/bifrost/config.json` | `make setup` (pull), `make smoke` |
 | Prompt wording | `prompts/*.md` (`$placeholders`) | Run evals and compare |
@@ -86,7 +88,7 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 
 Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (61 passing).
 Contracting Standards v1.0: one YAML per provision in `copilot/config/standards/`. The app shows plain-English labels (OK / Acceptable / Not acceptable / Missing / Not mentioned (fine) / Doesn't apply / Needs a lawyer's check) over the fixed internal status codes; the outgoing Issues List keeps formal legal wording.
-Runs as Option B: app and Ollama native on the Mac (GPU), Bifrost + Langfuse in Docker via `infra/`; full-Docker packaging and voice removed.
+This branch runs everything in Docker from `docker-compose.yml`. Docker on a Mac has no GPU access, so models run on the CPU there; `main` keeps Option B (app and Ollama native).
 Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 5/5 risk bands, 0 risky clauses marked OK.
 Next: no-egress check (Wi-Fi off); Bifrost allowlist test; a held-out set of new contracts run once (no tuning on it).
 Open: demo machine specs, deadline, judge at review time.

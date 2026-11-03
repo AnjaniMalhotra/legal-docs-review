@@ -1,42 +1,29 @@
-# Local infrastructure: Bifrost + Langfuse
+# Local infrastructure: full Docker
 
-The app and Ollama run natively (Ollama uses the Mac GPU); Bifrost and Langfuse run in Docker (Colima).
+Every service runs in Docker from `../docker-compose.yml`. Start it from `copilot/` with `make up`.
 
 ```
-app (localhost:8000) ──> Bifrost (127.0.0.1:8080) ──> Ollama on the Mac (host.docker.internal:11434)
+app (localhost:8000) ──> Bifrost (localhost:8080) ──> Ollama (no published port)
         │                        │
-        └──── OTel traces ───────┴──> Langfuse (127.0.0.1:3000)  [Postgres, ClickHouse, Redis, MinIO, worker]
+        └──── OTel traces ───────┴──> Langfuse (localhost:3000)  [Postgres, ClickHouse, Redis, MinIO, worker]
+
+website (localhost:5500)    presentation (localhost:5600)
 ```
 
-## Start
-
-```bash
-colima start --cpu 4 --memory 4 --disk 40
-cd infra/langfuse && docker compose up -d                 # official compose file; secrets in .env
-docker start paynest-bifrost                                 # created once, see "Bifrost container" below
-ollama serve &                                               # if not already running
-cd ../../copilot && make up                                # loads copilot/.env.local (gateway profile)
-```
+Inside Docker the services find each other by name: `bifrost`, `ollama`, `langfuse-web`.
 
 Langfuse UI: http://localhost:3000. Login email and password are in `infra/langfuse/.env`
-(`LANGFUSE_INIT_USER_EMAIL` / `LANGFUSE_INIT_USER_PASSWORD`); the organisation, project and API keys were
+(`LANGFUSE_INIT_USER_EMAIL` / `LANGFUSE_INIT_USER_PASSWORD`); the organisation, project and API keys are
 created automatically on first start.
 
-## Files (all local, never committed)
+## Files
 
 | File | Holds |
 |---|---|
+| `../docker-compose.yml` | Every service, with ports bound to 127.0.0.1. Includes Langfuse's file below |
+| `../copilot/Dockerfile` | Builds the app image; `.dockerignore` keeps secrets and contracts out |
 | `langfuse/docker-compose.yml` | Langfuse's official self-host compose, with web and MinIO ports bound to 127.0.0.1 |
-| `langfuse/.env` | Generated secrets, `TELEMETRY_ENABLED=false`, first-run org, project, keys and login |
-| `bifrost/config.json` | File-only config: Ollama provider (`allow_private_network` for the Mac host), `models` allowlist (analyst, judge, embed only; update it when a model is swapped), OTel export to Langfuse |
-| `bifrost/.env` | `LANGFUSE_OTEL_AUTH` (Basic auth for the OTel exporter) |
-| `../copilot/.env.local` | `SETTINGS_PROFILE=gateway`, Bifrost URL, Langfuse host and keys |
-
-## Bifrost container (created once)
-
-```bash
-cd infra/bifrost
-docker run -d --name paynest-bifrost --restart unless-stopped --network langfuse_default \
-  -p 127.0.0.1:8080:8080 --add-host=host.docker.internal:host-gateway --env-file .env \
-  -v "$PWD:/app/data" maximhq/bifrost:latest
-```
+| `langfuse/.env` | Generated secrets, `TELEMETRY_ENABLED=false`, first-run org, project, keys and login (never committed) |
+| `bifrost/config.json` | File-only config: Ollama provider, `models` allowlist (analyst, judge, embed only; update it when a model is swapped), OTel export to Langfuse |
+| `bifrost/.env` | `LANGFUSE_OTEL_AUTH`, Basic auth for the OTel exporter (never committed) |
+| `../copilot/.env.local` | Langfuse keys for the app (never committed) |
