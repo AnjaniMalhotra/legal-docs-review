@@ -1,6 +1,6 @@
 # Local infrastructure: full Docker
 
-Every service runs in Docker from `../docker-compose.yml`. Start it from `copilot/` with `make up`.
+Every service runs in Docker from `../docker-compose.yml`. Start it with `./start.sh` from the project root.
 
 ```
 app (localhost:8000) ──> Bifrost (localhost:8080) ──> Ollama (no published port)

@@ -1,4 +1,4 @@
-# Secrets: every machine creates its own (see SETUP.md, step 4)
+# Secrets: every machine creates its own (copilot/scripts/create_secrets.sh)
 .env
 .env.local
 **/.env

@@ -11,7 +11,7 @@ provider whose promise is *"your data never leaves PayNest"*, and this tool keep
 
 | Folder | What | Notes |
 |---|---|---|
-| `SETUP.md` | Step-by-step CLI setup for a new machine: tools, models, secrets, all services | For teammates |
+| `start.sh` | Sets up and starts everything: tools, secrets, services, models | `./start.sh` |
 | `STEPS.md` | The 4 learning steps (branches `step-1-setup` … `step-4-evals`) | Each step has a notebook in `copilot/notebooks/` |
 | `docs/` | Supporting docs: company and clients, case studies, architecture, tech stack, glossary | Reference only |
 | `policies/` | PayNest Contracting Standards (company policy), generated from `copilot/config/standards/` | Do not edit by hand |

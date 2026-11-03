@@ -47,6 +47,8 @@ stack doc and the teaching presentation (`presentation/`, also published on GitH
 
 ## Running a step
 
-Follow [SETUP.md](SETUP.md) once. It describes the finished project, so on earlier steps stop where the step ends:
+The step branches run natively, and each has its own `SETUP.md`. It describes the finished project, so on earlier steps stop where the step ends:
 step 1 after section 5 (there is no app yet), and step 2 at `/api/docs` (the web portal arrives in step 3).
 Notebooks start with `cd copilot && ./scripts/run.sh jupyter lab`.
+
+The `full-docker` branch has no `SETUP.md`: run `./start.sh` from the project root, and start notebooks with `make notebook`.

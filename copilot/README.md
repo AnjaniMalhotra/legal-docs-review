@@ -6,7 +6,7 @@ run a one-click review against the 10 standards, see issues highlighted in the c
 lawyer sign off the risky findings, and issue the Issues List for negotiation.
 **No byte leaves the machine.**
 
-**Setting it up on a new machine?** Follow [../SETUP.md](../SETUP.md): every command, from installing tools to tracing a review.
+**Setting it up on a new machine?** Run `./start.sh` from the project root.
 
 **Learning it step by step?** See [../STEPS.md](../STEPS.md): four branches, each with a notebook in `notebooks/` (`make notebook`).
 
@@ -27,11 +27,10 @@ lawyer sign off the risky findings, and issue the Issues List for negotiation.
 
 ## First run
 
-Needs Docker and 16 GB of RAM. Create the secrets first: see [../SETUP.md](../SETUP.md).
+Needs 16 GB of RAM.
 
 ```bash
-make up                  # start every service → http://localhost:8000
-make setup               # one-time: pull the 3 models
+../start.sh              # secrets, every service and the 3 models → http://localhost:8000
 make smoke               # one prompt per role: check it appears in Langfuse
 ```
 

@@ -22,8 +22,8 @@ What each tool does, why it was chosen, and where to find it in the code. Every 
 
 ```bash
 cd copilot
-make up       # start every service in Docker → http://localhost:8000
-make setup    # one-time, after make up: pull the 3 models
+../start.sh   # secrets, every service and the 3 models → http://localhost:8000
+make up       # after a code change: rebuild and restart
 make down     # stop every service
 make test     # unit tests, no models needed
 make evals     # run the sample contracts against the answer key
@@ -50,6 +50,7 @@ copilot/
   Dockerfile     builds the app image · .dockerignore keeps secrets and contracts out
 policies/        PayNest Contracting Standards (generated from config/standards)
 docker-compose.yml  starts every service
+start.sh         sets up and starts everything
 infra/           Bifrost and Langfuse config
 ```
 

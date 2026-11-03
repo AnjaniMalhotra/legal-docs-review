@@ -8,16 +8,24 @@ PayNest Technologies, its clients and its contracts are fictional, made for teac
 
 **Presentation:** https://anjanimalhotra.github.io/legal-docs-review/
 
-## Start here
+## Run it
+
+```bash
+./start.sh               # starts every portal
+docker compose down      # stops them
+```
+
+The first run downloads about 10 GB and needs the internet. Needs 16 GB of RAM.
+
+## Read more
 
 | | |
 |---|---|
-| Set it up on your machine | [SETUP.md](SETUP.md) |
 | Learn it in 4 steps (one branch and one notebook per step) | [STEPS.md](STEPS.md) |
 | The business and its clients | [docs/1_company_and_clients.md](docs/1_company_and_clients.md) |
-| The company policy the tool checks against | [policies/PayNest_Contracting_Standards.md](policies/PayNest_Contracting_Standards.md) (from step 3) |
-| How it works | [docs/3_architecture.md](docs/3_architecture.md) (from step 3) |
-| The tools and every file | [docs/4_tech_stack.md](docs/4_tech_stack.md) (step 4) |
+| The company policy the tool checks against | [policies/PayNest_Contracting_Standards.md](policies/PayNest_Contracting_Standards.md)  |
+| How it works | [docs/3_architecture.md](docs/3_architecture.md)  |
+| The tools and every file | [docs/4_tech_stack.md](docs/4_tech_stack.md)  |
 
 ## The stack
 
