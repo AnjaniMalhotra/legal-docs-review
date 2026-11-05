@@ -49,4 +49,6 @@ stack doc and the teaching presentation (`presentation/`, also published on GitH
 
 Follow [SETUP.md](SETUP.md) once. It describes the finished project, so on earlier steps stop where the step ends:
 step 1 after section 5 (there is no app yet), and step 2 at `/api/docs` (the web portal arrives in step 3).
-Notebooks start with `cd copilot && ./scripts/run.sh jupyter lab`.
+Notebooks live in `notebooks/` and start with `cd copilot && make notebook`.
+
+The finished project, packaged in Docker, is the `full-docker` branch: run `./start.sh` from its project root.

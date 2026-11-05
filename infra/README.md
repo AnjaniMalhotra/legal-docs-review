@@ -22,14 +22,16 @@ Langfuse UI: http://localhost:3000. Login email and password are in `infra/langf
 (`LANGFUSE_INIT_USER_EMAIL` / `LANGFUSE_INIT_USER_PASSWORD`); the organisation, project and API keys were
 created automatically on first start.
 
+Create every secret file once with `copilot/scripts/create_secrets.sh` (see SETUP.md, step 4).
+
 ## Files (all local, never committed)
 
 | File | Holds |
 |---|---|
 | `langfuse/docker-compose.yml` | Langfuse's official self-host compose, with web and MinIO ports bound to 127.0.0.1 |
 | `langfuse/.env` | Generated secrets, `TELEMETRY_ENABLED=false`, first-run org, project, keys and login |
-| `bifrost/config.json` | File-only config: Ollama provider (`allow_private_network` for the Mac host), `models` allowlist (analyst, judge, embed only; update it when a model is swapped), OTel export to Langfuse |
-| `bifrost/.env` | `LANGFUSE_OTEL_AUTH` (Basic auth for the OTel exporter) |
+| `bifrost/config.json` | Ollama provider (`host.docker.internal`, `allow_private_network` for the host), `models` allowlist (analyst, judge, embed only; update it when a model is swapped), OTel export to Langfuse, dashboard login (`admin`), and `enforce_auth_on_inference: false` so the app can call it without a key |
+| `bifrost/.env` | `LANGFUSE_OTEL_AUTH` (Basic auth for the OTel exporter) and `BIFROST_ADMIN_PASSWORD` (dashboard login) |
 | `../copilot/.env.local` | `SETTINGS_PROFILE=gateway`, Bifrost URL, Langfuse host and keys |
 
 ## Bifrost container (created once)

@@ -1,0 +1,407 @@
+# Demo copy of PayNest's 10 Contracting Standards, for these notebooks only. The notebooks read nothing from copilot/.
+- id: P1
+  title: Limitation of Liability
+  category: Risk Allocation
+  weight: 5
+  critical: true
+  if_silent: risk
+  na_when: Never. Every client agreement must allocate liability.
+  preferred: Each Party's aggregate liability arising out of or in connection with the Agreement is capped at the
+    Fees paid or payable in the twelve (12) months preceding the event giving rise to the claim. Neither Party is
+    liable for indirect, special or consequential loss, or for loss of profit, revenue, goodwill or anticipated
+    savings. Standard carve-outs (fraud, wilful misconduct, death or personal injury caused by negligence) apply
+    without limit.
+  fallback: A separate, higher cap ("super-cap") for breach of the data protection and confidentiality obligations,
+    not exceeding twenty-four (24) months' Fees, with the general cap remaining at twelve (12) months' Fees and
+    the exclusion of indirect loss preserved.
+  walk_away: Unlimited or uncapped liability (generally or for data breach); any cap exceeding twenty-four (24)
+    months' Fees; deletion of the exclusion of indirect and consequential loss; or liability for loss of profit
+    of the Client's own customers or employees.
+  proposed_amendment: Delete the unlimited-liability wording and insert PayNest's standard cap of twelve (12) months'
+    Fees. If required to close, offer a data-protection super-cap of up to twenty-four (24) months' Fees and retain
+    the exclusion of indirect and consequential loss.
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel and Chief Financial Officer
+  look_for:
+  - limitation of liability
+  - aggregate liability
+  - shall not exceed
+  - unlimited
+  - uncapped
+  - consequential loss
+  - indirect loss
+  - notwithstanding
+  red_flags:
+  - unlimited
+  - uncapped
+  - without limit
+  - without any limit
+  numeric_check:
+    unit: months of Fees (cap)
+    pattern: \(?(\d+)\)?\s*months
+    pick: max
+    bands:
+    - max: 12
+      status: Compliant
+    - max: 24
+      status: Partial
+    - status: Conflicting
+- id: P2
+  title: Indemnification
+  category: Risk Allocation
+  weight: 5
+  critical: true
+  if_silent: ok
+  na_when: Never.
+  preferred: Mutual indemnities limited to third-party claims to the extent caused by the indemnifying Party's proven
+    breach of the Agreement, negligence or wilful misconduct, subject to the limitation of liability, with customary
+    conduct-of-claims provisions (prompt notice, control of defence, reasonable co-operation, duty to mitigate).
+  fallback: A one-way indemnity from PayNest limited to named heads of claim (third-party intellectual property
+    infringement; data breach caused by PayNest's breach of its security obligations), capped at the data-protection
+    super-cap.
+  walk_away: Indemnity for "any and all claims" arising out of or relating to the Services regardless of fault;
+    uncapped indemnity; indemnity covering losses caused by the Client's own negligence, instructions or data; or
+    indemnity for regulatory fines levied on the Client.
+  proposed_amendment: Make the indemnity mutual and fault-based, limit it to third-party claims caused by the indemnifying
+    Party's breach, negligence or wilful misconduct, and subject it expressly to the limitation of liability.
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel
+  look_for:
+  - indemnify
+  - indemnification
+  - hold harmless
+  - defend
+  - any and all claims
+  - third-party claims
+  - losses arising
+  red_flags:
+  - any and all claims
+  - regardless of fault
+  - howsoever arising
+- id: P3
+  title: Security Incident Notification
+  category: Data Protection
+  weight: 5
+  critical: true
+  if_silent: ok
+  na_when: The agreement involves no live Client Personal Data (for example a pilot on synthetic data).
+  preferred: Notice to the Client without undue delay and in any event within twenty-four (24) hours of PayNest
+    confirming a Security Incident affecting Client Personal Data, followed by a written incident report within
+    seventy-two (72) hours describing the nature of the incident, categories of data and data principals affected,
+    and remedial measures.
+  fallback: A fixed notification window of twelve (12) to less than twenty-four (24) hours from confirmation, or
+    twenty-four (24) hours from discovery rather than confirmation.
+  walk_away: '"Immediately", "forthwith", "without any delay" or any other undefined deadline; any window of less
+    than twelve (12) hours; or an obligation on PayNest to notify the Client''s employees, regulators or other third
+    parties directly on the Client''s behalf.'
+  proposed_amendment: Replace "immediately" with notification within twenty-four (24) hours of confirmation of a
+    Security Incident, with a written incident report to follow within seventy-two (72) hours.
+  approval:
+    fallback: Legal Counsel with Chief Information Security Officer
+    walk_away: General Counsel
+  look_for:
+  - security incident
+  - personal data breach
+  - notify
+  - notification
+  - hours
+  - immediately
+  - forthwith
+  - without delay
+  red_flags:
+  - immediately
+  - forthwith
+  - without any delay
+  red_flag_context:
+  - security incident
+  - data breach
+  - personal data breach
+  numeric_check:
+    unit: hours (notification window)
+    pattern: \(?(\d+)\)?\s*hours
+    pick: min
+    bands:
+    - max: 11
+      status: Conflicting
+    - max: 23
+      status: Partial
+    - status: Compliant
+- id: P4
+  title: Service Levels and Service Credits
+  category: Performance
+  weight: 4
+  critical: false
+  if_silent: ok
+  na_when: There is no live production service (for example a pilot or proof of concept).
+  preferred: 99.5% Availability measured monthly, excluding Scheduled Maintenance notified at least seventy-two
+    (72) hours in advance; service credits are the Client's sole and exclusive remedy for failure to meet the Availability
+    target and are capped at ten percent (10%) of the monthly Fees.
+  fallback: Availability of up to 99.9%, or a service-credit cap of up to twenty percent (20%) of the monthly Fees,
+    provided credits remain the sole and exclusive remedy.
+  walk_away: Availability above 99.9%; uncapped penalties or liquidated damages; credits in addition to damages
+    and a right to terminate for a single failure; or penalties for payroll errors caused by Client-supplied data
+    or late approvals.
+  proposed_amendment: Align the Availability target to 99.5% excluding Scheduled Maintenance, cap service credits
+    at ten percent (10%) of monthly Fees, and confirm credits are the sole and exclusive remedy.
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel and Head of Service Delivery
+  look_for:
+  - service level
+  - availability
+  - uptime
+  - service credits
+  - penalty
+  - downtime
+  - sole remedy
+  - scheduled maintenance
+  red_flags:
+  - 99.99%
+  - uncapped penalt
+  - in addition to service credits
+  numeric_check:
+    unit: '% availability'
+    pattern: (9\d(?:\.\d+)?)\s*%
+    pick: max
+    bands:
+    - max: 99.5
+      status: Compliant
+    - max: 99.9
+      status: Partial
+    - status: Conflicting
+- id: P5
+  title: Audit and Inspection Rights
+  category: Data Protection
+  weight: 3
+  critical: false
+  if_silent: ok
+  na_when: The agreement involves no live Client Personal Data.
+  preferred: On-site audit no more than once in any twelve (12) month period, on not less than thirty (30) days'
+    written notice, during business hours, at the Client's cost, by an auditor bound by confidentiality who is not
+    a competitor of PayNest; or, at PayNest's election, provision of its current ISO/IEC 27001 certificate and most
+    recent independent audit report in lieu.
+  fallback: Up to two (2) audits in any twelve (12) month period, or a notice period of not less than fifteen (15)
+    days, with all other preferred conditions retained.
+  walk_away: Unannounced or "at any time" audits; unlimited frequency; audits by a competitor of PayNest; or access
+    to premises, systems or records holding the data of PayNest's other clients.
+  proposed_amendment: Limit audits to once in any twelve (12) month period on thirty (30) days' written notice,
+    during business hours, and offer PayNest's ISO/IEC 27001 certificate and annual audit report in lieu.
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel and Chief Information Security Officer
+  look_for:
+  - audit
+  - inspection
+  - inspect
+  - on-site
+  - access to premises
+  - records
+  - auditor
+  - regulator
+  red_flags:
+  - at any time
+  - without notice
+  - without prior notice
+  - unannounced
+  numeric_check:
+    unit: days' notice (audit)
+    pattern: \(?(\d+)\)?\s*days\W*(?:prior\s+)?(?:written\s+)?notice
+    pick: min
+    bands:
+    - max: 14
+      status: Conflicting
+    - max: 29
+      status: Partial
+    - status: Compliant
+- id: P6
+  title: Return and Deletion of Client Data
+  category: Data Protection
+  weight: 3
+  critical: false
+  if_silent: ok
+  na_when: The agreement involves no live Client Personal Data.
+  preferred: On termination or expiry, PayNest returns Client Data in a standard, machine-readable format and deletes
+    it from production systems within thirty (30) days, with backup copies purged in the next scheduled rotation;
+    a certificate of deletion is provided on written request. Statutory records may be retained for the period required
+    by applicable law.
+  fallback: Return and deletion within eight (8) to twenty-nine (29) days of termination, with backup purge in the
+    next scheduled rotation preserved.
+  walk_away: Return and deletion within seven (7) days or less, or "immediately"; immediate deletion from all backup
+    media; or any right for the Client to access PayNest's databases or backup systems directly.
+  proposed_amendment: Extend the return-and-deletion period to thirty (30) days after termination, with backup copies
+    purged in the next scheduled rotation and a certificate of deletion on written request.
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel and Chief Information Security Officer
+  look_for:
+  - return of data
+  - deletion
+  - delete
+  - destruction
+  - termination assistance
+  - exit
+  - backups
+  - certificate of deletion
+  red_flags:
+  - immediately upon termination
+  - direct access to
+  numeric_check:
+    unit: days (return and deletion)
+    pattern: \(?(\d+)\)?\s*(?:business\s+)?days
+    pick: min
+    bands:
+    - max: 7
+      status: Conflicting
+    - max: 29
+      status: Partial
+    - status: Compliant
+- id: P7
+  title: Confidentiality
+  category: Information Protection
+  weight: 4
+  critical: false
+  if_silent: risk
+  na_when: Never.
+  preferred: Mutual confidentiality obligations covering each Party's Confidential Information, including PayNest's
+    pricing, platform architecture and security documentation, with customary exclusions (public domain, independently
+    developed, lawfully received, compelled by law) and survival of not less than three (3) years after termination
+    or expiry.
+  fallback: One-way confidentiality protecting only the Client's information, provided that PayNest's security documentation
+    is protected by a separate non-disclosure agreement referenced in the Agreement.
+  walk_away: Any obligation on PayNest to disclose Client Data, employee data, security assessments or audit reports
+    to the Client's other service providers or third parties; or any right for the Client to publish or onward-share
+    PayNest's security reports.
+  proposed_amendment: Make confidentiality mutual, extend protection to PayNest's security documentation, and delete
+    any obligation to share data or security reports with the Client's third-party providers.
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel
+  look_for:
+  - confidential information
+  - confidentiality
+  - non-disclosure
+  - disclose
+  - share with
+  - third parties
+  - service providers
+  - survive
+  red_flags:
+  - service providers on request
+  - publish
+- id: P8
+  title: Fees, Invoicing and Payment
+  category: Commercial
+  weight: 2
+  critical: false
+  if_silent: risk
+  na_when: A free (unpaid) pilot.
+  preferred: Invoices issued monthly in advance and payable within thirty (30) days of the invoice date; interest
+    on overdue amounts at the rate permitted by law; and a right for PayNest to suspend the Services on written
+    notice where undisputed amounts remain unpaid sixty (60) days after the due date.
+  fallback: Payment within thirty-one (31) to sixty (60) days of the invoice date, with the suspension right preserved.
+  walk_away: Payment terms exceeding sixty (60) days; payment conditional on the Client's satisfaction or acceptance;
+    or a right for the Client to withhold or set off payment indefinitely.
+  proposed_amendment: 'Reduce the payment term to thirty (30) days from the invoice date (fallback: sixty (60) days)
+    and include PayNest''s right to suspend the Services for undisputed amounts outstanding beyond sixty (60) days.'
+  approval:
+    fallback: Legal Counsel
+    walk_away: Chief Financial Officer
+  look_for:
+  - payment
+  - invoice
+  - fees
+  - due
+  - days
+  - withhold
+  - set-off
+  - late payment
+  - interest
+  red_flags:
+  - satisfaction of the client
+  - client's satisfaction
+  - withhold payment
+  numeric_check:
+    unit: days (payment)
+    pattern: \(?(\d+)\)?\s*(?:business\s+)?days
+    pick: max
+    bands:
+    - max: 30
+      status: Compliant
+    - max: 60
+      status: Partial
+    - status: Conflicting
+- id: P9
+  title: Term and Termination
+  category: Commercial
+  weight: 2
+  critical: false
+  if_silent: risk
+  na_when: Never.
+  preferred: Termination for convenience by the Client on not less than ninety (90) days' written notice; termination
+    by either Party for uncured material breach after thirty (30) days' notice; no refund of Fees for Services already
+    performed; and PayNest's right to suspend or terminate for persistent non-payment.
+  fallback: Termination for convenience on thirty (30) to eighty-nine (89) days' written notice, with all other
+    preferred conditions retained.
+  walk_away: Termination for convenience on less than thirty (30) days' notice; any refund of Fees for Services
+    already performed; or the absence of any PayNest right to suspend or terminate for non-payment.
+  proposed_amendment: 'Set termination for convenience at ninety (90) days'' written notice (fallback: thirty (30)
+    days), exclude refunds for Services performed, and preserve PayNest''s suspension right for non-payment.'
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel
+  look_for:
+  - termination
+  - terminate
+  - convenience
+  - notice period
+  - refund
+  - suspension
+  - expiry
+  - material breach
+  red_flags:
+  - full refund
+  - refund of all fees
+  numeric_check:
+    unit: days' notice (termination for convenience)
+    pattern: \(?(\d+)\)?\s*days\W*(?:prior\s+)?(?:written\s+)?notice
+    pick: min
+    bands:
+    - max: 29
+      status: Conflicting
+    - max: 89
+      status: Partial
+    - status: Compliant
+- id: P10
+  title: Governing Law and Dispute Resolution
+  category: Legal
+  weight: 2
+  critical: false
+  if_silent: risk
+  na_when: Never.
+  preferred: The Agreement is governed by the laws of India, and the courts at Bengaluru have exclusive jurisdiction;
+    or disputes are referred to arbitration under the Arbitration and Conciliation Act, 1996, seated in Bengaluru,
+    before a sole arbitrator, in English.
+  fallback: Indian law with arbitration or court jurisdiction seated elsewhere in India (for example Mumbai or New
+    Delhi).
+  walk_away: Any foreign governing law, or a foreign court or arbitral seat.
+  proposed_amendment: Provide for Indian law with exclusive jurisdiction of the courts at Bengaluru, or arbitration
+    seated in Bengaluru under the Arbitration and Conciliation Act, 1996.
+  approval:
+    fallback: Legal Counsel
+    walk_away: General Counsel
+  look_for:
+  - governing law
+  - jurisdiction
+  - courts
+  - arbitration
+  - seat
+  - venue
+  - disputes
+  - dispute resolution
+  red_flags:
+  - laws of singapore
+  - laws of england
+  - courts of london
+  - new york

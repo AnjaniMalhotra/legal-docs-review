@@ -34,6 +34,12 @@ retrieval:
   chat_candidates: 20       # semantic candidates re-ranked by the question's own words (hybrid retrieval)
   chat_opening_chunks: 2    # parties and recitals are always given to chat: names, addresses, headcount, dates
   min_term_length: 4        # question words shorter than this are ignored when re-ranking
+  question_synonyms:        # everyday word in a question -> the contract's wording, added to the search
+    breach: [security incident]
+    hack: [security incident]
+    uptime: [availability]
+    delete: [return and deletion]
+    pay: [invoice, payment]
   preamble_heading: Cover page, parties and recitals   # label for text before the first numbered clause
   top_k_rule: 6
   rule_candidates: 12       # semantic candidates re-ranked by the rule's look_for terms (hybrid retrieval)

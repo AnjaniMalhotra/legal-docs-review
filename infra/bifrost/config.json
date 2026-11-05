@@ -1,8 +1,9 @@
 {
   "$schema": "https://www.getbifrost.ai/schema",
-  "config_store": { "enabled": false },
+  "config_store": { "enabled": true, "type": "sqlite", "config": { "path": "./config.db" } },
   "logs_store": { "enabled": true, "type": "sqlite", "config": { "path": "./logs.db" } },
-  "client": { "drop_excess_requests": false },
+  "client": { "drop_excess_requests": false, "enforce_auth_on_inference": false },
+  "governance": { "auth_config": { "is_enabled": true, "admin_username": "admin", "admin_password": "env.BIFROST_ADMIN_PASSWORD" } },
   "providers": {
     "ollama": {
       "keys": [
@@ -11,7 +12,7 @@
       ],
       "network_config": {
         "base_url": "http://host.docker.internal:11434",
-        "default_request_timeout_in_seconds": 300,
+        "default_request_timeout_in_seconds": 900,
         "max_retries": 1,
         "allow_private_network": true
       }

@@ -22,8 +22,8 @@ test:             ## unit tests (no models needed)
 smoke:            ## one prompt per role
 	$(RUN) python scripts/smoke_test_roles.py
 
-notebook:         ## teaching notebooks (notebooks/) with the app's settings
-	$(RUN) jupyter lab notebooks
+notebook:         ## teaching notebooks (../notebooks): standalone, they import nothing from the app
+	$(RUN) jupyter lab ../notebooks
 
 evals:            ## golden-set evals; one contract: make evals ARGS="--contract lexmore"
 	$(RUN) python -m evals.run_evals $(ARGS)

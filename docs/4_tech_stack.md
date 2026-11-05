@@ -48,6 +48,7 @@ copilot/
   evals/         answer key (golden_set.json) · runner · metrics + Ragas
   tests/         unit tests
   sample_contracts/  synthetic contract PDFs
+notebooks/       standalone demos of the logic, with their own demo data and saved outputs
 policies/        PayNest Contracting Standards (generated from config/standards)
 infra/           Bifrost and Langfuse (Docker)
 ```
