@@ -2,10 +2,12 @@
 
 The app and Ollama run natively (Ollama uses the Mac GPU); Bifrost and Langfuse run in Docker (Colima).
 
-```
-app (localhost:8000) ──> Bifrost (127.0.0.1:8080) ──> Ollama on the Mac (host.docker.internal:11434)
-        │                        │
-        └──── OTel traces ───────┴──> Langfuse (127.0.0.1:3000)  [Postgres, ClickHouse, Redis, MinIO, worker]
+```mermaid
+flowchart LR
+    App["App<br/>localhost:8000"] -->|every model call| Bifrost["Bifrost gateway<br/>localhost:8080, in Docker"]
+    Bifrost --> Ollama["Ollama<br/>on your computer"]
+    App -.->|traces| Langfuse["Langfuse<br/>localhost:3000, in Docker"]
+    Bifrost -.->|traces| Langfuse
 ```
 
 ## Start

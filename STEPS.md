@@ -1,10 +1,14 @@
 # Learning Path: Build the Contract Copilot in 4 Steps
 
-The project is built up in four steps. Each one is a **branch** (and a matching **tag**) in this
+The project is built up in four steps, and a fifth branch (`full-docker`) packages the finished project. Each one is a **branch** (and a matching **tag**) in this
 repository, and each adds to the one before. Check out any step and you get a project that runs at that stage.
 
-```
-step-1-setup ──► step-2-rag ──► step-3-review-agent ──► step-4-evals (= main)
+```mermaid
+flowchart LR
+    S1["Step 1<br/>Setup<br/>a local AI model,<br/>a gateway, tracing"] --> S2["Step 2<br/>Documents + RAG<br/>search a PDF,<br/>answers with page numbers"]
+    S2 --> S3["Step 3<br/>Policies + review<br/>a risk score and<br/>a lawyer's sign-off"]
+    S3 --> S4["Step 4<br/>Evals<br/>prove it works<br/>with numbers"]
+    S4 --> S5["Final<br/>full-docker<br/>everything starts with<br/>one command"]
 ```
 
 | Step | Branch / tag | What you learn | Run it | Notebook |
@@ -19,7 +23,7 @@ step-1-setup ──► step-2-rag ──► step-3-review-agent ──► step-4
 ```bash
 git checkout step-2-rag                 # look at step 2
 git checkout -b my-work v2-rag          # start your own work from step 2
-git checkout main                       # back to the finished project
+git checkout full-docker               # the finished project, packaged in Docker
 ```
 
 After switching, reinstall the Python packages if the step added new ones:
