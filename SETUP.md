@@ -10,7 +10,7 @@ Langfuse tracing, the marketing website and the teaching deck. Copy each block i
 |---|---|---|
 | Contract Copilot (the app) | http://localhost:8000 | Step 6 |
 | Langfuse (traces of every step) | http://localhost:3000 | Step 5 |
-| Bifrost (model gateway and call log; login `admin`, password in `infra/bifrost/.env`) | http://localhost:8080 | Step 5 |
+| Bifrost (model gateway and call log; login in `credentials.md`) | http://localhost:8080 | Step 5 |
 | Ollama (the AI models) | http://localhost:11434 | Step 3 |
 | Marketing website | http://localhost:5500 | Step 7 |
 | Teaching presentation | http://localhost:5600 | Step 7 |
@@ -80,8 +80,8 @@ LANGFUSE_HOST=http://127.0.0.1:3000
 EOF
 ```
 
-The script never overwrites existing files, so it is safe to run again. The Langfuse login (email and password) is in
-`infra/langfuse/.env`, and the Bifrost login (user `admin`) is in `infra/bifrost/.env`. Write them down.
+The script never overwrites existing files, so it is safe to run again. The Langfuse and Bifrost logins are fixed and
+simple on purpose (this is a local teaching setup): they are in [credentials.md](credentials.md).
 
 ## 5. Start Docker, Langfuse and Bifrost
 
