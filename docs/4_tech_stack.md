@@ -19,7 +19,7 @@ What each tool does, why it was chosen, and where to find it in the code. Every 
 | Judge model | **Llama 3.1 8B** | Grades chat answers in evals (Ragas) | A different model family, so it doesn't grade its own work |
 | Embeddings | **nomic-embed-text** | Turns clauses and questions into vectors | Small, local, good retrieval |
 | Gateway | **Bifrost** (`infra/bifrost/`) | One door for every model call; only allowed models pass | The app never names a model; a refused model never runs |
-| Tracing | **Langfuse**, self-hosted (`infra/langfuse/`) | Shows every step, prompt and answer | Traces contain contract text, so they must stay local |
+| Tracing and prompts | **Langfuse**, self-hosted (`infra/langfuse/`) | Shows every step, prompt and answer; keeps prompt versions; tags traces with `guardrail:*` | Traces contain contract text, so they must stay local |
 | Evals | **Ragas** + plain Python (`copilot/evals/`) | Accuracy against an answer key; faithfulness of chat answers | Proves quality with numbers, not impressions |
 
 ## 2. How it runs
@@ -46,10 +46,10 @@ copilot/
   app/graph/     LangGraph: classify → score → human_gate → finalize
   app/api/       HTTP routes
   config/        settings.yaml (every number, role → model) · profiles/gateway.yaml · standards/P01–P10
-  prompts/       the instructions given to the model
+  prompts/       starting copy of the instructions given to the model (scripts/push_prompts.py loads them into Langfuse)
   web/           the browser UI
   evals/         answer key (golden_set.json) · runner · metrics + Ragas
-  tests/         unit tests
+  tests/         unit tests · test_red_team.py: five attacks on the real models
   sample_contracts/  synthetic contract PDFs
   Dockerfile     builds the app image · .dockerignore keeps secrets and contracts out
 notebooks/       standalone demos of the logic, with their own demo data and saved outputs

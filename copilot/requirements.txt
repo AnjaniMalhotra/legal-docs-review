@@ -19,7 +19,7 @@ langgraph>=0.4
 langgraph-checkpoint-sqlite>=2.0
 
 # Tracing (self-hosted Langfuse only)
-langfuse>=3.0
+langfuse>=5.0
 
 # Evals
 ragas>=0.2

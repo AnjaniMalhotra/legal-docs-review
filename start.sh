@@ -86,6 +86,9 @@ copilot/scripts/pull_models.sh
 
 wait_for "Contract Copilot" curl -sf http://127.0.0.1:8000/api/health
 
+step "Loading the prompts into Langfuse"
+docker compose exec -T app python scripts/push_prompts.py
+
 cat <<'EOF'
 
 ✓ Everything is running.

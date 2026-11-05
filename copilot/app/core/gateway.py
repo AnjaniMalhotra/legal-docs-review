@@ -11,7 +11,7 @@ from openai import OpenAI
 
 from app.core.config import env, settings
 from app.core.errors import GatewayError
-from app.core.tracing import traced
+from app.core.tracing import prompt_tag, traced
 
 
 @lru_cache
@@ -39,6 +39,8 @@ def chat(role: str, prompt: str, json_mode: bool = False) -> str:
     }
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
+    if prompt_tag():
+        kwargs["extra_headers"] = {"x-paynest-prompt": prompt_tag()}   # shows in the Bifrost logs
     try:
         resp = _client(env("BIFROST_URL")).chat.completions.create(**kwargs)
     except Exception as exc:  # surfaced loudly to the UI and the trace

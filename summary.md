@@ -17,6 +17,16 @@ Local and GitHub match for every branch below (checked after the last push). Rem
 
 The four tags were force-pushed to the new tips. This `summary.md` was committed and pushed on the user's request.
 
+## Added after that handoff (on `full-docker` only)
+
+`main` and the step branches do not have these yet, so `main` is now behind `full-docker`. `step-5-tests` (tag `v5-tests`) is step 4 plus `copilot/tests/step5/`.
+
+- **Prompts come from Langfuse.** `config.render` reads the `production` label; with Langfuse connected and no prompt available it raises `GatewayError`, with no file fallback. `prompts/*.md` is the starting copy; `scripts/push_prompts.py` (`make prompts`) loads it. `chat_answer` is at version 3 on this machine.
+- **Tags.** `tracing.guardrail()` adds `guardrail:red_flag`, `grounding`, `numeric_check`, `human_gate` and `not_found` to Langfuse traces. Each model call sends `x-paynest-prompt` (for example `chat_answer@v3`), which Bifrost logs through `logging_headers`.
+- **Red team.** `tests/test_red_team.py`: 4 of 5 attacks blocked on real models. Attack 4 (repeat your instructions) still leaks the prompt. Prompt version 2 stopped the leak but wrongly refused 4 of 10 real questions, so it was rejected. A small Python output check would fix it; the user has not decided.
+- **Deck.** Slides 24-37 are technical flow diagrams (`js/tech_*.js`, `css/tech.css`, `images/logos/`), and the colors are brighter. Logos are saved locally so the deck makes no outside requests. Slide 20 says 5 of 5 bands and slide 36 says 3 of 5: known and not yet resolved.
+- **This machine's app container** must be rebuilt after code changes; prompts change without a rebuild.
+
 ## How the branches relate (read before changing anything)
 
 The project is taught step by step, so the branches are cumulative. The rule is:
@@ -37,8 +47,8 @@ The project is taught step by step, so the branches are cumulative. The rule is:
 - **Steps 1 to 4 brought up to `full-docker`:** the teaching cleanup, chat synonyms, standalone notebooks at the repo root, Bifrost dashboard login, and no retention job. `GET /reviews/{id}` stays removed because `full-docker` dropped it.
 - **Step 1 now has the `embed` role**, because notebook `01` uses embeddings. `STEPS.md` says so.
 - **Bug fixed in `create_secrets.sh` (on `full-docker` too):** it never wrote `BIFROST_ADMIN_PASSWORD`, which `infra/bifrost/config.json` reads.
-- **`credentials.md`** (in every branch except `gh-pages`) lists the Langfuse and Bifrost logins. The script sets both passwords to `12345678`, simple on purpose (local teaching setup). It is 8 characters because Langfuse may reject shorter ones. **Not verified**, as nothing was running.
-- **This machine keeps its old random passwords.** `create_secrets.sh` never overwrites files, and the `.env` files were not read or changed. `credentials.md` applies to fresh setups only.
+- **`credentials.md`** (in every branch except `gh-pages`) lists the Langfuse and Bifrost logins. The script sets both passwords to `12345678`, simple on purpose (local teaching setup). It is 8 characters because Langfuse may reject shorter ones. On a fresh setup this is still untested.
+- **This machine now uses the `credentials.md` logins too**, tested with real sign-ins. Bifrost: `infra/bifrost/.env` plus a recreated container. Langfuse: `infra/langfuse/.env` plus the bcrypt hash in Postgres `users.password`, because `LANGFUSE_INIT_USER_PASSWORD` only applies on first setup. Langfuse data was kept.
 - **Docs:** `STEPS.md` names `full-docker` as the finished project and has a learning-path diagram. `README.md` has a how-it-fits-together diagram. `infra/README.md` has a Mermaid picture. `docs/3_architecture.md` has a five-box review diagram and an "In simple words" box, and `docs/4_tech_stack.md` has a similar box. The GPU/CPU contradiction in the tech-stack doc is fixed, and old accuracy numbers in `CLAUDE.md` and `copilot/README.md` now say 3 of 5.
 - **Deck:** `gh-pages` carries the current deck (hardware, models and speed slides, title fix). The user chose to **leave its results slide at 5 of 5 bands**.
 
@@ -70,7 +80,7 @@ Never use `./start.sh` or plain `docker compose up` here: they recreate the Dock
 | Langfuse | http://localhost:3000 |
 | Website, deck | http://localhost:5500, http://localhost:5600 (no login) |
 
-Logins for a fresh setup are in `credentials.md`. This machine's own logins are in the git-ignored `.env` files; rule 9 applies, so do not read or print them unless the user asks.
+Logins are in `credentials.md`, on this machine and on a fresh setup. The other secrets are in the git-ignored `.env` files; rule 9 applies, so do not read or print them unless the user asks.
 
 Tests: `cd copilot && .venv/Scripts/python.exe -m pytest -q` (64 passed on the last run, before this session). The venv is Python 3.13 and git-ignored.
 
@@ -123,7 +133,7 @@ Prompt lines saying the standard is not contract text, plus a classifier retry w
 6. `policy_service.py` says a reviewer can reload and resume, but no branch has a `GET /reviews/{id}` route or a UI for it. The wording in the docstring is still wrong.
 7. Test leftovers in `copilot/data/`, including one Lexmore review still awaiting a decision.
 8. From `CLAUDE.md`, still not done: no-egress check, held-out contract run (PDFs `06`-`15`, do not tune on them).
-9. The Langfuse login `12345678` (8 characters) is untested; if Langfuse rejects it, change `PW=` in `create_secrets.sh` on every branch.
+9. Langfuse accepts `12345678` at sign-in on this machine, but creating it on a fresh setup is untested; if first-run setup rejects it, change `PW=` in `create_secrets.sh` on every branch.
 
 ## Pitfalls
 

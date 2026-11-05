@@ -2,7 +2,7 @@
 COMPOSE = docker compose -f ../docker-compose.yml
 RUN = $(COMPOSE) exec app ./scripts/run.sh
 
-.PHONY: up setup down logs test smoke notebook evals policy
+.PHONY: up setup down logs test smoke notebook evals policy prompts red-team
 
 up:               ## start every service → http://localhost:8000
 	$(COMPOSE) up -d --build
@@ -27,6 +27,12 @@ notebook:         ## teaching notebooks → http://localhost:8888
 
 policy:           ## rebuild ../policies from config/standards
 	$(RUN) python scripts/build_policy_doc.py
+
+prompts:          ## load prompts/*.md into Langfuse (once, and after editing a prompt)
+	$(RUN) python scripts/push_prompts.py
+
+red-team:         ## five attacks on the real models
+	$(COMPOSE) exec -e RUN_RED_TEAM=1 app python -m pytest tests/test_red_team.py -v -s
 
 evals:            ## golden-set evals; one contract: make evals ARGS="--contract lexmore"
 	$(RUN) python -m evals.run_evals $(ARGS)

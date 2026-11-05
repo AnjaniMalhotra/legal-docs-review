@@ -1,7 +1,8 @@
 """Loads settings.yaml, the standards, prompt templates and environment variables.
 
-Every tunable value comes from config/, prompts/ or the environment.
-Prompts are files, not strings in code, so they can be tuned without code changes.
+Every tunable value comes from config/, Langfuse or the environment.
+Prompts are versioned in self-hosted Langfuse, so they can be tuned without code changes.
+prompts/*.md is the starting copy: scripts/push_prompts.py loads it into Langfuse.
 """
 import os
 from functools import lru_cache
@@ -9,6 +10,8 @@ from pathlib import Path
 from string import Template
 
 import yaml
+
+from app.core import tracing
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG_DIR = ROOT / "config"
@@ -63,15 +66,17 @@ def data_dir(*parts: str) -> Path:
     return path
 
 
-@lru_cache
-def _template(name: str) -> Template:
-    """Load a prompt file once and cache it."""
-    return Template((PROMPTS_DIR / f"{name}.md").read_text(encoding="utf-8"))
+def _prompt_text(name: str) -> str:
+    """The prompt from Langfuse, where its versions are kept. Only without Langfuse (unit tests): the local file."""
+    if tracing.ENABLED:
+        cfg = settings()["prompts"]
+        return tracing.fetch_prompt(name, cfg["label"], cfg["cache_ttl_s"])
+    return (PROMPTS_DIR / f"{name}.md").read_text(encoding="utf-8")
 
 
 def render(name: str, **values) -> str:
-    """Render prompts/<name>.md, filling $placeholders. Values are inserted as-is (never re-parsed)."""
-    return _template(name).safe_substitute(**{k: str(v) for k, v in values.items()})
+    """Fill a prompt's $placeholders. Values are inserted as-is (never re-parsed)."""
+    return Template(_prompt_text(name)).safe_substitute(**{k: str(v) for k, v in values.items()})
 
 
 def format_clauses(chunks: list[dict]) -> str:

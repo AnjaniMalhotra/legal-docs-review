@@ -4,7 +4,7 @@ Uses the analyst role. Replies "Not found in the document." when no clause answe
 """
 from app.core import doc_store, gateway
 from app.core.config import format_clauses, render
-from app.core.tracing import current_trace_id, tag_trace, traced
+from app.core.tracing import current_trace_id, guardrail, tag_trace, traced
 from app.rag import retriever
 
 NOT_FOUND = "Not found in the document."
@@ -18,6 +18,8 @@ def answer(doc_id: str, question: str) -> dict:
     prompt = render("chat_answer", clauses=format_clauses(chunks), question=question)
     text = gateway.chat("analyst", prompt) if chunks else NOT_FOUND
     tag_trace(doc_id=doc_id)
+    if text.lower().startswith(NOT_FOUND.lower().rstrip(".")):
+        guardrail("not_found")
     return {
         "answer": text,
         "found": not text.lower().startswith(NOT_FOUND.lower().rstrip(".")),

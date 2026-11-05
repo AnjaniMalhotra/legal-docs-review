@@ -27,6 +27,7 @@ ollama pull qwen2.5:7b-instruct && ollama pull llama3.1:8b && ollama pull nomic-
 docker compose -f docker-compose.yml -f docker-compose.native.yml up -d     # Bifrost, Langfuse, website, presentation
 docker compose -f docker-compose.yml up -d --no-deps app                    # the app, in Docker
 # or natively instead: copilot/scripts/run.sh  (settings from copilot/.env.local)
+docker compose exec -T app python scripts/push_prompts.py                   # load the prompts into Langfuse (first time)
 ```
 
 `bifrost/config.native.json` is `bifrost/config.json` with the native Ollama address. Change both when a model is swapped.

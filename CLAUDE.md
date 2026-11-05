@@ -25,7 +25,7 @@ provider whose promise is *"your data never leaves PayNest"*, and this tool keep
 
 1. **Max 120 lines per file.** Split by responsibility instead. A hook checks this after every edit.
 2. **No hardcoded tunables.** Numbers, thresholds, weights, bands, model names, prompts and URLs live in
-   `copilot/config/settings.yaml`, `copilot/config/standards/*.yaml`, `copilot/prompts/*.md` or `.env`.
+   `copilot/config/settings.yaml`, `copilot/config/standards/*.yaml`, Langfuse prompts (starting copy in `copilot/prompts/*.md`) or `.env`.
    Only the *status vocabulary* (`LLM_STATUSES`, `ALL_STATUSES` in `app/policy/scoring.py`) is fixed in code.
 3. **The app never names a model.** Call `gateway.chat(role, …)` / `gateway.embed(…)` with a role
    (`analyst`, `judge`, `embed`). All model traffic goes through `app/core/gateway.py` → Bifrost.
@@ -49,6 +49,8 @@ make logs   # follow the app's log
 make policy # rebuild policies/ from config/standards/
 make test   # unit tests (no models)
 make smoke   # one prompt per role
+make prompts # load prompts/*.md into Langfuse (once, and after editing a prompt)
+make red-team # five attacks on the real models
 make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--skip-ragas"
 ```
 
@@ -59,14 +61,14 @@ make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--s
 | A standard, weight or `if_silent` | `config/standards/P*.yaml`, then `make policy` | Recompute `expected_score` in `evals/golden_set.json`; run tests |
 | Bands, gap factors, floor, gate | `config/settings.yaml` → `scoring` / `gate` | Run `tests/test_scoring.py` |
 | Swap a model | `config/settings.yaml` → `models.<role>.model`, `config/profiles/gateway.yaml` **and** the `models` allowlist in `infra/bifrost/config.json` and `config.native.json` | `make setup` (pull), `make smoke` |
-| Prompt wording | `prompts/*.md` (`$placeholders`) | Run evals and compare |
+| Prompt wording | In Langfuse (new version, move the `production` label), or `prompts/*.md` then `make prompts` | Run `make red-team` and evals, and compare |
 | UI | `web/` (ES modules, no frameworks, no CDN) | Keep each file ≤120 lines |
 | A new term | `docs/glossary.md` | Alphabetical |
 
 ## Code map (`copilot/app/`)
 
 
-- `core/` `config` (settings + gateway profile, standards, prompt templates) · `gateway.py` (only door to models, no fallback) · `errors.py` (domain errors → HTTP codes, handled once in `main.py`) · `tracing.py` (Langfuse, no-op without keys) · `doc_store.py`
+- `core/` `config` (settings + gateway profile, standards, prompt templates) · `gateway.py` (only door to models, no fallback) · `errors.py` (domain errors → HTTP codes, handled once in `main.py`) · `tracing.py` (Langfuse: prompts by version, guardrail tags; no-op without keys) · `doc_store.py`
 - `ingest/` `ingest_service` (PDF text → `chunker` (clause headings + page) → `vector_store` (Chroma))
 - `rag/` `retriever` (hybrid for standards) · `answerer` (chat) · `summariser` (key-terms summary, one call, cached; sources attached by Python)
 - `policy/` `classifier` (strict JSON; retry with reason; unquoted N/A → Not found) · `grounding` (page-break aware) · `checks` (red-flag tripwire + numeric check; stricter only) · `scoring` · `review` (counsel decisions + audit) · `report` (Issues List)
@@ -87,7 +89,7 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 
 ## Status
 
-Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (64 passing).
+Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (69 passing, plus 5 red-team tests that need real models).
 Contracting Standards v1.0: one YAML per provision in `copilot/config/standards/`. The app shows plain-English labels (OK / Acceptable / Not acceptable / Missing / Not mentioned (fine) / Doesn't apply / Needs a lawyer's check) over the fixed internal status codes; the outgoing Issues List keeps formal legal wording.
 This branch runs everything in Docker from `docker-compose.yml`. Docker on a Mac has no GPU access, so models run on the CPU there; `main` keeps Option B (app and Ollama native). Where Docker cannot run the models, `docker-compose.native.yml` moves Ollama out of Docker.
 Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 3 of 5 risk bands right on the current test machine (5 of 5 on the first Mac run), 0 risky clauses marked OK.

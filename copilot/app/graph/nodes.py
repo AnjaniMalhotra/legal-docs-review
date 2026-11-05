@@ -6,7 +6,7 @@ from typing import TypedDict
 
 from langgraph.types import interrupt
 
-from app.core import doc_store
+from app.core import doc_store, tracing
 from app.core.config import standards
 from app.policy import checks, classifier, grounding, report, review, scoring
 from app.policy.classifier import ClassificationError
@@ -29,6 +29,17 @@ class ReviewState(TypedDict, total=False):
     report: dict
 
 
+def _record_guardrails(finding: dict) -> None:
+    """Show in Langfuse which Python guardrails changed this finding. Changes no result."""
+    rule_id = finding["rule_id"]
+    if finding.get("red_flag"):
+        tracing.guardrail("red_flag", rule=rule_id, phrase=finding["red_flag"])
+    if finding.get("grounded") is False:
+        tracing.guardrail("grounding", rule=rule_id)
+    if "numeric_value" in finding:
+        tracing.guardrail("numeric_check", rule=rule_id, value=finding["numeric_value"])
+
+
 def _classify_one(doc_id: str, rule: dict, pages: list[str]) -> dict:
     """Judge one standard, then verify its quote and numbers; a failed answer goes to a lawyer."""
     try:
@@ -38,8 +49,11 @@ def _classify_one(doc_id: str, rule: dict, pages: list[str]) -> dict:
                    "llm_status": "Not found", "status": scoring.NEEDS_REVIEW, "evidence_quote": "",
                    "page": None, "clause_ref": "", "grounded": False,
                    "reason": f"The AI could not give a clear answer for this standard, so a lawyer must check it. (Technical detail: {exc})"}
+        _record_guardrails(finding)
         return finding
-    return checks.numbers(grounding.apply_guard(finding, pages), rule)   # numbers only on verified quotes
+    finding = checks.numbers(grounding.apply_guard(finding, pages), rule)   # numbers only on verified quotes
+    _record_guardrails(finding)
+    return finding
 
 
 def classify_all(state: ReviewState) -> dict:
@@ -52,9 +66,12 @@ def classify_all(state: ReviewState) -> dict:
 def score(state: ReviewState) -> dict:
     """Step 2: compute the risk score and decide whether a lawyer must approve."""
     result = scoring.compute(state["findings"])
+    reasons = scoring.gate_reasons(state["findings"], result)
+    if reasons:
+        tracing.guardrail("human_gate", reasons=reasons)
     return {
         "system_result": result,
-        "gate_reasons": scoring.gate_reasons(state["findings"], result),
+        "gate_reasons": reasons,
         "flagged": scoring.flagged_rule_ids(state["findings"]),
     }
 

@@ -66,6 +66,10 @@ summary:                    # plain-English key-terms summary (separate from the
     - {name: Termination and exit, query: "termination, convenience, return and deletion of data"}
     - {name: Governing law and disputes, query: "governing law, jurisdiction, courts, dispute resolution"}
 
+prompts:                    # prompt text and versions live in self-hosted Langfuse (scripts/push_prompts.py)
+  label: production         # the version the app uses; move this label in Langfuse to change or roll back
+  cache_ttl_s: 60           # a change in Langfuse reaches the app within this time
+
 classifier:
   json_mode: true           # ask the gateway for a JSON object response
   max_retries: 1            # one retry if the JSON is invalid

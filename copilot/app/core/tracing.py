@@ -3,15 +3,19 @@
 If Langfuse keys are not set (e.g. in unit tests), every helper is a no-op,
 so the app still runs. Traces never leave the machine: LANGFUSE_HOST must be local.
 Tracing must never break the product: every call is wrapped and failures are logged.
-Works with Langfuse SDK v3 (update_current_trace) and v4/v5 (update_current_span).
+Prompts are the exception: with no prompt there is no safe answer, so that failure is raised.
 """
 import logging
 import os
+from contextvars import ContextVar
+
+from app.core.errors import GatewayError
 
 log = logging.getLogger(__name__)
+_prompt_tag: ContextVar[str] = ContextVar("prompt_tag", default="")
 
 try:
-    from langfuse import get_client, observe
+    from langfuse import get_client, observe, propagate_attributes
 
     ENABLED = bool(os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_HOST"))
 except ImportError:  # langfuse not installed
@@ -49,6 +53,34 @@ def tag_trace(**metadata) -> None:
     update = getattr(client, "update_current_trace", None) or getattr(client, "update_current_span", None)
     if update:
         _safe("tag", update, metadata=metadata)
+
+
+def fetch_prompt(name: str, label: str, cache_ttl_s: int) -> str:
+    """The labelled version of a prompt from Langfuse. No fallback: a missing prompt fails loudly."""
+    try:
+        prompt = get_client().get_prompt(name, label=label, type="text", cache_ttl_seconds=cache_ttl_s)
+    except Exception as exc:
+        raise GatewayError(f"Prompt '{name}' could not be loaded from Langfuse: {exc}") from exc
+    _prompt_tag.set(f"{name}@v{prompt.version}")
+    tag_trace(prompt=_prompt_tag.get())
+    return prompt.prompt
+
+
+def prompt_tag() -> str:
+    """Which prompt version is in use, e.g. chat_answer@v2. The gateway logs it with each call."""
+    return _prompt_tag.get()
+
+
+def guardrail(name: str, **details) -> None:
+    """Mark the trace when a guardrail fires, so Langfuse can filter on guardrail:<name>."""
+    if not ENABLED:
+        return
+
+    def record():
+        with propagate_attributes(tags=["guardrail", f"guardrail:{name}"]):
+            get_client().create_event(name=f"guardrail.{name}", metadata=details, level="WARNING")
+
+    _safe("guardrail", record)
 
 
 def score(trace_id: str | None, name: str, value: float, comment: str = "") -> None:
