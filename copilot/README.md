@@ -8,7 +8,7 @@ lawyer sign off the risky findings, and issue the Issues List for negotiation.
 
 **Setting it up on a new machine?** Run `./start.sh` from the project root.
 
-**Learning it step by step?** See [../STEPS.md](../STEPS.md): four branches, each with a notebook in `notebooks/` (`make notebook`).
+**Learning it step by step?** See [../STEPS.md](../STEPS.md): four branches, each with a standalone notebook in [../notebooks/](../notebooks/) (`make notebook`).
 
 **New to the code?** Read [../docs/4_tech_stack.md](../docs/4_tech_stack.md) (tools and every file) and [../docs/3_architecture.md](../docs/3_architecture.md) (how it works). The rules it checks: [../policies/PayNest_Contracting_Standards.md](../policies/PayNest_Contracting_Standards.md).
 
@@ -37,7 +37,7 @@ make smoke               # one prompt per role: check it appears in Langfuse
 ## Everyday commands
 
 ```bash
-make test                            # 56 unit tests, about 1 second, no models needed
+make test                            # 64 unit tests, a few seconds, no models needed
 make evals                           # all 5 sample contracts, printed one by one (~1-2 h on 8 GB)
 make evals ARGS="--contract lexmore" # one contract
 make evals ARGS="--skip-ragas"       # without the judge model
@@ -58,7 +58,7 @@ prompts/      prompt templates
 evals/        golden set, per-contract runner, metrics + Ragas
 scripts/      run, model pull, system check, policy document
 tests/        unit tests
-sample_contracts/  8 synthetic contract PDFs (5 in the answer key, 3 kept unseen)
+sample_contracts/  15 synthetic contract PDFs (5 in the answer key, 10 kept unseen)
 ```
 
 ## Known limits (honest list)

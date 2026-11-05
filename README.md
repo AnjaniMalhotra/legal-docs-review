@@ -35,7 +35,8 @@ Chroma · FastAPI · plain HTML/CSS/JS · Ragas. Everything runs in Docker on on
 ## Folders
 
 ```
-copilot/       the app: code, settings, prompts, web UI, tests, evals, notebooks, sample contracts
+copilot/       the app: code, settings, prompts, web UI, tests, evals, sample contracts
+notebooks/     standalone demos of the logic, with their own demo data and saved outputs
 docker-compose.yml  starts every service
 infra/         Bifrost and Langfuse config
 docs/          supporting docs

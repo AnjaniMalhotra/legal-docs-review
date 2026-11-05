@@ -16,6 +16,21 @@ Langfuse UI: http://localhost:3000. Login email and password are in `infra/langf
 (`LANGFUSE_INIT_USER_EMAIL` / `LANGFUSE_INIT_USER_PASSWORD`); the organisation, project and API keys are
 created automatically on first start.
 
+## When Docker cannot run the models
+
+Models need more memory than Docker may have, and Docker on Windows or Mac may not reach the GPU. On such a machine, run
+Ollama natively and leave the rest in Docker. The app can run in either place, and it reaches the models through Bifrost:
+
+```bash
+ollama pull qwen2.5:7b-instruct && ollama pull llama3.1:8b && ollama pull nomic-embed-text
+docker compose -f docker-compose.yml -f docker-compose.native.yml up -d     # Bifrost, Langfuse, website, presentation
+docker compose -f docker-compose.yml up -d --no-deps app                    # the app, in Docker
+# or natively instead: copilot/scripts/run.sh  (settings from copilot/.env.local)
+```
+
+`bifrost/config.native.json` is `bifrost/config.json` with the native Ollama address. Change both when a model is swapped.
+Do not use plain `docker compose up` or `./start.sh` on such a machine: they start the Docker Ollama again.
+
 ## Files
 
 | File | Holds |

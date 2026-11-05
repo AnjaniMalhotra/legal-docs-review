@@ -23,7 +23,7 @@ smoke:            ## one prompt per role
 	$(RUN) python scripts/smoke_test_roles.py
 
 notebook:         ## teaching notebooks → http://localhost:8888
-	$(RUN) jupyter lab notebooks --ip 0.0.0.0 --port 8888 --no-browser --allow-root
+	$(RUN) jupyter lab --notebook-dir=/notebooks --ip 0.0.0.0 --port 8888 --no-browser --allow-root
 
 policy:           ## rebuild ../policies from config/standards
 	$(RUN) python scripts/build_policy_doc.py

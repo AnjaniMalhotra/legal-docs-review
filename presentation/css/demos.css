@@ -32,9 +32,6 @@
 .typed::after { content: "▍"; color: var(--seal); animation: blink 1s infinite; } .typed.done::after { content: ""; }
 .redline-stamp { position: absolute; right: 30px; top: -22px; }
 
-/* 03 promise */
-.icon.big { width: 120px; height: 120px; border-radius: 30px; } .icon.big svg { width: 64px; height: 64px; }
-
 /* 04 features */
 .features { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 24px; }
 .feat { padding: 26px; display: flex; flex-direction: column; gap: 10px; transition: transform .2s; }
@@ -138,7 +135,6 @@
 .job .tick { width: 26px; height: 26px; border-radius: 50%; background: var(--ok); display: grid; place-items: center; transform: scale(0); transition: transform .3s cubic-bezier(.3,1.6,.5,1); }
 .job .tick svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 3; }
 .job.done { opacity: 1; border-color: var(--ink); background: var(--card); } .job.done .tick { transform: scale(1); }
-.job .tick::after { display: none; }
 
 /* 12 review */
 .rv-wrap { display: grid; grid-template-columns: 1fr 330px; gap: 22px; height: 100%; }

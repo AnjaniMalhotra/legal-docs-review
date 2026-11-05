@@ -23,10 +23,9 @@ Demos.gate = (() => {
   }
 
   function moveTo(k) {
-    const node = $(`#gt-${NODES[k][0]}`, root), g = $(".gt-graph", root);
+    const node = $(`#gt-${NODES[k][0]}`, root);
     $("#gt-token", root).style.left = `${node.offsetLeft + node.offsetWidth / 2 - 11}px`;
     $$(".gt-node", root).forEach((n, i) => n.classList.toggle("on", i === k));
-    void g;
   }
   function state(html) { $("#gt-state", root).innerHTML = html; }
   function statuses() {

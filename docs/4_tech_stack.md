@@ -48,6 +48,7 @@ copilot/
   tests/         unit tests
   sample_contracts/  synthetic contract PDFs
   Dockerfile     builds the app image · .dockerignore keeps secrets and contracts out
+notebooks/       standalone demos of the logic, with their own demo data and saved outputs
 policies/        PayNest Contracting Standards (generated from config/standards)
 docker-compose.yml  starts every service
 start.sh         sets up and starts everything

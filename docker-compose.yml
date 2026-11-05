@@ -39,7 +39,7 @@ services:
       - 127.0.0.1:8888:8888             # teaching notebooks (make notebook)
     volumes:
       - ./copilot/data:/app/data        # uploaded contracts stay outside the image
-      - ./copilot/notebooks:/app/notebooks
+      - ./notebooks:/notebooks          # standalone demos: they import nothing from the app
       - ./copilot/config:/app/config:ro  # standards and settings
       - ./policies:/policies            # make policy writes the policy document here
     depends_on:

@@ -128,12 +128,9 @@ Sections: [Project terms](#project-terms) · [Legal and contract terms](#legal-a
 - **RAG** *(Retrieval-Augmented Generation)*: Retrieve relevant text first, then let the LLM answer from it.
 - **Ragas**: An open-source Python library for evaluating RAG systems.
 - **Strict JSON output**: Forcing the model to reply in an exact structured format.
-- **STT** *(Speech-to-Text)*: Converting speech to text; we use faster-whisper.
 - **Temperature**: Randomness of model output; 0 = most deterministic.
 - **Top-k**: The number of most-similar chunks retrieved (e.g. top 5).
-- **TTS** *(Text-to-Speech)*: Converting text to speech; we use Piper.
 - **Vector store**: A database that stores embeddings and finds similar ones; we use Chroma.
-- **WER** *(Word Error Rate)*: The share of words speech-to-text gets wrong.
 
 ## Infrastructure and observability terms
 

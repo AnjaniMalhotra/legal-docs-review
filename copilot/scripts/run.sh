@@ -13,7 +13,7 @@ export GATEWAY_API_KEY="${GATEWAY_API_KEY:-local}"
 export HF_HOME="${HF_HOME:-$PWD/data/hf}" HF_HUB_OFFLINE=1
 export ANONYMIZED_TELEMETRY=False RAGAS_DO_NOT_TRACK=true
 export LANGSMITH_TRACING=false LANGCHAIN_TRACING_V2=false
-export PATH="$PWD/.venv/bin:$PATH"
+export PATH="$PWD/.venv/bin:$PWD/.venv/Scripts:$PATH"   # bin on Mac and Linux, Scripts on Windows
 APP_PORT="${APP_PORT:-8000}"
 
 if [ $# -gt 0 ]; then exec "$@"; fi

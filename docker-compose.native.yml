@@ -1,0 +1,18 @@
+# For a machine where Docker cannot give the models enough memory or a GPU: Ollama and the app run
+# natively, and only Bifrost, Langfuse, the website and the presentation stay in Docker.
+#   docker compose -f docker-compose.yml -f docker-compose.native.yml up -d
+#   ollama serve                 # if the Ollama app is not already running
+#   copilot/scripts/run.sh       # the app → http://localhost:8000 (settings from copilot/.env.local)
+services:
+  ollama:
+    profiles: [full]             # not started: the native Ollama serves the models
+
+  app:
+    profiles: [full]             # not started: copilot/scripts/run.sh runs it natively
+
+  bifrost:
+    depends_on: !reset []
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./infra/bifrost/config.native.json:/app/data/config.json:ro   # same config, native Ollama address

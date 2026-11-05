@@ -12,10 +12,11 @@ provider whose promise is *"your data never leaves PayNest"*, and this tool keep
 | Folder | What | Notes |
 |---|---|---|
 | `start.sh` | Sets up and starts everything: tools, secrets, services, models | `./start.sh` |
-| `STEPS.md` | The 4 learning steps (branches `step-1-setup` … `step-4-evals`) | Each step has a notebook in `copilot/notebooks/` |
+| `STEPS.md` | The 4 learning steps (branches `step-1-setup` … `step-4-evals`) | Standalone demos, one per step, in `notebooks/` (they import nothing from the app) |
 | `docs/` | Supporting docs: company and clients, case studies, architecture, tech stack, glossary | Reference only |
 | `policies/` | PayNest Contracting Standards (company policy), generated from `copilot/config/standards/` | Do not edit by hand |
 | `docker-compose.yml` | Full Docker: starts every service from one file | See `infra/README.md` |
+| `docker-compose.native.yml` | Add it when Docker cannot give the models memory or a GPU: Ollama and the app run natively | See `infra/README.md` |
 | `infra/` | Bifrost and self-hosted Langfuse config used by `docker-compose.yml` | See `infra/README.md` |
 | `website/` | PayNest marketing site (static HTML/CSS/JS) | Separate from the copilot |
 | `copilot/` | The product: FastAPI + HTML/CSS UI + LangGraph + Ollama (via Bifrost) | See `copilot/README.md` |
@@ -36,7 +37,7 @@ provider whose promise is *"your data never leaves PayNest"*, and this tool keep
    Telemetry stays off (Chroma, Ragas, HF offline). Langfuse must be self-hosted.
 8. **Fail loudly.** The analyst role has no fallback. Raise `GatewayError` rather than silently degrading.
 9. **Confidential data.** Never read, print or commit `copilot/data/` (uploaded contracts, vectors, reports) or `.env`.
-   Only synthetic contracts belong in `copilot/sample_contracts/`.
+   Only synthetic contracts belong in `copilot/sample_contracts/` and `notebooks/data/`.
 
 ## Commands (run from `copilot/`)
 
@@ -57,7 +58,7 @@ make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--s
 |---|---|---|
 | A standard, weight or `if_silent` | `config/standards/P*.yaml`, then `make policy` | Recompute `expected_score` in `evals/golden_set.json`; run tests |
 | Bands, gap factors, floor, gate | `config/settings.yaml` → `scoring` / `gate` | Run `tests/test_scoring.py` |
-| Swap a model | `config/settings.yaml` → `models.<role>.model`, `config/profiles/gateway.yaml` **and** the `models` allowlist in `infra/bifrost/config.json` | `make setup` (pull), `make smoke` |
+| Swap a model | `config/settings.yaml` → `models.<role>.model`, `config/profiles/gateway.yaml` **and** the `models` allowlist in `infra/bifrost/config.json` and `config.native.json` | `make setup` (pull), `make smoke` |
 | Prompt wording | `prompts/*.md` (`$placeholders`) | Run evals and compare |
 | UI | `web/` (ES modules, no frameworks, no CDN) | Keep each file ≤120 lines |
 | A new term | `docs/glossary.md` | Alphabetical |
@@ -86,9 +87,9 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 
 ## Status
 
-Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (61 passing).
+Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (64 passing).
 Contracting Standards v1.0: one YAML per provision in `copilot/config/standards/`. The app shows plain-English labels (OK / Acceptable / Not acceptable / Missing / Not mentioned (fine) / Doesn't apply / Needs a lawyer's check) over the fixed internal status codes; the outgoing Issues List keeps formal legal wording.
-This branch runs everything in Docker from `docker-compose.yml`. Docker on a Mac has no GPU access, so models run on the CPU there; `main` keeps Option B (app and Ollama native).
+This branch runs everything in Docker from `docker-compose.yml`. Docker on a Mac has no GPU access, so models run on the CPU there; `main` keeps Option B (app and Ollama native). Where Docker cannot run the models, `docker-compose.native.yml` moves Ollama out of Docker.
 Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 5/5 risk bands, 0 risky clauses marked OK.
 Next: no-egress check (Wi-Fi off); Bifrost allowlist test; a held-out set of new contracts run once (no tuning on it).
 Open: demo machine specs, deadline, judge at review time.

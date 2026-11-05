@@ -24,12 +24,21 @@ def _rerank(candidates: list[dict], terms: list[str], keep: int) -> list[dict]:
     return sorted(candidates, key=score, reverse=True)[:keep]
 
 
+def _contract_terms(words: list[str]) -> list[str]:
+    """The contract's wording for everyday words in the question ("breach" -> "security incident")."""
+    synonyms = settings()["retrieval"]["question_synonyms"]
+    return [term for word in words for term in synonyms.get(word, [])]
+
+
 @traced("retrieve.question")
 def for_question(doc_id: str, question: str) -> list[dict]:
     """Hybrid search on the question, plus the opening (parties and recitals) for general questions."""
     cfg = settings()["retrieval"]
-    terms = [w for w in re.findall(r"[a-z0-9]+", question.lower()) if len(w) >= cfg["min_term_length"]]
-    hits = _rerank(vector_store.search(doc_id, question, cfg["chat_candidates"]), terms, cfg["top_k_chat"])
+    words = re.findall(r"[a-z0-9]+", question.lower())
+    extra = _contract_terms(words)
+    query = f"{question} {', '.join(extra)}" if extra else question
+    terms = [w for w in words if len(w) >= cfg["min_term_length"]] + extra
+    hits = _rerank(vector_store.search(doc_id, query, cfg["chat_candidates"]), terms, cfg["top_k_chat"])
     opening = vector_store.opening(doc_id, cfg["chat_opening_chunks"])
     seen = {h["text"] for h in hits}
     return hits + [h for h in opening if h["text"] not in seen]
