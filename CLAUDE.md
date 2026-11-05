@@ -87,6 +87,6 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (61 passing).
 Contracting Standards v1.0: one YAML per provision in `copilot/config/standards/`. The app shows plain-English labels (OK / Acceptable / Not acceptable / Missing / Not mentioned (fine) / Doesn't apply / Needs a lawyer's check) over the fixed internal status codes; the outgoing Issues List keeps formal legal wording.
 Runs as Option B: app and Ollama native on the Mac (GPU), Bifrost + Langfuse in Docker via `infra/`; full-Docker packaging and voice removed.
-Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 5/5 risk bands, 0 risky clauses marked OK.
+Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 3 of 5 risk bands right on the current test machine (5 of 5 on the first Mac run), 0 risky clauses marked OK.
 Next: no-egress check (Wi-Fi off); Bifrost allowlist test; a held-out set of new contracts run once (no tuning on it).
 Open: demo machine specs, deadline, judge at review time.
