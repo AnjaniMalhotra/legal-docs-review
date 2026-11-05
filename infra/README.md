@@ -2,12 +2,14 @@
 
 Every service runs in Docker from `../docker-compose.yml`. Start it with `./start.sh` from the project root.
 
-```
-app (localhost:8000) ──> Bifrost (localhost:8080) ──> Ollama (no published port)
-        │                        │
-        └──── OTel traces ───────┴──> Langfuse (localhost:3000)  [Postgres, ClickHouse, Redis, MinIO, worker]
-
-website (localhost:5500)    presentation (localhost:5600)
+```mermaid
+flowchart LR
+    App["App<br/>localhost:8000"] -->|every model call| Bifrost["Bifrost gateway<br/>localhost:8080"]
+    Bifrost --> Ollama["Ollama<br/>no published port"]
+    App -.->|traces| Langfuse["Langfuse<br/>localhost:3000"]
+    Bifrost -.->|traces| Langfuse
+    Site["Website<br/>localhost:5500"]
+    Deck["Presentation<br/>localhost:5600"]
 ```
 
 Inside Docker the services find each other by name: `bifrost`, `ollama`, `langfuse-web`.

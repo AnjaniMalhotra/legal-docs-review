@@ -63,7 +63,7 @@ sample_contracts/  15 synthetic contract PDFs (5 in the answer key, 10 kept unse
 
 ## Known limits (honest list)
 
-- Accuracy on the 5 sample contracts: 76% of rules exact, 5/5 risk bands right, no risky clause
+- Accuracy on the 5 sample contracts: 76% of rules exact, 3 of 5 risk bands right on the current test machine (5 of 5 on the first Mac run), no risky clause
   ever marked OK. These contracts were also used for tuning, so expect lower on new clients.
 - A review takes about 5–10 minutes on an 8 GB Mac; close other apps.
 - The no-egress check (Wi-Fi off during a review) has not been run yet.

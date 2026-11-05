@@ -1,10 +1,14 @@
 # Learning Path: Build the Contract Copilot in 4 Steps
 
-The project is built up in four steps. Each one is a **branch** (and a matching **tag**) in this
+The project is built up in four steps, and a fifth branch (`full-docker`) packages the finished project. Each one is a **branch** (and a matching **tag**) in this
 repository, and each adds to the one before. Check out any step and you get a project that runs at that stage.
 
-```
-step-1-setup ──► step-2-rag ──► step-3-review-agent ──► step-4-evals (= main)
+```mermaid
+flowchart LR
+    S1["Step 1<br/>Setup<br/>a local AI model,<br/>a gateway, tracing"] --> S2["Step 2<br/>Documents + RAG<br/>search a PDF,<br/>answers with page numbers"]
+    S2 --> S3["Step 3<br/>Policies + review<br/>a risk score and<br/>a lawyer's sign-off"]
+    S3 --> S4["Step 4<br/>Evals<br/>prove it works<br/>with numbers"]
+    S4 --> S5["Final<br/>full-docker<br/>everything starts with<br/>one command"]
 ```
 
 | Step | Branch / tag | What you learn | Run it | Notebook |
@@ -19,7 +23,7 @@ step-1-setup ──► step-2-rag ──► step-3-review-agent ──► step-4
 ```bash
 git checkout step-2-rag                 # look at step 2
 git checkout -b my-work v2-rag          # start your own work from step 2
-git checkout main                       # back to the finished project
+git checkout full-docker               # the finished project, packaged in Docker
 ```
 
 After switching, reinstall the Python packages if the step added new ones:
@@ -30,20 +34,20 @@ cd copilot && .venv/bin/pip install -r requirements.txt
 ## What each step adds
 
 **Step 1 · Setup.** The model plumbing (`app/core/`), the gateway and tracing infrastructure (`infra/`),
-`config/settings.yaml` with one model role (analyst), the setup scripts, `SETUP.md`, the company background
-(`docs/1_company_and_clients.md`, `docs/glossary.md`) and the marketing website.
+`config/settings.yaml` with two model roles (analyst, embed), the setup scripts, `SETUP.md`, the company background
+(`docs/1_company_and_clients.md`, `docs/glossary.md`), the marketing website and the first notebook (`notebooks/`).
 
 **Step 2 · Documents + RAG.** PDF ingestion and clause chunking (`app/ingest/`), embeddings and the vector
 store, hybrid retrieval, cited chat answers and the key-terms summary (`app/rag/`), the document API routes,
-the embed model role, and the sample contracts.
+the sample contracts and the second notebook.
 
 **Step 3 · Policies + review agent.** PayNest's Contracting Standards (`config/standards/`, `policies/`), the
 classifier, grounding guard, stricter-only checks, scoring, lawyer decisions and the Issues List
-(`app/policy/`), the LangGraph workflow with its human gate (`app/graph/`), the full web portal (`web/`), and
-the case studies and architecture docs.
+(`app/policy/`), the LangGraph workflow with its human gate (`app/graph/`), the full web portal (`web/`),
+the case studies and architecture docs, and the third notebook.
 
 **Step 4 · Evals.** The answer key and eval runner (`evals/`), the judge model role and Ragas, the tech
-stack doc and the teaching presentation (`presentation/`, also published on GitHub Pages).
+stack doc, the fourth notebook and the teaching presentation (`presentation/`, also published on GitHub Pages).
 
 ## Running a step
 
