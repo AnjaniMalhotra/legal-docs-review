@@ -15,7 +15,7 @@ TECH.slide("t-master", {
     n("net", "Internet", 1195, 255, 150, 165, "i-cloud", "paper", null, { cross: true }),
   ],
   edges: [["law", "ui"], ["ui", "app"], ["std", "app", { still: true }], ["app", "ch", { still: true }], ["app", "sql", { still: true }],
-    ["app", "bf"], ["bf", "ol"], ["app", "lf", { dash: true, color: "amber", bend: -94, still: true }], ["bf", "lf", { dash: true, color: "amber" }],
+    ["app", "bf"], ["bf", "ol"], ["bf", "lf", { dash: true, color: "amber" }],
     ["rg", "bf", { color: "green", bend: 28 }], ["rg", "lf", { dash: true, color: "amber", still: true }]],
 });
 
