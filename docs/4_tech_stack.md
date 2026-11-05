@@ -1,5 +1,9 @@
 # 4 · Tech Stack and Code Walkthrough
 
+> **In simple words.** Each row in the first table is one tool: what it does here, and why we picked it. The rest of the
+> page shows where each idea lives in the code, so you can open the file and read it. Every file is short.
+> Stuck on a word? See the [glossary](glossary.md).
+
 What each tool does, why it was chosen, and where to find it in the code. Every code file is under 120 lines.
 
 ## 1. The stack

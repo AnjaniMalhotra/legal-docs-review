@@ -1,5 +1,13 @@
 # 3 · Architecture
 
+> **In simple words.** The AI only *reads* a clause and gives it a label. Ordinary Python code then checks that the
+> AI's quote really exists in the PDF, and works out the score, so the same labels always give the same score.
+> A lawyer must approve anything risky. It all runs on one computer, so no contract leaves it.
+>
+> **Words you will meet:** *retrieval* = finding the right clauses · *grounding guard* = the check that a quote is
+> really in the PDF · *human gate* = the pause where a lawyer decides · *gateway* = the one door every model call uses.
+> More in the [glossary](glossary.md).
+
 The copilot runs on one machine: **browser UI → FastAPI app (LangGraph review graph) → Ollama models**,
 optionally through the **Bifrost gateway**, with **Langfuse + Ragas** for observability. **Nothing talks to the internet.**
 
@@ -89,6 +97,21 @@ sequenceDiagram
 ```
 
 ## 6. Flow: the standards review (LangGraph)
+
+The short version, in five steps:
+
+```mermaid
+flowchart LR
+    A["1. Find the clauses<br/>for each rule"] --> B["2. The AI reads them<br/>and labels each rule"]
+    B --> C["3. Python checks the quote,<br/>red flags and numbers"]
+    C --> D["4. Python works out<br/>the score, 0 to 100"]
+    D --> E{"5. Risky?"}
+    E -->|yes| F["A lawyer decides"]
+    E -->|no| G["Report and Issues List"]
+    F --> G
+```
+
+The same flow in detail:
 
 ```mermaid
 flowchart TD
