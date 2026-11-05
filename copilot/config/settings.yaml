@@ -1,13 +1,11 @@
 # PayNest Contract Copilot — runtime settings.
-# Every threshold, weight cut-off and model name lives here (decision D15).
+# Every threshold, weight cut-off and model name lives here.
 # Code reads these values; it never hard-codes them.
 
 app:
   name: PayNest Contract Copilot
   standards_version: v1.0
   data_dir: data            # uploads, chroma, checkpoints, reports (git-ignored)
-  retention_days: 30        # uploads, vectors, paused reviews (mirrors standard P6)
-  report_retention_days: 365  # final reports are the audit record
   max_upload_mb: 25
 
 # Role -> model map. The app asks for a ROLE; only this file names models.
@@ -31,6 +29,12 @@ retrieval:
   chat_candidates: 20       # semantic candidates re-ranked by the question's own words (hybrid retrieval)
   chat_opening_chunks: 2    # parties and recitals are always given to chat: names, addresses, headcount, dates
   min_term_length: 4        # question words shorter than this are ignored when re-ranking
+  question_synonyms:        # everyday word in a question -> the contract's wording, added to the search
+    breach: [security incident]
+    hack: [security incident]
+    uptime: [availability]
+    delete: [return and deletion]
+    pay: [invoice, payment]
   preamble_heading: Cover page, parties and recitals   # label for text before the first numbered clause
   top_k_rule: 6
   rule_candidates: 12       # semantic candidates re-ranked by the rule's look_for terms (hybrid retrieval)

@@ -66,7 +66,7 @@ Sections: [Project terms](#project-terms) · [Legal and contract terms](#legal-a
 - **Confidentiality**: The duty to keep information secret and use it only as allowed. *P7*
 - **Consequential (indirect) losses**: Knock-on losses such as lost profits; PayNest wants these excluded. *P1*
 - **DPA** *(Data Processing Agreement)*: The part of a contract about how PayNest handles the client's employee data.
-- **DPDP Act**: India's Digital Personal Data Protection Act, 2023. *Considered and not used as the yardstick (D2).*
+- **DPDP Act**: India's Digital Personal Data Protection Act, 2023. *Considered and not used as the yardstick.*
 - **Force majeure**: A clause excusing a party when events beyond its control happen (floods, war).
 - **General Counsel** *(GC)*: The head of a company's legal team.
 - **Governing law**: Which country's law applies to the contract. *P10*
@@ -128,12 +128,9 @@ Sections: [Project terms](#project-terms) · [Legal and contract terms](#legal-a
 - **RAG** *(Retrieval-Augmented Generation)*: Retrieve relevant text first, then let the LLM answer from it.
 - **Ragas**: An open-source Python library for evaluating RAG systems.
 - **Strict JSON output**: Forcing the model to reply in an exact structured format.
-- **STT** *(Speech-to-Text)*: Converting speech to text; we use faster-whisper.
 - **Temperature**: Randomness of model output; 0 = most deterministic.
 - **Top-k**: The number of most-similar chunks retrieved (e.g. top 5).
-- **TTS** *(Text-to-Speech)*: Converting text to speech; we use Piper.
 - **Vector store**: A database that stores embeddings and finds similar ones; we use Chroma.
-- **WER** *(Word Error Rate)*: The share of words speech-to-text gets wrong.
 
 ## Infrastructure and observability terms
 
@@ -149,7 +146,7 @@ Sections: [Project terms](#project-terms) · [Legal and contract terms](#legal-a
 - **Interrupt** (LangGraph): A pause in the graph that waits for human input.
 - **ISO 27001**: An international certification for information security management. *P5*
 - **Langfuse**: An open-source, self-hostable tool for LLM tracing, scores and dashboards.
-- **LangSmith**: A hosted tracing tool from LangChain. *Excluded (D4).*
+- **LangSmith**: A hosted tracing tool from LangChain. *Not used: it is hosted, so traces would leave the machine.*
 - **Ollama**: A tool that runs open LLMs locally behind a simple API.
 - **On-prem**: Running on the company's own hardware, not the cloud.
 - **OpenAI-compatible endpoint**: An API that accepts the same request format as OpenAI's, so standard clients work.

@@ -19,6 +19,7 @@ except ImportError:  # langfuse not installed
 
 
 def _safe(action: str, fn, *args, **kwargs):
+    """Run a tracing call; a tracing failure must never stop a review."""
     try:
         return fn(*args, **kwargs)
     except Exception as exc:  # never let observability fail a review
@@ -34,6 +35,7 @@ def traced(name: str):
 
 
 def current_trace_id() -> str | None:
+    """The active Langfuse trace id, or None when tracing is off."""
     if not ENABLED:
         return None
     return _safe("get trace id", lambda: get_client().get_current_trace_id())
@@ -56,5 +58,6 @@ def score(trace_id: str | None, name: str, value: float, comment: str = "") -> N
 
 
 def flush() -> None:
+    """Send any buffered traces to Langfuse now."""
     if ENABLED:
         _safe("flush", lambda: get_client().flush())

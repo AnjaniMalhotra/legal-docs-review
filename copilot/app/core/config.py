@@ -1,6 +1,6 @@
 """Loads settings.yaml, the standards, prompt templates and environment variables.
 
-Every tunable value comes from config/, prompts/ or the environment (decision D15).
+Every tunable value comes from config/, prompts/ or the environment.
 Prompts are files, not strings in code, so they can be tuned without code changes.
 """
 import os
@@ -46,10 +46,12 @@ def standards() -> list[dict]:
 
 
 def rule(rule_id: str) -> dict:
+    """One standard by id, e.g. rule("P4")."""
     return next(r for r in standards() if r["id"] == rule_id)
 
 
 def env(name: str, default: str | None = None) -> str | None:
+    """Read an environment variable."""
     return os.getenv(name, default)
 
 
@@ -63,6 +65,7 @@ def data_dir(*parts: str) -> Path:
 
 @lru_cache
 def _template(name: str) -> Template:
+    """Load a prompt file once and cache it."""
     return Template((PROMPTS_DIR / f"{name}.md").read_text(encoding="utf-8"))
 
 
