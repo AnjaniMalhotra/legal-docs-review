@@ -5,3 +5,5 @@
 models:
   analyst:
     model: ollama/qwen2.5:7b-instruct
+  embed:
+    model: ollama/nomic-embed-text

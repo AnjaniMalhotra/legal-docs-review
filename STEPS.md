@@ -30,23 +30,25 @@ cd copilot && .venv/bin/pip install -r requirements.txt
 ## What each step adds
 
 **Step 1 · Setup.** The model plumbing (`app/core/`), the gateway and tracing infrastructure (`infra/`),
-`config/settings.yaml` with one model role (analyst), the setup scripts, `SETUP.md`, the company background
-(`docs/1_company_and_clients.md`, `docs/glossary.md`) and the marketing website.
+`config/settings.yaml` with two model roles (analyst, embed), the setup scripts, `SETUP.md`, the company background
+(`docs/1_company_and_clients.md`, `docs/glossary.md`), the marketing website and the first notebook (`notebooks/`).
 
 **Step 2 · Documents + RAG.** PDF ingestion and clause chunking (`app/ingest/`), embeddings and the vector
 store, hybrid retrieval, cited chat answers and the key-terms summary (`app/rag/`), the document API routes,
-the embed model role, and the sample contracts.
+the sample contracts and the second notebook.
 
 **Step 3 · Policies + review agent.** PayNest's Contracting Standards (`config/standards/`, `policies/`), the
 classifier, grounding guard, stricter-only checks, scoring, lawyer decisions and the Issues List
-(`app/policy/`), the LangGraph workflow with its human gate (`app/graph/`), the full web portal (`web/`), and
-the case studies and architecture docs.
+(`app/policy/`), the LangGraph workflow with its human gate (`app/graph/`), the full web portal (`web/`),
+the case studies and architecture docs, and the third notebook.
 
 **Step 4 · Evals.** The answer key and eval runner (`evals/`), the judge model role and Ragas, the tech
-stack doc and the teaching presentation (`presentation/`, also published on GitHub Pages).
+stack doc, the fourth notebook and the teaching presentation (`presentation/`, also published on GitHub Pages).
 
 ## Running a step
 
 Follow [SETUP.md](SETUP.md) once. It describes the finished project, so on earlier steps stop where the step ends:
 step 1 after section 5 (there is no app yet), and step 2 at `/api/docs` (the web portal arrives in step 3).
-Notebooks start with `cd copilot && ./scripts/run.sh jupyter lab`.
+Notebooks live in `notebooks/` and start with `cd copilot && make notebook`.
+
+The finished project, packaged in Docker, is the `full-docker` branch: run `./start.sh` from its project root.

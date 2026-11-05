@@ -10,7 +10,7 @@ Langfuse tracing, the marketing website and the teaching deck. Copy each block i
 |---|---|---|
 | Contract Copilot (the app) | http://localhost:8000 | Step 6 |
 | Langfuse (traces of every step) | http://localhost:3000 | Step 5 |
-| Bifrost (model gateway and call log) | http://localhost:8080 | Step 5 |
+| Bifrost (model gateway and call log; login `admin`, password in `infra/bifrost/.env`) | http://localhost:8080 | Step 5 |
 | Ollama (the AI models) | http://localhost:11434 | Step 3 |
 | Marketing website | http://localhost:5500 | Step 7 |
 | Teaching presentation | http://localhost:5600 | Step 7 |
@@ -51,73 +51,37 @@ cd "Legal Docs Project/copilot"
 python3.12 -m venv .venv
 .venv/bin/pip install --upgrade pip
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python -m pytest -q          # expect: 58 passed (no models needed)
+.venv/bin/python -m pytest -q          # expect: all tests pass (no models needed)
 ```
 
-## 3. Start Ollama and download the models (once, ~10 GB)
+## 3. Start Ollama and download the models (once, ~5 GB; step 4 adds the ~5 GB judge model)
 
 ```bash
 ollama serve > /tmp/ollama.log 2>&1 &    # skip if the Ollama app is already running (menu-bar llama icon)
 cd "Legal Docs Project/copilot"
-make setup                               # pulls qwen2.5:7b-instruct, llama3.1:8b, nomic-embed-text
-ollama list                              # all three should be listed
+make setup                               # pulls qwen2.5:7b-instruct and nomic-embed-text (step 4 adds llama3.1:8b)
+ollama list                              # the models you pulled should be listed
 ```
 
 > **Linux only:** Docker containers must reach Ollama, so start it with `OLLAMA_HOST=0.0.0.0 ollama serve`.
 
 ## 4. Create your own secrets (once)
 
-The zip does **not** contain anyone's passwords or keys. This block generates fresh ones for your machine
-and writes the three settings files. Run it from the project root:
+The zip does **not** contain anyone's passwords or keys. One script generates fresh ones for your machine and
+writes the three settings files (Langfuse, Bifrost and the app). Run it from the project root:
 
 ```bash
 cd "Legal Docs Project"
-rnd() { openssl rand -hex "$1"; }
-PG=$(rnd 16); CH=$(rnd 16); RD=$(rnd 16); MN=$(rnd 16)
-PK="pk-lf-$(rnd 16)"; SK="sk-lf-$(rnd 16)"; PW=$(rnd 8)
-
-cat > infra/langfuse/.env <<EOF
-TELEMETRY_ENABLED=false
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=$(rnd 32)
-SALT=$(rnd 16)
-ENCRYPTION_KEY=$(rnd 32)
-POSTGRES_PASSWORD=$PG
-DATABASE_URL=postgresql://postgres:$PG@postgres:5432/postgres
-CLICKHOUSE_PASSWORD=$CH
-REDIS_AUTH=$RD
-MINIO_ROOT_PASSWORD=$MN
-LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY=$MN
-LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY=$MN
-LANGFUSE_S3_BATCH_EXPORT_SECRET_ACCESS_KEY=$MN
-LANGFUSE_INIT_ORG_ID=paynest
-LANGFUSE_INIT_ORG_NAME=PayNest
-LANGFUSE_INIT_PROJECT_ID=contract-copilot
-LANGFUSE_INIT_PROJECT_NAME=Contract Copilot
-LANGFUSE_INIT_PROJECT_PUBLIC_KEY=$PK
-LANGFUSE_INIT_PROJECT_SECRET_KEY=$SK
-LANGFUSE_INIT_USER_EMAIL=admin@paynest.local
-LANGFUSE_INIT_USER_NAME=Admin
-LANGFUSE_INIT_USER_PASSWORD=$PW
-EOF
-
-echo "LANGFUSE_OTEL_AUTH=Basic $(printf '%s:%s' "$PK" "$SK" | base64 | tr -d '\n')" > infra/bifrost/.env
-
-cat > copilot/.env.local <<EOF
+copilot/scripts/create_secrets.sh
+cat >> copilot/.env.local <<EOF          # the app talks to the models through Bifrost, traced in Langfuse
 SETTINGS_PROFILE=gateway
 BIFROST_URL=http://127.0.0.1:8080/v1
-GATEWAY_API_KEY=local
-EMBED_BASE_URL=
 LANGFUSE_HOST=http://127.0.0.1:3000
-LANGFUSE_PUBLIC_KEY=$PK
-LANGFUSE_SECRET_KEY=$SK
-APP_PORT=8000
 EOF
-
-echo "Langfuse login → email: admin@paynest.local   password: $PW   (also saved in infra/langfuse/.env)"
 ```
 
-Write down the Langfuse password it prints.
+The script never overwrites existing files, so it is safe to run again. The Langfuse login (email and password) is in
+`infra/langfuse/.env`, and the Bifrost login (user `admin`) is in `infra/bifrost/.env`. Write them down.
 
 ## 5. Start Docker, Langfuse and Bifrost
 

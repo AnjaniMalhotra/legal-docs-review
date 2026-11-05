@@ -1,0 +1,3 @@
+# Everything the notebooks need. They use nothing from copilot/.
+openai>=1.40
+jupyterlab>=4.0

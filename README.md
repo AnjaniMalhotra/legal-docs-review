@@ -27,7 +27,8 @@ Chroma · FastAPI · plain HTML/CSS/JS · Ragas. Everything runs on one machine.
 ## Folders
 
 ```
-copilot/       the app: code, settings, prompts, web UI, tests, evals, notebooks, sample contracts
+copilot/       the app: code, settings, prompts, web UI, tests, evals, sample contracts
+notebooks/     standalone demos of the logic, with their own demo data and saved outputs
 infra/         Bifrost and Langfuse (Docker)
 docs/          supporting docs
 policies/      PayNest Contracting Standards (generated from copilot/config/standards/)

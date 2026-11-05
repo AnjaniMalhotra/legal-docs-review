@@ -1,4 +1,4 @@
-"""Phase 1 exit check: one test prompt per role, through Bifrost.
+"""System check: one test prompt per model role, through the gateway.
 
 Each call should appear in both the Bifrost logs and a Langfuse trace.
 Usage:  make smoke
@@ -17,6 +17,7 @@ PROMPT = "Reply with exactly: PayNest copilot online."
 
 
 def main() -> int:
+    """Send one prompt per role and report which ones answered."""
     failures = 0
     for role in settings()["models"]:
         start = time.perf_counter()
