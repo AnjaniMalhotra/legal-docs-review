@@ -50,7 +50,7 @@ copilot/
   prompts/       the instructions given to the model
   web/           the browser UI
   evals/         answer key (golden_set.json) · runner · metrics + Ragas
-  tests/         unit tests
+  tests/         unit tests · step5/ simple tests on real contracts, attacks and the golden rules
   sample_contracts/  synthetic contract PDFs
 notebooks/       standalone demos of the logic, with their own demo data and saved outputs
 policies/        PayNest Contracting Standards (generated from config/standards)

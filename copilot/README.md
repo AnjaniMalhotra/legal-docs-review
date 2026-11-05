@@ -50,7 +50,9 @@ make smoke                         # one prompt per role: check it appears in La
 ## Everyday commands
 
 ```bash
-make test                            # 56 unit tests, about 1 second, no models needed
+make test                            # 99 unit tests, a few seconds, no models needed
+make test-step5                      # only the step 5 tests
+make test-live                       # step 5 tests with the real models
 make evals                           # all 5 sample contracts, printed one by one (~1-2 h on 8 GB)
 make evals ARGS="--contract lexmore" # one contract
 make evals ARGS="--skip-ragas"       # without the judge model

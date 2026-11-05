@@ -8,6 +8,7 @@ flowchart LR
     S1["Step 1<br/>Setup<br/>a local AI model,<br/>a gateway, tracing"] --> S2["Step 2<br/>Documents + RAG<br/>search a PDF,<br/>answers with page numbers"]
     S2 --> S3["Step 3<br/>Policies + review<br/>a risk score and<br/>a lawyer's sign-off"]
     S3 --> S4["Step 4<br/>Evals<br/>prove it works<br/>with numbers"]
+    S4 --> T5["Step 5<br/>Tests<br/>catch mistakes<br/>automatically"]
     S4 --> S5["Final<br/>full-docker<br/>everything starts with<br/>one command"]
 ```
 
@@ -17,6 +18,7 @@ flowchart LR
 | **2** | `step-2-rag` / `v2-rag` | Turn a PDF into searchable clauses; answer questions with page citations | `make up` → http://localhost:8000/api/docs | `02_rag.ipynb` |
 | **3** | `step-3-review-agent` / `v3-review-agent` | Encode company policy; an agent applies it; Python verifies and scores; a lawyer signs off | `make up` → http://localhost:8000 (the full portal) | `03_review_agent.ipynb` |
 | **4** | `step-4-evals` / `v4-evals` | Prove the quality with an answer key, a judge model and Ragas | `make evals ARGS="--contract lexmore"` | `04_evals.ipynb` |
+| **5** | `step-5-tests` | Protect the project with simple tests on real contracts, attacks and the golden rules | `make test-step5` | none |
 
 ## Switching steps
 
@@ -48,6 +50,9 @@ the case studies and architecture docs, and the third notebook.
 
 **Step 4 · Evals.** The answer key and eval runner (`evals/`), the judge model role and Ragas, the tech
 stack doc, the fourth notebook and the teaching presentation (`presentation/`, also published on GitHub Pages).
+
+**Step 5 · Tests.** Step 4 plus `copilot/tests/step5/`: nine short files, each about one idea. The tests from
+steps 1 to 4 stay where they are. `make test-step5` needs no models; `make test-live` uses the real ones.
 
 ## Running a step
 

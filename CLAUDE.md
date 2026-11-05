@@ -45,6 +45,8 @@ make setup   # one-time model download with `ollama pull` (egress allowed only h
 make up      # run the app natively → http://localhost:8000 (Ollama direct, or Bifrost if .env.local sets the gateway profile)
 make gateway # Option B: start Langfuse + Bifrost in Docker
 make test    # unit tests (.venv, no models)
+make test-step5 # only the step 5 tests (no models)
+make test-live  # step 5 tests with the real models
 make smoke   # one prompt per role
 make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--skip-ragas"
 ```
@@ -84,7 +86,7 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 
 ## Status
 
-Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (61 passing).
+Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (99 passing, including `tests/step5/`).
 Contracting Standards v1.0: one YAML per provision in `copilot/config/standards/`. The app shows plain-English labels (OK / Acceptable / Not acceptable / Missing / Not mentioned (fine) / Doesn't apply / Needs a lawyer's check) over the fixed internal status codes; the outgoing Issues List keeps formal legal wording.
 Runs as Option B: app and Ollama native on the Mac (GPU), Bifrost + Langfuse in Docker via `infra/`; full-Docker packaging and voice removed.
 Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 3 of 5 risk bands right on the current test machine (5 of 5 on the first Mac run), 0 risky clauses marked OK.
