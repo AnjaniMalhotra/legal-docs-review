@@ -33,6 +33,7 @@ def _heading(line: str) -> tuple[str, str, str] | None:
 
 
 def _split_long(text: str, max_chars: int, overlap: int) -> list[str]:
+    """Split text longer than max_chars into overlapping parts."""
     if len(text) <= max_chars:
         return [text]
     parts, start = [], 0
@@ -53,6 +54,21 @@ def is_page_furniture(line: str) -> bool:
     return any(re.match(p, line.strip(), re.I) for p in patterns)
 
 
+def _add_clause(chunks: list[dict], lines: list[str], page: int, clause_no: str, heading: str, cfg: dict) -> None:
+    """Append one clause to chunks, split into overlapping parts if it is too long."""
+    text = " ".join(" ".join(lines).split())
+    if len(text) < cfg["min_chunk_chars"]:
+        return
+    for part in _split_long(text, cfg["chunk_max_chars"], cfg["chunk_overlap_chars"]):
+        chunks.append({
+            "chunk_id": f"c{len(chunks) + 1:04d}",
+            "page": page,
+            "clause_no": clause_no,
+            "heading": f"{clause_no} {heading}".strip(),
+            "text": part,
+        })
+
+
 def chunk_pages(pages: list[str]) -> list[dict]:
     """Return chunks: {chunk_id, page, clause_no, heading, text}.
 
@@ -64,26 +80,13 @@ def chunk_pages(pages: list[str]) -> list[dict]:
     buffer: list[str] = []
     start_page = 1
 
-    def flush(page: int, lines: list[str]) -> None:
-        text = " ".join(" ".join(lines).split())
-        if len(text) < cfg["min_chunk_chars"]:
-            return
-        for part in _split_long(text, cfg["chunk_max_chars"], cfg["chunk_overlap_chars"]):
-            chunks.append({
-                "chunk_id": f"c{len(chunks) + 1:04d}",
-                "page": page,
-                "clause_no": clause_no,
-                "heading": f"{clause_no} {heading}".strip(),
-                "text": part,
-            })
-
     for page_no, page_text in enumerate(pages, start=1):
         for line in page_text.splitlines():
             if is_page_furniture(line):
                 continue
             found = _heading(line)
             if found:
-                flush(start_page, buffer)
+                _add_clause(chunks, buffer, start_page, clause_no, heading, cfg)
                 kind, clause_no, text = found
                 if kind == "title":
                     section = text
@@ -91,5 +94,5 @@ def chunk_pages(pages: list[str]) -> list[dict]:
                 buffer, start_page = [line.strip()], page_no
             elif line.strip():
                 buffer.append(line.strip())
-    flush(start_page, buffer)
+    _add_clause(chunks, buffer, start_page, clause_no, heading, cfg)
     return chunks

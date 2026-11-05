@@ -50,7 +50,7 @@ look_for: [security incident, personal data breach, notify, notification, hours,
 
 red_flags: [immediately, forthwith, without any delay]   # walk-away phrases: tripwire escalates if the model misses them
 
-numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter
   unit: "hours (notification window)"
   pattern: '\(?(\d+)\)?\s*hours'
   pick: min

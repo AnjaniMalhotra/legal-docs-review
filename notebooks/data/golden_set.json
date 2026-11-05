@@ -1,0 +1,86 @@
+{
+  "_note": "Answer key for the demo contracts in data/contracts/.",
+  "contracts": [
+    {
+      "id": "carewell",
+      "file": "data/contracts/01_carewell_hospitals.pdf",
+      "expected_score": 49,
+      "expected_band": "High",
+      "labels": {
+        "P1": "Conflicting",
+        "P2": "Partial",
+        "P3": "Conflicting",
+        "P4": "Partial",
+        "P5": "Compliant",
+        "P6": "Partial",
+        "P7": "Compliant",
+        "P8": "Partial",
+        "P9": "Compliant",
+        "P10": "Compliant"
+      }
+    },
+    {
+      "id": "lexmore",
+      "file": "data/contracts/03_lexmore_associates.pdf",
+      "expected_score": 3,
+      "expected_band": "Low",
+      "labels": {
+        "P1": "Compliant",
+        "P2": "Compliant",
+        "P3": "Compliant",
+        "P4": "Silent (OK)",
+        "P5": "Silent (OK)",
+        "P6": "Compliant",
+        "P7": "Compliant",
+        "P8": "Partial",
+        "P9": "Compliant",
+        "P10": "Compliant"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "contract": "carewell",
+      "question": "What's our liability if there's a data breach?",
+      "expected_answer": "Unlimited liability for any data breach (Clause 15.1).",
+      "expected_pages": [
+        6
+      ],
+      "answerable": true
+    },
+    {
+      "contract": "carewell",
+      "question": "How fast must we tell them about a breach?",
+      "expected_answer": "Immediately upon becoming aware of a security incident (Clause 9.3).",
+      "expected_pages": [
+        5
+      ],
+      "answerable": true
+    },
+    {
+      "contract": "carewell",
+      "question": "How many days do we have to delete their data after exit?",
+      "expected_answer": "Within fifteen days of termination or expiry (Clause 18.2).",
+      "expected_pages": [
+        7
+      ],
+      "answerable": true
+    },
+    {
+      "contract": "lexmore",
+      "question": "What uptime do we have to guarantee?",
+      "expected_answer": "Not found in the document.",
+      "expected_pages": [],
+      "answerable": false
+    },
+    {
+      "contract": "lexmore",
+      "question": "When must they pay our invoices?",
+      "expected_answer": "Within 45 days.",
+      "expected_pages": [
+        3
+      ],
+      "answerable": true
+    }
+  ]
+}

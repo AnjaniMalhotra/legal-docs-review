@@ -1,7 +1,7 @@
 # PayNest Contract Copilot · Step 3 of 4: Policies + review agent
 
 A fully local AI copilot that reviews client contracts against PayNest's Contracting Standards.
-This branch is **step 3** of the learning path in [../STEPS.md](../STEPS.md); `main` holds the finished project.
+This branch is **step 3** of the learning path in [../STEPS.md](../STEPS.md); `full-docker` holds the finished project.
 
 ## In this step
 - `config/standards/` and `../policies/`: PayNest's 10 Contracting Standards.
@@ -18,7 +18,7 @@ make test                      # golden scores 49 / 43 / 3 / 29 / 18
 ```
 
 ## Teaching notebook
-`notebooks/03_review_agent.ipynb`: start it with `make notebook`.
+`../notebooks/03_review_agent.ipynb`: start it with `make notebook`.
 
 ## Next step
 `git checkout step-4-evals`: measure quality with an answer key, a judge model and Ragas.

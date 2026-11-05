@@ -42,14 +42,11 @@ def get_standards() -> list[dict]:
 
 @router.post("/reviews")
 def start_review(req: StartRequest) -> dict:
+    """Run the review; it pauses here if a lawyer must decide."""
     return policy_service.start(req.doc_id, req.reviewer.strip(), req.matter.model_dump())
-
-
-@router.get("/reviews/{review_id}")
-def get_review(review_id: str) -> dict:
-    return policy_service.status(review_id)
 
 
 @router.post("/reviews/{review_id}/decisions")
 def submit_decisions(review_id: str, req: DecisionsRequest) -> dict:
+    """Record the lawyer's decisions and finish the review."""
     return policy_service.resume(review_id, [d.model_dump() for d in req.decisions])

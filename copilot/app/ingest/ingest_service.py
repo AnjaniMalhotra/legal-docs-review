@@ -21,6 +21,7 @@ def extract_pages(pdf_bytes: bytes) -> list[str]:
 
 @traced("ingest")
 def ingest_pdf(file_name: str, pdf_bytes: bytes) -> dict:
+    """Upload pipeline: PDF -> page text -> clause chunks -> vectors."""
     pages = extract_pages(pdf_bytes)
     chunks = chunk_pages(pages)
     doc_id = doc_store.save_document(file_name, pages)

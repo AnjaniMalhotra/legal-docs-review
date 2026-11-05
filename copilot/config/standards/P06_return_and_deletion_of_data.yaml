@@ -48,7 +48,7 @@ look_for: [return of data, deletion, delete, destruction, termination assistance
 
 red_flags: [immediately upon termination, direct access to]   # walk-away phrases: tripwire escalates if the model misses them
 
-numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter
   unit: "days (return and deletion)"
   pattern: '\(?(\d+)\)?\s*(?:business\s+)?days'
   pick: min

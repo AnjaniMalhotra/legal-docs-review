@@ -173,7 +173,6 @@ $$\text{Risk} = 100 \times \frac{\sum w_i \cdot g_i}{\sum w_i} \quad \text{(weig
 | No egress | Models are downloaded once; after that nothing calls the internet. The live demo counts outside requests: 0 |
 | One gate to the models | Every model call goes through Bifrost, which serves only the three allowed local models |
 | No hosted tracing | Langfuse is self-hosted; LangSmith and telemetry are switched off |
-| Retention | Uploaded contracts and vectors are deleted after 30 days; final reports are kept 365 days as the audit record |
 | Audit trail | Every lawyer decision is stored with name, time, old and new status |
 | No secrets in code | Keys live in `.env.local`, never in the repository |
 

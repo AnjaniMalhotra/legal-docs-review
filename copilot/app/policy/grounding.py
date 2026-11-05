@@ -19,6 +19,7 @@ _TRANSLATE = str.maketrans({"‘": "'", "’": "'", "“": '"', "”": '"', "–
 
 
 def normalise(text: str) -> str:
+    """Lower-case and tidy text so harmless differences do not fail a quote check."""
     text = text.translate(_TRANSLATE).lower()
     text = re.sub(r"-\s*\n\s*", "-", text)         # "non-\ndisclosure" -> "non-disclosure"
     return " ".join(text.split())

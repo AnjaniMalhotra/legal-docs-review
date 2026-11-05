@@ -13,6 +13,7 @@ FALLBACK_ONLY = ("Partial",)   # within delegated authority; everything else nee
 
 
 def _approver(r: dict, status: str) -> str:
+    """Who may approve this finding, according to the standard."""
     return r["approval"]["fallback"] if status in FALLBACK_ONLY else r["approval"]["walk_away"]
 
 
@@ -40,6 +41,7 @@ def issues_list(findings: list[dict]) -> list[dict]:
 
 
 def headline(result: dict, issues: list[dict]) -> str:
+    """One-line summary of the review's main risk."""
     if not issues:
         return f"Risk rating: {result['band']}. The agreement conforms to the Contracting Standards."
     key = "; ".join(i["title"] for i in issues[:3])
@@ -47,6 +49,7 @@ def headline(result: dict, issues: list[dict]) -> str:
 
 
 def build(meta: dict, findings: list[dict], system: dict, final: dict, audit: list[dict]) -> dict:
+    """Assemble the final report and Issues List."""
     issues = issues_list(findings)
     return {
         "review_id": meta["review_id"],

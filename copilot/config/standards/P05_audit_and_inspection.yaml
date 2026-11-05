@@ -47,7 +47,7 @@ look_for: [audit, inspection, inspect, on-site, access to premises, records, aud
 
 red_flags: [at any time, without notice, without prior notice, unannounced]   # walk-away phrases: tripwire escalates if the model misses them
 
-numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter
   unit: "days' notice (audit)"
   pattern: '\(?(\d+)\)?\s*days\W*(?:prior\s+)?(?:written\s+)?notice'
   pick: min

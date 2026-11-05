@@ -1,0 +1,7 @@
+# Everything the notebooks need. They use nothing from copilot/.
+openai>=1.40
+pypdf>=4.2
+pyyaml>=6.0
+chromadb>=0.5
+langgraph>=0.4
+jupyterlab>=4.0

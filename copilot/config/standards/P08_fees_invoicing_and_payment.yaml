@@ -46,7 +46,7 @@ look_for: [payment, invoice, fees, due, days, withhold, set-off, late payment, i
 
 red_flags: [satisfaction of the client, client's satisfaction, withhold payment]   # walk-away phrases: tripwire escalates if the model misses them
 
-numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter
   unit: "days (payment)"
   pattern: '\(?(\d+)\)?\s*(?:business\s+)?days'
   pick: max

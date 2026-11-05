@@ -16,10 +16,12 @@ SILENT = {"risk": "Missing (counts as full risk)", "ok": "Not mentioned (fine)"}
 
 
 def _clean(text: str) -> str:
+    """Collapse YAML line breaks into one line."""
     return " ".join(str(text).split())
 
 
 def summary() -> list[str]:
+    """The overview table of all standards."""
     rows = ["| Ref. | Provision | Weight | Key rule | If the contract is silent |", "|---|---|:-:|:-:|---|"]
     for r in standards():
         rows.append(f"| {r['id']} | {r['title']} | {r['weight']} | {'Yes' if r['critical'] else ''} | {SILENT[r['if_silent']]} |")
@@ -27,6 +29,7 @@ def summary() -> list[str]:
 
 
 def section(r: dict) -> list[str]:
+    """The full policy text for one standard."""
     key = " · Key rule" if r["critical"] else ""
     return [
         f"## {r['id']} · {r['title']}",
@@ -50,6 +53,7 @@ def section(r: dict) -> list[str]:
 
 
 def build() -> str:
+    """The whole policy document as Markdown."""
     version = settings()["app"]["standards_version"]
     lines = [
         f"# PayNest Contracting Standards {version}",

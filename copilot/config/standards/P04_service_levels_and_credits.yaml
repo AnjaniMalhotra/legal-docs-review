@@ -47,7 +47,7 @@ look_for: [service level, availability, uptime, service credits, penalty, downti
 
 red_flags: [99.99%, uncapped penalt, in addition to service credits]   # walk-away phrases: tripwire escalates if the model misses them
 
-numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter (D34)
+numeric_check:              # Python reads this number in the verified quote; can only make a finding stricter
   unit: "% availability"
   pattern: '(9\d(?:\.\d+)?)\s*%'
   pick: max
