@@ -14,6 +14,7 @@ PayNest Technologies, its clients and its contracts are fictional, made for teac
 |---|---|
 | Set it up on your machine | [SETUP.md](SETUP.md) |
 | Learn it in 4 steps (one branch and one notebook per step) | [STEPS.md](STEPS.md) |
+| Logins for Langfuse and Bifrost (local, educational) | [credentials.md](credentials.md) |
 | The business and its clients | [docs/1_company_and_clients.md](docs/1_company_and_clients.md) |
 | The company policy the tool checks against | [policies/PayNest_Contracting_Standards.md](policies/PayNest_Contracting_Standards.md) (from step 3) |
 | How it works | [docs/3_architecture.md](docs/3_architecture.md) (from step 3) |

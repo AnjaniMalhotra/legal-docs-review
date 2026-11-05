@@ -18,9 +18,8 @@ ollama serve &                                               # if not already ru
 cd ../../copilot && make up                                # loads copilot/.env.local (gateway profile)
 ```
 
-Langfuse UI: http://localhost:3000. Login email and password are in `infra/langfuse/.env`
-(`LANGFUSE_INIT_USER_EMAIL` / `LANGFUSE_INIT_USER_PASSWORD`); the organisation, project and API keys were
-created automatically on first start.
+Langfuse UI: http://localhost:3000, Bifrost UI: http://localhost:8080. Both logins are in [../credentials.md](../credentials.md);
+the organisation, project and API keys were created automatically on first start.
 
 Create every secret file once with `copilot/scripts/create_secrets.sh` (see SETUP.md, step 4).
 
