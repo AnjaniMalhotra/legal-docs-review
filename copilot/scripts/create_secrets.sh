@@ -15,7 +15,8 @@ fi
 
 rnd() { openssl rand -hex "$1"; }
 PG=$(rnd 16); CH=$(rnd 16); RD=$(rnd 16); MN=$(rnd 16)
-PK="pk-lf-$(rnd 16)"; SK="sk-lf-$(rnd 16)"; PW=$(rnd 8)
+PK="pk-lf-$(rnd 16)"; SK="sk-lf-$(rnd 16)"
+PW=12345678   # the Langfuse and Bifrost logins are simple on purpose: a local teaching setup (credentials.md)
 
 cat > infra/langfuse/.env <<EOF
 TELEMETRY_ENABLED=false
@@ -44,7 +45,7 @@ EOF
 
 cat > infra/bifrost/.env <<EOF
 LANGFUSE_OTEL_AUTH=Basic $(printf '%s:%s' "$PK" "$SK" | base64 | tr -d '\n')
-BIFROST_ADMIN_PASSWORD=$(rnd 8)
+BIFROST_ADMIN_PASSWORD=$PW
 EOF
 
 cat > copilot/.env.local <<EOF
@@ -53,4 +54,4 @@ LANGFUSE_PUBLIC_KEY=$PK
 LANGFUSE_SECRET_KEY=$SK
 EOF
 
-echo "✓ Secrets created. Logins: Langfuse in infra/langfuse/.env, Bifrost in infra/bifrost/.env"
+echo "✓ Secrets created. Logins for Langfuse and Bifrost: see credentials.md"

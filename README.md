@@ -22,6 +22,7 @@ The first run downloads about 10 GB and needs the internet. Needs 16 GB of RAM.
 | | |
 |---|---|
 | Learn it in 4 steps (one branch and one notebook per step) | [STEPS.md](STEPS.md) |
+| Logins for Langfuse and Bifrost (local, educational) | [credentials.md](credentials.md) |
 | The business and its clients | [docs/1_company_and_clients.md](docs/1_company_and_clients.md) |
 | The company policy the tool checks against | [policies/PayNest_Contracting_Standards.md](policies/PayNest_Contracting_Standards.md)  |
 | How it works | [docs/3_architecture.md](docs/3_architecture.md)  |

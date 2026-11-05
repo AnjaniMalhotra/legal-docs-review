@@ -91,8 +91,9 @@ cat <<'EOF'
 ✓ Everything is running.
 
   Contract Copilot  http://localhost:8000
-  Langfuse          http://localhost:3000   (login is in infra/langfuse/.env)
+  Langfuse          http://localhost:3000
   Bifrost           http://localhost:8080
+  (logins for both: credentials.md)
   Website           http://localhost:5500
   Presentation      http://localhost:5600
 

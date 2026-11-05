@@ -12,9 +12,8 @@ website (localhost:5500)    presentation (localhost:5600)
 
 Inside Docker the services find each other by name: `bifrost`, `ollama`, `langfuse-web`.
 
-Langfuse UI: http://localhost:3000. Login email and password are in `infra/langfuse/.env`
-(`LANGFUSE_INIT_USER_EMAIL` / `LANGFUSE_INIT_USER_PASSWORD`); the organisation, project and API keys are
-created automatically on first start.
+Langfuse UI: http://localhost:3000, Bifrost UI: http://localhost:8080. Both logins are in [../credentials.md](../credentials.md);
+the organisation, project and API keys are created automatically on first start.
 
 ## When Docker cannot run the models
 
