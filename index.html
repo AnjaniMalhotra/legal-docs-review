@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PayNest Contract Copilot</title>
-<link rel="stylesheet" href="css/deck.css?v=6">
+<link rel="stylesheet" href="css/deck.css?v=7">
 <link rel="stylesheet" href="css/demos.css?v=6">
 <link rel="stylesheet" href="css/specs.css?v=6">
+<link rel="stylesheet" href="css/tech.css?v=1">
 </head>
 <body>
 <!-- Icon set: inline, so the deck never fetches anything. -->
@@ -40,6 +41,25 @@
   <symbol id="i-box" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="9" rx="2.5"/><path d="M7 20h10M7 12.5h.01"/></symbol>
   <symbol id="i-gpu" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="11" rx="1.5"/><circle cx="9" cy="11.5" r="3"/><circle cx="16" cy="11.5" r="2"/><path d="M5 17v3"/></symbol>
   <symbol id="i-gift" viewBox="0 0 24 24"><path d="M12 3H5v7l10 10 6-6L11 4z"/><path d="M8 7h.01"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 8h6M9 11.5h6M9 8c4 0 5 3.5 1 4.5l4 3.5"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><path d="M6 21V3h10v18M3 21h18M13 12h.01"/><path d="M16 8l4 4-4 4"/></symbol>
+  <symbol id="i-gavel" viewBox="0 0 24 24"><path d="M13 4l7 7M10 7l7 7M12 5l5 5-3 3-5-5zM10.5 11L4 17.5 6.5 20l6.5-6.5M4 22h10"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M2 13l5-3 4 1 5 3c1 .7.2 2.4-1 2l-4-1M7 10l5-5 4 1 6 6M2 13l5 7 7 1 7-6"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4zM9 8l6 5M15 8l-6 5"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="5"/><path d="M12 11l8-8M16 7l3 3M13 10l2 2"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="M3 18a9 9 0 1 1 18 0M12 18l4-7"/><circle cx="12" cy="18" r="1.4"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5zM3 12l9 5 9-5M3 16l9 5 9-5"/></symbol>
+  <symbol id="i-floor" viewBox="0 0 24 24"><path d="M3 20h18M12 16V4M7 9l5-5 5 5"/></symbol>
+  <symbol id="i-browser" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M6.5 6.5h.01M9.5 6.5h.01M13 13l2 5 1-2 2-1z"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.5 11l9-4M7.5 13l9 4"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 3h9l9 9-9 9-9-9zM8 8h.01"/></symbol>
+  <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 10l1.5 1.5L13 9M9 16h6"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></symbol>
+  <symbol id="i-gpu" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="11" rx="1.5"/><circle cx="9" cy="11.5" r="3"/><circle cx="16" cy="11.5" r="2"/><path d="M5 17v3"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7zM3 7l9 5 9-5M12 12v10"/></symbol>
+  <symbol id="i-disk" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 13h18M7 16h.01M11 16h.01"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-bug" viewBox="0 0 24 24"><rect x="8" y="8" width="8" height="12" rx="4"/><path d="M9 5l2 3M15 5l-2 3M3 10l5 2M21 10l-5 2M3 20l5-3M21 20l-5-3M3 15h5M21 15h-5"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
 </svg>
 
@@ -327,10 +347,108 @@
     <div class="body" id="close"></div>
   </section>
 
+  <!-- 24 Words: contract -->
+  <section class="slide" data-label="Words: contract" data-demo="t-words-contract">
+    <div class="kicker"><span>§ 23</span>Words · the contract</div>
+    <h2>The <em>contract</em> words.</h2>
+    <div class="body tech" id="t-words-contract"></div>
+  </section>
+
+  <!-- 25 Words: review -->
+  <section class="slide" data-label="Words: review" data-demo="t-words-review">
+    <div class="kicker"><span>§ 24</span>Words · the review</div>
+    <h2>The <em>review</em> words.</h2>
+    <div class="body tech" id="t-words-review"></div>
+  </section>
+
+  <!-- 26 The rules -->
+  <section class="slide" data-label="The rules" data-demo="t-standards">
+    <div class="kicker"><span>§ 25</span>Compliance · in simple words</div>
+    <h2>Ten rules, <em>simply</em>.</h2>
+    <div class="body tech" id="t-standards"></div>
+  </section>
+
+  <!-- 27 Tech stack -->
+  <section class="slide" data-label="Tech stack" data-demo="t-stack">
+    <div class="kicker"><span>§ 26</span>Tech stack</div>
+    <h2>Every job, one <em>tool</em>.</h2>
+    <div class="body tech" id="t-stack"></div>
+  </section>
+
+  <!-- 28 Ollama -->
+  <section class="slide" data-label="Ollama" data-demo="t-ollama">
+    <div class="kicker"><span>§ 27</span>How it works · Ollama</div>
+    <h2>Ollama runs the <em>models</em>.</h2>
+    <div class="body tech" id="t-ollama"></div>
+  </section>
+
+  <!-- 29 Bifrost -->
+  <section class="slide" data-label="Bifrost" data-demo="t-bifrost">
+    <div class="kicker"><span>§ 28</span>How it works · Bifrost</div>
+    <h2>Bifrost is the only <em>door</em>.</h2>
+    <div class="body tech" id="t-bifrost"></div>
+  </section>
+
+  <!-- 30 Langfuse -->
+  <section class="slide" data-label="Langfuse" data-demo="t-langfuse">
+    <div class="kicker"><span>§ 29</span>How it works · Langfuse</div>
+    <h2>Prompts and <em>traces</em>.</h2>
+    <div class="body tech" id="t-langfuse"></div>
+  </section>
+
+  <!-- 31 Ragas -->
+  <section class="slide" data-label="Ragas" data-demo="t-ragas">
+    <div class="kicker"><span>§ 30</span>How it works · Ragas</div>
+    <h2>Ragas <em>grades</em> the answers.</h2>
+    <div class="body tech" id="t-ragas"></div>
+  </section>
+
+  <!-- 32 RAG -->
+  <section class="slide" data-label="RAG" data-demo="t-rag">
+    <div class="kicker"><span>§ 31</span>How it works · search</div>
+    <h2>From PDF to <em>cited</em> answer.</h2>
+    <div class="body tech" id="t-rag"></div>
+  </section>
+
+  <!-- 33 Review agent -->
+  <section class="slide" data-label="Review agent" data-demo="t-agent">
+    <div class="kicker"><span>§ 32</span>How it works · the agent</div>
+    <h2>The review <em>agent</em>.</h2>
+    <div class="body tech" id="t-agent"></div>
+  </section>
+
+  <!-- 34 Master -->
+  <section class="slide" data-label="Master" data-demo="t-master">
+    <div class="kicker"><span>§ 33</span>Architecture · everything</div>
+    <h2>The whole <em>system</em>.</h2>
+    <div class="body tech" id="t-master"></div>
+  </section>
+
+  <!-- 35 Hosting -->
+  <section class="slide" data-label="Hosting" data-demo="t-hosting">
+    <div class="kicker"><span>§ 34</span>Architecture · where it runs</div>
+    <h2>Where it <em>runs</em>.</h2>
+    <div class="body tech" id="t-hosting"></div>
+  </section>
+
+  <!-- 36 Testing -->
+  <section class="slide" data-label="Testing" data-demo="t-testing">
+    <div class="kicker"><span>§ 35</span>Testing</div>
+    <h2>Four <em>gates</em> of testing.</h2>
+    <div class="body tech" id="t-testing"></div>
+  </section>
+
+  <!-- 37 Red team -->
+  <section class="slide" data-label="Red team" data-demo="t-redteam">
+    <div class="kicker"><span>§ 36</span>Testing · red team</div>
+    <h2>We <em>attacked</em> it.</h2>
+    <div class="body tech" id="t-redteam"></div>
+  </section>
+
   <div class="hint">← → navigate · O overview · F fullscreen</div>
   <nav class="nav">
     <button class="back" id="back">‹ Back</button>
-    <span class="count" id="count">1 / 23</span>
+    <span class="count" id="count">1 / 37</span>
     <button class="next" id="next">Next ›</button>
   </nav>
   <div class="overview" id="overview"><h3>ALL SLIDES · press O to close</h3><div class="ov-grid" id="ov-grid"></div></div>
@@ -346,5 +464,9 @@
 <script src="js/demo_score.js?v=6"></script>
 <script src="js/demo_gate.js?v=6"></script>
 <script src="js/demo_results.js?v=6"></script>
+<script src="js/tech_diagram.js?v=7"></script>
+<script src="js/tech_words.js?v=7"></script>
+<script src="js/tech_parts.js?v=7"></script>
+<script src="js/tech_system.js?v=7"></script>
 </body>
 </html>

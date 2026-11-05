@@ -1,17 +1,17 @@
 /* PayNest Contract Copilot — deck theme. Legal pad paper, seal-red ink, hard shadows.
    System fonts only: this deck makes no network requests (see the live counter, top right). */
 :root {
-  --paper: #f6f0e4; --paper-2: #efe6d3; --card: #fffdf8;
-  --ink: #1c1a2b; --ink-2: #4a4658; --muted: #8b8473; --line: #d8ccb5; --rule: rgba(64, 98, 140, .10);
-  --seal: #b2382b; --seal-soft: #f3d9cf; --ok: #2e6b4e; --ok-soft: #d8eadf;
-  --amber: #b7791f; --amber-soft: #f7e7c3; --navy: #23305e; --navy-soft: #dfe3f1; --hl: #f5df7a;
+  --paper: #fbf6ea; --paper-2: #f5ecd8; --card: #ffffff;
+  --ink: #1c1a2b; --ink-2: #39354d; --muted: #6e6754; --line: #dccfb5; --rule: rgba(64, 98, 140, .10);
+  --seal: #cf2f1d; --seal-soft: #ffd5c9; --ok: #18733f; --ok-soft: #cdeeda;
+  --amber: #cf8306; --amber-soft: #ffe7b0; --navy: #27409a; --navy-soft: #d9e0fa; --hl: #ffe45c;
   --shadow: 5px 5px 0 var(--ink); --shadow-sm: 3px 3px 0 var(--ink);
   --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   --serif: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; background: #2a2733; overflow: hidden; }
+html, body { margin: 0; height: 100%; background: #37334a; overflow: hidden; }
 body { font-family: var(--sans); color: var(--ink); -webkit-font-smoothing: antialiased; }
 button { font: inherit; color: inherit; cursor: pointer; }
 
