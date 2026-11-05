@@ -54,13 +54,13 @@ python3.12 -m venv .venv
 .venv/bin/python -m pytest -q          # expect: all tests pass (no models needed)
 ```
 
-## 3. Start Ollama and download the models (once, ~10 GB)
+## 3. Start Ollama and download the models (once, ~5 GB; step 4 adds the ~5 GB judge model)
 
 ```bash
 ollama serve > /tmp/ollama.log 2>&1 &    # skip if the Ollama app is already running (menu-bar llama icon)
 cd "Legal Docs Project/copilot"
-make setup                               # pulls qwen2.5:7b-instruct, llama3.1:8b, nomic-embed-text
-ollama list                              # all three should be listed
+make setup                               # pulls qwen2.5:7b-instruct and nomic-embed-text (step 4 adds llama3.1:8b)
+ollama list                              # the models you pulled should be listed
 ```
 
 > **Linux only:** Docker containers must reach Ollama, so start it with `OLLAMA_HOST=0.0.0.0 ollama serve`.
