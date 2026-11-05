@@ -70,7 +70,7 @@ make evals   # golden-set evals, per contract; ARGS="--contract lexmore" or "--s
 
 - `core/` `config` (settings + gateway profile, standards, prompt templates) · `gateway.py` (only door to models, no fallback) · `errors.py` (domain errors → HTTP codes, handled once in `main.py`) · `tracing.py` (Langfuse: prompts by version, guardrail tags; no-op without keys) · `doc_store.py`
 - `ingest/` `ingest_service` (PDF text → `chunker` (clause headings + page) → `vector_store` (Chroma))
-- `rag/` `retriever` (hybrid for standards) · `answerer` (chat) · `summariser` (key-terms summary, one call, cached; sources attached by Python)
+- `rag/` `retriever` (hybrid for standards) · `answerer` (chat) · `output_guard` (Python check: a reply copying the prompt becomes a refusal) · `summariser` (key-terms summary, one call, cached; sources attached by Python)
 - `policy/` `classifier` (strict JSON; retry with reason; unquoted N/A → Not found) · `grounding` (page-break aware) · `checks` (red-flag tripwire + numeric check; stricter only) · `scoring` · `review` (counsel decisions + audit) · `report` (Issues List)
 - `graph/` LangGraph `classify → score → human_gate (interrupt) → finalize`, `nodes` (steps + `ReviewState`) · `policy_service` (builds the graph with a SQLite checkpointer; start/resume)
 - `api/` `routes_documents` (upload, page text, summary, Q&A) · `routes_policy` · `main.py` mounts `web/`
@@ -89,7 +89,7 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 
 ## Status
 
-Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (69 passing, plus 5 red-team tests that need real models).
+Built: config, standards, ingest, chat RAG, policy graph + human gate, corporate legal UI, evals, tests (76 passing, plus 5 red-team tests that need real models).
 Contracting Standards v1.0: one YAML per provision in `copilot/config/standards/`. The app shows plain-English labels (OK / Acceptable / Not acceptable / Missing / Not mentioned (fine) / Doesn't apply / Needs a lawyer's check) over the fixed internal status codes; the outgoing Issues List keeps formal legal wording.
 This branch runs everything in Docker from `docker-compose.yml`. Docker on a Mac has no GPU access, so models run on the CPU there; `main` keeps Option B (app and Ollama native). Where Docker cannot run the models, `docker-compose.native.yml` moves Ollama out of Docker.
 Done: 5 synthetic contract PDFs, smoke test, gateway + tracing, 7B/8B models, per-contract evals: 76% rules exact, 3 of 5 risk bands right on the current test machine (5 of 5 on the first Mac run), 0 risky clauses marked OK.

@@ -78,6 +78,7 @@ infra/           Bifrost and Langfuse config
 | Build the prompt | `app/core/config.py` (`render()`) + `prompts/chat_answer.md` | prompts are files, not code |
 | Call the model | `app/core/gateway.py` | role → model; errors raised loudly |
 | Honest "Not found" | `app/rag/answerer.py` | no clauses → no model call |
+| Prompt leak check | `app/rag/output_guard.py` | a reply copying 8 words in a row from the prompt becomes a refusal, tagged `guardrail:prompt_leak` |
 
 ## 6. Walkthrough: the standards review
 

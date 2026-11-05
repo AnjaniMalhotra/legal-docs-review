@@ -19,11 +19,11 @@ The four tags were force-pushed to the new tips. This `summary.md` was committed
 
 ## Added after that handoff (on `full-docker` only)
 
-`main` and the step branches do not have these yet, so `main` is now behind `full-docker`. `step-5-tests` (tag `v5-tests`) is step 4 plus `copilot/tests/step5/`.
+`main` matches `full-docker`. The step branches do not have these. `step-5-tests` (tag `v5-tests`) is step 4 plus `copilot/tests/step5/`.
 
 - **Prompts come from Langfuse.** `config.render` reads the `production` label; with Langfuse connected and no prompt available it raises `GatewayError`, with no file fallback. `prompts/*.md` is the starting copy; `scripts/push_prompts.py` (`make prompts`) loads it. `chat_answer` is at version 3 on this machine.
 - **Tags.** `tracing.guardrail()` adds `guardrail:red_flag`, `grounding`, `numeric_check`, `human_gate` and `not_found` to Langfuse traces. Each model call sends `x-paynest-prompt` (for example `chat_answer@v3`), which Bifrost logs through `logging_headers`.
-- **Red team.** `tests/test_red_team.py`: 4 of 5 attacks blocked on real models. Attack 4 (repeat your instructions) still leaks the prompt. Prompt version 2 stopped the leak but wrongly refused 4 of 10 real questions, so it was rejected. A small Python output check would fix it; the user has not decided.
+- **Red team.** `tests/test_red_team.py`: 5 of 5 attacks blocked on real models. Prompt rules alone stopped 4; the model still writes out its prompt when told to repeat it word for word. `app/rag/output_guard.py` catches that after the reply is written (8 words in a row copied from the prompt) and returns the refusal, tagged `guardrail:prompt_leak`. Tested on 5 leak attempts, and 10 real questions were not blocked. It only catches copied text, not a paraphrase or translation. Prompt version 2 stopped the leak by prompt alone but wrongly refused 4 of 10 real questions.
 - **Deck.** Slides 24-37 are technical flow diagrams (`js/tech_*.js`, `css/tech.css`, `images/logos/`), and the colors are brighter. Logos are saved locally so the deck makes no outside requests. Slide 20 says 5 of 5 bands and slide 36 says 3 of 5: known and not yet resolved.
 - **This machine's app container** must be rebuilt after code changes; prompts change without a rebuild.
 

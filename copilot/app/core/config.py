@@ -66,7 +66,7 @@ def data_dir(*parts: str) -> Path:
     return path
 
 
-def _prompt_text(name: str) -> str:
+def prompt_text(name: str) -> str:
     """The prompt from Langfuse, where its versions are kept. Only without Langfuse (unit tests): the local file."""
     if tracing.ENABLED:
         cfg = settings()["prompts"]
@@ -76,7 +76,7 @@ def _prompt_text(name: str) -> str:
 
 def render(name: str, **values) -> str:
     """Fill a prompt's $placeholders. Values are inserted as-is (never re-parsed)."""
-    return Template(_prompt_text(name)).safe_substitute(**{k: str(v) for k, v in values.items()})
+    return Template(prompt_text(name)).safe_substitute(**{k: str(v) for k, v in values.items()})
 
 
 def format_clauses(chunks: list[dict]) -> str:
