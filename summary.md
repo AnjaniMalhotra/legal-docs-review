@@ -1,12 +1,50 @@
 # Handoff: PayNest Contract Copilot
 
-State as of 2026-11-05. Read `CLAUDE.md` first: its golden rules apply. This file adds only what happened in the last session.
+State as of 2026-11-05. Read `CLAUDE.md` first: its golden rules apply. This file covers the branch work and what is still open.
 
-## Git state
+## Git state: everything is pushed
 
-- Commit `a61d543` is pushed: local `full-docker` and `origin/full-docker` match.
-- `main` (`69713ef`) and `gh-pages` were not changed, so the published deck does not have the title fix and `main` has none of this work.
-- This file (`summary.md`) is deliberately uncommitted. Ask before committing it.
+Local and GitHub match for every branch below (checked after the last push). Remote: `AnjaniMalhotra/legal-docs-review`.
+
+| Branch | Tip | What it is |
+|---|---|---|
+| `full-docker` and `main` | `5dd2920` + the commit that adds this file | The finished project in Docker. **Ground truth.** `main` was fast-forwarded to it and is kept identical |
+| `step-4-evals` | `03cf367` | Tag `v4-evals`. Same code as `full-docker`, but native (no Docker packaging) |
+| `step-3-review-agent` | `310bb62` | Tag `v3-review-agent` |
+| `step-2-rag` | `eacfa06` | Tag `v2-rag` |
+| `step-1-setup` | `f66df37` | Tag `v1-setup` |
+| `gh-pages` | `5640f6b` | The published deck (https://anjanimalhotra.github.io/legal-docs-review/), a copy of `presentation/` |
+
+The four tags were force-pushed to the new tips. This `summary.md` was committed and pushed on the user's request.
+
+## How the branches relate (read before changing anything)
+
+The project is taught step by step, so the branches are cumulative. The rule is:
+
+- **Change `full-docker` first.** It is tested and is the reference for every other branch.
+- **`step-4-evals`** = `full-docker` minus Docker packaging (`docker-compose*.yml`, `Dockerfile`, `start.sh`, `.dockerignore`, `summary.md`). It keeps `SETUP.md`, a native `Makefile`, `run.sh` and `pull_models.sh`.
+- **Steps 1 to 3** = `step-4-evals` with the content of later steps cut out. Code, tests, prompts, web and standards are copied unchanged. Only these differ per step:
+  - `settings.yaml` and `gateway.yaml`: step 1 has `analyst` and `embed`; step 2 adds `retrieval` and `summary`; step 3 adds `classifier`, `scoring` and `gate`; step 4 adds `judge` and `evals`.
+  - Bifrost allowlist (`infra/bifrost/config.json`): `llama3.1:8b` appears only from step 4.
+  - `requirements.txt`, `Makefile` targets, `app/main.py` (step 2 has no web UI or review routes), `copilot/README.md`.
+  - Notebooks: step N has notebooks `01` to `0N`, with `notebooks/requirements.txt` and `notebooks/data/` trimmed to match.
+- **Check:** `git diff step-1-setup step-2-rag` (and 2 to 3, 3 to 4) should show only what that step adds. This was true at the last push.
+- The branches are not a straight git history. Each was updated separately, so `git log` does not show step 2 on top of step 1. The file contents are consistent.
+- The helper scripts used to rebuild the steps were in a temporary folder and are gone. To redo it, copy files from `step-4-evals` with `git checkout step-4-evals -- <paths>` and cut the later content, as listed above.
+
+## What changed in this session
+
+- **Steps 1 to 4 brought up to `full-docker`:** the teaching cleanup, chat synonyms, standalone notebooks at the repo root, Bifrost dashboard login, and no retention job. `GET /reviews/{id}` stays removed because `full-docker` dropped it.
+- **Step 1 now has the `embed` role**, because notebook `01` uses embeddings. `STEPS.md` says so.
+- **Bug fixed in `create_secrets.sh` (on `full-docker` too):** it never wrote `BIFROST_ADMIN_PASSWORD`, which `infra/bifrost/config.json` reads.
+- **`credentials.md`** (in every branch except `gh-pages`) lists the Langfuse and Bifrost logins. The script sets both passwords to `12345678`, simple on purpose (local teaching setup). It is 8 characters because Langfuse may reject shorter ones. **Not verified**, as nothing was running.
+- **This machine keeps its old random passwords.** `create_secrets.sh` never overwrites files, and the `.env` files were not read or changed. `credentials.md` applies to fresh setups only.
+- **Docs:** `STEPS.md` names `full-docker` as the finished project and has a learning-path diagram. `README.md` has a how-it-fits-together diagram. `infra/README.md` has a Mermaid picture. `docs/3_architecture.md` has a five-box review diagram and an "In simple words" box, and `docs/4_tech_stack.md` has a similar box. The GPU/CPU contradiction in the tech-stack doc is fixed, and old accuracy numbers in `CLAUDE.md` and `copilot/README.md` now say 3 of 5.
+- **Deck:** `gh-pages` carries the current deck (hardware, models and speed slides, title fix). The user chose to **leave its results slide at 5 of 5 bands**.
+
+## Not verified
+
+No Ollama was running during this work, so nothing was run. Python, YAML, JSON and notebook files were only parse-checked. The Mermaid diagrams were only bracket-checked, not rendered. Tests were not run on any step branch. Please run `make test` on a branch before relying on it.
 
 ## How it runs on this machine
 
@@ -25,25 +63,16 @@ docker compose -f docker-compose.yml up -d --no-deps app
 
 Never use `./start.sh` or plain `docker compose up` here: they recreate the Docker Ollama, which was deleted on purpose (CPU only, and it exhausted memory).
 
-| App | URL | Login |
-|---|---|---|
-| Copilot | http://localhost:8000 | None |
-| Bifrost | http://localhost:8080 | `admin`; password is `BIFROST_ADMIN_PASSWORD` in `infra/bifrost/.env` |
-| Langfuse | http://localhost:3000 | `LANGFUSE_INIT_USER_*` in `infra/langfuse/.env` |
-| Website, deck | http://localhost:5500, http://localhost:5600 | None |
+| App | URL |
+|---|---|
+| Copilot | http://localhost:8000 (no login) |
+| Bifrost | http://localhost:8080 |
+| Langfuse | http://localhost:3000 |
+| Website, deck | http://localhost:5500, http://localhost:5600 (no login) |
 
-The user gave explicit permission to show them these logins. Otherwise rule 9 applies: do not read or print `.env` files or `copilot/data/`.
+Logins for a fresh setup are in `credentials.md`. This machine's own logins are in the git-ignored `.env` files; rule 9 applies, so do not read or print them unless the user asks.
 
-Tests: `cd copilot && .venv/Scripts/python.exe -m pytest -q` (64 pass). The venv is Python 3.13 and git-ignored.
-
-## What commit a61d543 contains
-
-- **CRLF crash:** `.gitattributes` forces LF on `*.sh`.
-- **Native mode:** `docker-compose.native.yml`, `infra/bifrost/config.native.json`. Change both Bifrost configs when swapping a model.
-- **Notebooks:** moved to root `notebooks/`, standalone (no `app` imports), demo data in `notebooks/data/`, outputs saved. The Windows username was removed from saved outputs in `04_evals`.
-- **Chat fix:** `retrieval.question_synonyms` in `settings.yaml`, used by `retriever.for_question`. "Breach" now finds "Security Incident" clauses. Tested live on CareWell and Lexmore.
-- **Bifrost dashboard on:** config store plus `enforce_auth_on_inference: false`. Without that setting every model call returns 401. Admin password comes from env; `create_secrets.sh` now generates it.
-- **Deck title** no longer overlaps the graphic. Small dead code removed, docs updated.
+Tests: `cd copilot && .venv/Scripts/python.exe -m pytest -q` (64 passed on the last run, before this session). The venv is Python 3.13 and git-ignored.
 
 ## User decisions already made
 
@@ -51,6 +80,9 @@ Tests: `cd copilot && .venv/Scripts/python.exe -m pytest -q` (64 pass). The venv
 - Notebooks keep their outputs. Evals may be run when asked.
 - Do not commit or push unless told to.
 - Only the Docker Ollama was deleted. Leave the unrelated `retail_vault_creds` Docker volume alone.
+- Docker comes only in the last branch. Steps 1 to 4 stay native, with Bifrost and Langfuse in Docker.
+- Notebook `01` is in step 1, and the others arrive with their own step.
+- The deck's results slide stays as it is.
 
 ## Measured results (this machine, GPU)
 
@@ -75,23 +107,23 @@ Evals on the 5 answer-key contracts, `--skip-ragas`:
 | BrightRetail | 34 High (29 High) |
 | Orbit | 40 Medium (18 Low): wrong band |
 
-**Out of date:** `CLAUDE.md` status and the deck (`presentation/js/data.js`, results slide) still show the Mac run: 5 of 5 bands, CareWell 54. Do not repeat those as current.
+**Still out of date:** the deck's results slide (`presentation/js/data.js`) shows the older Mac run: 5 of 5 bands, CareWell 54. Do not repeat that as current. `CLAUDE.md` and `copilot/README.md` were corrected.
 
 ## Tried and rejected
 
-Prompt lines saying the standard is not contract text, plus a classifier retry when the quote matches the standard but not the retrieved clauses. Result: still 38 of 50 and 3 of 5. Lexmore was fixed, but BrightRetail fell to Medium and Orbit got further off. A small prompt edit also shifted unrelated rules, so more prompt tuning on these 5 contracts is not worthwhile. Fully reverted. The patch was in the old scratchpad and may be gone; it is simple to recreate.
+Prompt lines saying the standard is not contract text, plus a classifier retry when the quote matches the standard but not the retrieved clauses. Result: still 38 of 50 and 3 of 5. Lexmore was fixed, but BrightRetail fell to Medium and Orbit got further off. A small prompt edit also shifted unrelated rules, so more prompt tuning on these 5 contracts is not worthwhile. Fully reverted. The patch is gone; it is simple to recreate.
 
 ## Open items, awaiting the user
 
 1. **Risk floor gap:** a key rule (P1-P3) at `Needs review` does not trigger the "at least High" floor. One-line change to `scoring.floor.statuses`; run `tests/test_scoring.py`. Recommended, though false alarms on key rules would also show High.
 2. **Silent contracts:** many false alarms come from the model "finding" evidence for topics the contract does not cover. A Python pre-check on retrieved clauses is likely better than prompts.
-3. **Update the deck and `CLAUDE.md`** with the numbers above.
-4. Known misses still open: CareWell P8 (45 days should be Partial, model says Conflicting), CareWell P7.
-5. Unexplained: Langfuse worker socket timeouts, seen earlier, had stopped when last checked. `Failed to export spans` appeared from short-lived script runs; traces from the app do arrive.
-6. Remaining redundant code, reported but not changed: JSON parsing in `classifier.py` and `summariser.py`; approver rule in `findings.js` and `report.py`; hardcoded footer regex in `document_view.js`; `clause_no`, `paynest_position`, `disclaimer`, `uploaded_at` never shown in the UI.
-7. `policy_service.py` says a reviewer can reload and resume, but `full-docker` and `main` have no `GET /reviews/{id}` route and no UI for it.
-8. Test leftovers in `copilot/data/`, including one Lexmore review still awaiting a decision.
-9. From `CLAUDE.md`, still not done: no-egress check, held-out contract run (PDFs `06`-`15`, do not tune on them).
+3. Known misses still open: CareWell P8 (45 days should be Partial, model says Conflicting), CareWell P7.
+4. Unexplained: Langfuse worker socket timeouts, seen earlier, had stopped when last checked. `Failed to export spans` appeared from short-lived script runs; traces from the app do arrive.
+5. Remaining redundant code, reported but not changed: JSON parsing in `classifier.py` and `summariser.py`; approver rule in `findings.js` and `report.py`; hardcoded footer regex in `document_view.js`; `clause_no`, `paynest_position`, `disclaimer`, `uploaded_at` never shown in the UI.
+6. `policy_service.py` says a reviewer can reload and resume, but no branch has a `GET /reviews/{id}` route or a UI for it. The wording in the docstring is still wrong.
+7. Test leftovers in `copilot/data/`, including one Lexmore review still awaiting a decision.
+8. From `CLAUDE.md`, still not done: no-egress check, held-out contract run (PDFs `06`-`15`, do not tune on them).
+9. The Langfuse login `12345678` (8 characters) is untested; if Langfuse rejects it, change `PW=` in `create_secrets.sh` on every branch.
 
 ## Pitfalls
 
@@ -99,4 +131,5 @@ Prompt lines saying the standard is not contract text, plus a classifier retry w
 - This Langfuse version only serves `/api/public/v2/observations`; the older traces API returns 404.
 - The app image contains the code, so run `docker compose -f docker-compose.yml up -d --build --no-deps app` after code changes. `config/` is mounted live, but `lru_cache` needs an app restart.
 - The GPU fits one large model at a time. Stop the app's use of it before long eval runs.
+- When changing a model, update `settings.yaml`, `gateway.yaml` and both Bifrost configs (`config.json` and `config.native.json`) on `full-docker`; on the native branches, only `config.json`, and keep its allowlist to that step's models.
 - In Python heredocs here, avoid literal Windows paths: backslash escapes broke twice. Build them with `chr(92)`.
