@@ -42,7 +42,10 @@ LANGFUSE_INIT_USER_NAME=Admin
 LANGFUSE_INIT_USER_PASSWORD=$PW
 EOF
 
-echo "LANGFUSE_OTEL_AUTH=Basic $(printf '%s:%s' "$PK" "$SK" | base64 | tr -d '\n')" > infra/bifrost/.env
+cat > infra/bifrost/.env <<EOF
+LANGFUSE_OTEL_AUTH=Basic $(printf '%s:%s' "$PK" "$SK" | base64 | tr -d '\n')
+BIFROST_ADMIN_PASSWORD=$(rnd 8)
+EOF
 
 cat > copilot/.env.local <<EOF
 GATEWAY_API_KEY=local
@@ -50,4 +53,4 @@ LANGFUSE_PUBLIC_KEY=$PK
 LANGFUSE_SECRET_KEY=$SK
 EOF
 
-echo "✓ Secrets created. Langfuse login is in infra/langfuse/.env"
+echo "✓ Secrets created. Logins: Langfuse in infra/langfuse/.env, Bifrost in infra/bifrost/.env"
