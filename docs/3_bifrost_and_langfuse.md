@@ -93,6 +93,8 @@ It says `Secrets created`. It made three files:
 - Run the script again and it says `Secrets already exist`. It never overwrites them.
 - The keys in the three files **must match**. That is why one script makes all three together.
 
+**Want to know what is inside the script?** Read `3a_create_secrets_explained.md`.
+
 ---
 
 ## 4. Start Langfuse
