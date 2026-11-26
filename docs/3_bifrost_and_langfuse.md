@@ -307,3 +307,5 @@ docker start paynest-bifrost
 | Stop everything | `docker compose stop` and `docker stop paynest-bifrost` |
 | Langfuse | http://localhost:3000 (`admin@paynest.local` / `12345678`) |
 | Bifrost | http://localhost:8080 (`admin` / `12345678`) |
+
+**Next:** `4_app_core_explained.md`, the app's first files.

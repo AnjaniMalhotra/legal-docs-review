@@ -1,5 +1,6 @@
 # Config
 pyyaml>=6.0
+python-dotenv>=1.0
 
 # Models (OpenAI-compatible client pointed at local Bifrost)
 openai>=1.40
