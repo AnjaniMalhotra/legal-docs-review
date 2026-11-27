@@ -208,5 +208,5 @@ The receiver then follows this guide from step 1. `copilot/data/` holds uploaded
 | Learn it in 4 steps (branches + notebooks) | `STEPS.md` |
 | The business and its clients | `docs/1_company_and_clients.md` |
 | The company policy the tool checks against | `policies/PayNest_Contracting_Standards.md` |
-| How the system works | `docs/3_architecture.md` |
+| How the system works | `docs/8_architecture.md` |
 | Each tool and every code file | `docs/4_tech_stack.md` |

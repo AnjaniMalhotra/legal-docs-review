@@ -10,15 +10,11 @@ This branch is **step 3** of the learning path in [../STEPS.md](../STEPS.md); `f
 - `web/`: the full portal: summary, highlighted agreement, review, Issues List, audit trail, chat.
 
 ## Run it
-First-time setup of tools, models and secrets: [../SETUP.md](../SETUP.md).
 
-```bash
-make gateway && make up        # → http://localhost:8000
-make test                      # golden scores 49 / 43 / 3 / 29 / 18
-```
+On Windows (cmd), follow `../docs/README.md` in order. The `make` commands and `scripts/run.sh` are shortcuts for Mac and Linux.
 
 ## Teaching notebook
-`../notebooks/03_review_agent.ipynb`: start it with `make notebook`.
+`../notebooks/03_review_agent.ipynb` (after `00` to `02` from steps 1 and 2).
 
 ## Next step
 `git checkout step-4-evals`: measure quality with an answer key, a judge model and Ragas.

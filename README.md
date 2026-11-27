@@ -16,8 +16,10 @@ PayNest Technologies, its clients and its contracts are fictional, made for teac
 | Learn it in 4 steps (one branch and one notebook per step) | [STEPS.md](STEPS.md) |
 | Logins for Langfuse and Bifrost (local, educational) | [credentials.md](credentials.md) |
 | The business and its clients | [docs/1_company_and_clients.md](docs/1_company_and_clients.md) |
+| Ollama in cmd: install, models, questions | [docs/2_ollama_basics.md](docs/2_ollama_basics.md) |
+| Bifrost and Langfuse in Docker, step by step | [docs/3_bifrost_and_langfuse.md](docs/3_bifrost_and_langfuse.md) |
 | The company policy the tool checks against | [policies/PayNest_Contracting_Standards.md](policies/PayNest_Contracting_Standards.md) (from step 3) |
-| How it works | [docs/3_architecture.md](docs/3_architecture.md) (from step 3) |
+| How it works | [docs/8_architecture.md](docs/8_architecture.md) (from step 3) |
 | The tools and every file | [docs/4_tech_stack.md](docs/4_tech_stack.md) (step 4) |
 
 ## How it fits together

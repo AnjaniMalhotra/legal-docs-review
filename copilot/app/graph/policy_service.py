@@ -1,4 +1,4 @@
-"""Builds the policy-check LangGraph, then starts and resumes reviews. Used by the API and by evals.
+"""Builds the policy-check LangGraph, then starts and resumes reviews. Used by the API.
 
 The SQLite checkpointer keeps a paused review (human gate) on disk, so the reviewer
 can reload the page or come back later and resume the same review.
