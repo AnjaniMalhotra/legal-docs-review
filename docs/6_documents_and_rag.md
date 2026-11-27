@@ -178,3 +178,5 @@ Uploaded contracts, their clauses and summaries are saved in **`copilot/data/`**
 | Old settings still used | A `set` from earlier is still active. Open a new cmd window |
 
 **Next:** the teaching notebook `notebooks/02_rag.ipynb` shows the same steps one cell at a time.
+
+**Also read:** `6a_why_rag_by_hand.md`, why we wrote RAG ourselves instead of using LangChain.
