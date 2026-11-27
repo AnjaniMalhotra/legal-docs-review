@@ -56,7 +56,7 @@ copilot/
 |   |-- pull_models.sh           downloads models (same as ollama pull)
 |   `-- run.sh                   starts things on Mac/Linux
 |-- tests/
-|   |-- conftest.py              shared test setup
+|   |-- conftest.py              lets the tests find the app code
 |   `-- test_gateway.py          tests for gateway.py
 |-- requirements.txt             Python packages the app needs
 |-- .env.local.example           a sample of .env.local
@@ -94,7 +94,9 @@ models:
 
 - `settings()` opens `settings.yaml`, then lays the profile on top if one is set.
 - It reads the file **once** and remembers it (`@lru_cache`, see doc 5).
-- It also has helpers we use **in later steps**: `standards()` (step 3, company rules), `render()` (prompts), `data_dir()` (where uploads go). You can skip those for now.
+- `env(name, default)` reads one setting from the environment, like `BIFROST_URL`.
+- Each function has a comment above it showing **what goes in and what comes out**.
+- In later steps this file grows: company rules (step 3), prompt files and upload folders (step 2).
 
 ### `app/core/gateway.py`: the only door to the models
 
@@ -111,14 +113,10 @@ models:
 
 ### `app/core/errors.py`: named errors
 
-| Error | Means | Used from |
-|---|---|---|
-| `GatewayError` | a model call failed | step 1 |
-| `NotFoundError` | unknown document | step 2 |
-| `UnreadablePdfError` | a scanned PDF with no text | step 2 |
-| `DecisionError` | a lawyer's decision is incomplete | step 3 |
+Step 1 has one: `GatewayError`, meaning **a model call failed**.
 
 A named error says **what** went wrong. A plain `Exception` says nothing.
+More join in later steps, like `NotFoundError` (an unknown document, step 2).
 
 ### `scripts/smoke_test_roles.py`: "is everything alive?"
 

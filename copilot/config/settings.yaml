@@ -2,12 +2,6 @@
 # Every threshold, weight cut-off and model name lives here.
 # Code reads these values; it never hard-codes them.
 
-app:
-  name: PayNest Contract Copilot
-  standards_version: v1.0
-  data_dir: data            # uploads, chroma, checkpoints, reports (git-ignored)
-  max_upload_mb: 25
-
 # Role -> model map. The app asks for a ROLE; only this file names models.
 # By default requests go straight to Ollama (BIFROST_URL=http://localhost:11434/v1).
 # profiles/gateway.yaml routes the same models through Bifrost, traced in Langfuse.
@@ -21,5 +15,3 @@ models:
   embed:
     model: nomic-embed-text
     base_url_env: EMBED_BASE_URL               # defaults to BIFROST_URL if unset
-    document_prefix: "search_document: "       # nomic-embed-text task prefixes
-    query_prefix: "search_query: "

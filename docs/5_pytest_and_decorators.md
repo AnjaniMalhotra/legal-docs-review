@@ -124,7 +124,7 @@ hello()   # -> "HELLO"
 |---|---|---|---|
 | `@lru_cache` | `config.py` (`settings`), `gateway.py` (`_client`) | **Remember the answer.** Run once, then reuse the result | 1 |
 | `@traced("llm.chat")` | `gateway.py` (`chat`, `embed`) | **Record every call in Langfuse.** Does nothing if there are no keys | 1 |
-| `@pytest.fixture` | `tests/conftest.py` | **Prepare something for tests** (see below) | 1 |
+| `@pytest.fixture` | `tests/` | **Prepare something for tests** (see below) | 2 |
 | `@router.get(...)`, `@router.post(...)` | `app/api/` | **Turn a function into a web address**, like `POST /api/documents` | 2 |
 | `@app.get("/api/health")` | `app/main.py` | The same, for the app's health check | 2 |
 | `@pytest.mark.parametrize(...)` | `tests/` | **Run one test many times** with different inputs | 3 |
@@ -156,28 +156,24 @@ In the notebook we did the same thing by hand, with `with langfuse.start_as_curr
 
 ### `@pytest.fixture`: prepare things for tests
 
-A fixture is **something a test needs, made ready before the test runs**.
-
-```python
-@pytest.fixture(autouse=True)
-def isolated_data_dir(tmp_path, monkeypatch):
-    monkeypatch.setenv("DATA_DIR", str(tmp_path))
-```
-
-- `autouse=True`: use it for **every** test, automatically.
-- `tmp_path`: pytest gives each test a **fresh empty folder**, deleted afterwards.
-- So every test saves its files in its own throwaway folder, **never** in the real `data/` folder.
+A fixture is **something a test needs, made ready before the test runs**. We write our own from step 2. Here is the idea:
 
 ```python
 @pytest.fixture
-def golden() -> dict:
-    ...  # loads evals/golden_set.json
+def fake_contract():
+    return {"page": 3, "text": "Availability of 99.5%."}
+
+def test_reads_the_page(fake_contract):      # naming it is enough: pytest hands it over
+    assert fake_contract["page"] == 3
 ```
 
-- No `autouse`, so a test gets it **only if it asks**, by naming it: `def test_something(golden):`.
-- `golden` is the answer key for the sample contracts. It is used from step 3. In step 1 no test asks for it yet.
+- A test gets a fixture **just by naming it** as an input.
+- Add `autouse=True` and **every** test gets it automatically.
 
-> `tmp_path` and `monkeypatch` are fixtures that **come with pytest**. A test just names them and pytest hands them over.
+**You already used one in step 1:** `monkeypatch` is a fixture that **comes with pytest**.
+Our tests name it (`def test_...(monkeypatch):`) and pytest hands it over. So does `tmp_path`, which gives a test a fresh empty folder.
+
+> `tests/conftest.py` is where shared fixtures live. In step 1 it only does one job: it lets the tests find the `app` code.
 
 ---
 

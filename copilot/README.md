@@ -9,17 +9,12 @@ This branch is **step 1** of the learning path in [../STEPS.md](../STEPS.md); `f
 - `infra/`: Bifrost (with a model allowlist) and self-hosted Langfuse in Docker.
 
 ## Run it
-First-time setup of tools, models and secrets: [../SETUP.md](../SETUP.md) (sections 1–5).
 
-```bash
-make install && make setup     # Python packages and the model
-make gateway                   # Bifrost + Langfuse
-make smoke                     # one prompt → see it in Bifrost (:8080) and Langfuse (:3000)
-make test
-```
+On Windows (cmd), follow `../docs/README.md` in order: Ollama (doc 2), Bifrost and Langfuse (doc 3), then this app (doc 4).
+The `make` commands and `scripts/run.sh` are shortcuts for Mac and Linux.
 
 ## Teaching notebook
-`../notebooks/01_hello_llm.ipynb`: start it with `make notebook`.
+`../notebooks/00_hello_ollama.ipynb`, then `../notebooks/01_hello_llm.ipynb`.
 
 ## Next step
 `git checkout step-2-rag`: turn PDFs into searchable clauses and answer questions with citations.
