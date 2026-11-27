@@ -1,4 +1,4 @@
-"""Plain-English summary of an agreement's key terms, separate from the standards review.
+"""Plain-English summary of an agreement's key terms.
 
 For each section in settings.summary, the most relevant provisions are retrieved and the
 analyst model writes all section summaries in ONE call. The sources (clause and page) are
