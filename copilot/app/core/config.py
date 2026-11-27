@@ -16,9 +16,9 @@ CONFIG_DIR = ROOT / "config"
 PROMPTS_DIR = ROOT / "prompts"              # new in step 2
 
 
-# In:  base     = {"analyst": {"model": "qwen2.5:7b-instruct", "temperature": 0}}
-#      override = {"analyst": {"model": "ollama/qwen2.5:7b-instruct"}}
-# Out: {"analyst": {"model": "ollama/qwen2.5:7b-instruct", "temperature": 0}}   <- only the model changed
+# In:  base     = {"analyst": {"model": "<model>", "temperature": 0}}
+#      override = {"analyst": {"model": "ollama/<model>"}}
+# Out: {"analyst": {"model": "ollama/<model>", "temperature": 0}}   <- only the model changed
 def _merge(base: dict, override: dict) -> dict:
     """Deep-merge `override` into `base` (dicts merge, everything else replaces)."""
     out = dict(base)
@@ -28,9 +28,9 @@ def _merge(base: dict, override: dict) -> dict:
 
 
 # In:  nothing (reads config/settings.yaml, and the profile named in SETTINGS_PROFILE)
-# Out: {"app": {...}, "models": {"analyst": {"model": "qwen2.5:7b-instruct", ...}, "embed": {...}},
+# Out: {"app": {...}, "models": {"analyst": {"model": "<model>", ...}, "embed": {...}},
 #       "retrieval": {"top_k_chat": 5, ...}, "summary": {...}}
-#      With SETTINGS_PROFILE=gateway, the analyst model is "ollama/qwen2.5:7b-instruct" instead.
+#      With SETTINGS_PROFILE=gateway, the analyst model is "ollama/<model>" instead.
 @lru_cache
 def settings() -> dict:
     """settings.yaml, optionally overlaid by config/profiles/<SETTINGS_PROFILE>.yaml."""
