@@ -46,7 +46,7 @@ def for_question(doc_id: str, question: str) -> list[dict]:
 
 @traced("retrieve.rule")
 def for_rule(doc_id: str, rule: dict) -> list[dict]:
-    """The clauses most relevant to one standard: by meaning, then re-ranked by its look_for terms."""
+    """The clauses most relevant to one standard: by meaning, then re-ranked by its look_for terms. New in step 3."""
     cfg = settings()["retrieval"]
     query = f"{rule['title']}. {', '.join(rule['look_for'])}. {rule['preferred']}"
     candidates = vector_store.search(doc_id, query, cfg["rule_candidates"])

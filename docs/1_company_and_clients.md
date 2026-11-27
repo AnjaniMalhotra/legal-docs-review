@@ -42,7 +42,7 @@ Everything you need to know about the business before reading the code. No legal
 | **Security** | ISO 27001 certified; yearly third-party audit; strict access control |
 
 > **The founding story:** in 2023 British Airways, the BBC and Boots lost staff payroll data because their
-> payroll provider's file-transfer *vendor* was hacked (Zellis/MOVEit, see [2_case_studies.md](2_case_studies.md)).
+> payroll provider's file-transfer *vendor* was hacked (Zellis/MOVEit, see [7_case_studies.md](7_case_studies.md)).
 > PayNest's pitch: **"With us, there is no vendor's vendor."**
 
 ## 2. Who the clients are

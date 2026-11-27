@@ -1,6 +1,6 @@
 """The only door to the models: an OpenAI-compatible client pointed at Bifrost.
 
-Callers pass a ROLE (analyst, judge, embed). The role -> model map comes from
+Callers pass a ROLE (analyst, embed; judge from step 4). The role -> model map comes from
 settings.yaml, so code never names a model. BIFROST_URL points at Bifrost
 (gateway profile) or straight at Ollama; both speak the same OpenAI-compatible API.
 There is no fallback model: a failure raises GatewayError (fail loudly).
@@ -22,7 +22,7 @@ def _client(base_url: str) -> OpenAI:
 
 
 def _role(role: str) -> dict:
-    """The settings block for a role (analyst, judge, embed)."""
+    """The settings block for a role (analyst, embed, judge)."""
     return settings()["models"][role]
 
 

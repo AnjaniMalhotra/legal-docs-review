@@ -21,6 +21,6 @@ def answer(doc_id: str, question: str) -> dict:
     return {
         "answer": text,
         "found": not text.lower().startswith(NOT_FOUND.lower().rstrip(".")),
-        "contexts": [c["text"] for c in chunks],   # used by evals (Ragas)
+        "contexts": [c["text"] for c in chunks],   # new in step 4: the evals (Ragas) read these
         "trace_id": current_trace_id(),
     }

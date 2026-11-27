@@ -1,27 +1,27 @@
-"""Domain errors, mapped to HTTP status codes in one place (app/main.py).
+"""Named errors, mapped to HTTP status codes in one place (app/main.py).
 
 Modules raise these instead of generic exceptions, so a real bug (e.g. a KeyError
 in our own code) is never mistaken for "document not found".
 """
 
 
-class NotFoundError(LookupError):
-    """An unknown document or review id."""
-
-
 class GatewayError(RuntimeError):
     """A model role failed and has no fallback. Never silently downgrade."""
 
 
+class NotFoundError(LookupError):
+    """An unknown document or review id. New in step 2."""
+
+
 class UnreadablePdfError(ValueError):
-    """The PDF has no extractable text (likely scanned)."""
+    """The PDF has no extractable text (likely scanned). New in step 2."""
 
 
 class DecisionError(ValueError):
-    """Reviewer decisions at the human gate are incomplete or invalid."""
+    """A lawyer's decisions at the human gate are incomplete or invalid. New in step 3."""
 
 
-# error class -> HTTP status code, used by the handler in app/main.py
+# error class -> HTTP status code, used by the handler in app/main.py (new in step 2)
 HTTP_STATUS = {
     NotFoundError: 404,
     UnreadablePdfError: 422,

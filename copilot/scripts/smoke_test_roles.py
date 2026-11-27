@@ -1,13 +1,17 @@
 """System check: one test prompt per model role, through the gateway.
 
 Each call should appear in both the Bifrost logs and a Langfuse trace.
-Usage:  make smoke
+Usage:  python scripts/smoke_test_roles.py   (from copilot/; works in cmd, no make needed)
 """
 import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from dotenv import load_dotenv
+
+COPILOT = Path(__file__).resolve().parents[1]
+load_dotenv(COPILOT / ".env.local")  # gateway profile, Bifrost URL, Langfuse keys; must load before app imports
+sys.path.insert(0, str(COPILOT))
 
 from app.core import gateway, tracing  # noqa: E402
 from app.core.errors import GatewayError  # noqa: E402

@@ -10,7 +10,7 @@ lawyer sign off the risky findings, and issue the Issues List for negotiation.
 
 **Learning it step by step?** See [../STEPS.md](../STEPS.md): four branches, each with a notebook in `notebooks/` (`make notebook`).
 
-**New to the code?** Read [../docs/4_tech_stack.md](../docs/4_tech_stack.md) (tools and every file) and [../docs/3_architecture.md](../docs/3_architecture.md) (how it works). The rules it checks: [../policies/PayNest_Contracting_Standards.md](../policies/PayNest_Contracting_Standards.md).
+**New to the code?** Read [../docs/10_tech_stack.md](../docs/10_tech_stack.md) (tools and every file) and [../docs/8_architecture.md](../docs/8_architecture.md) (how it works). The rules it checks: [../policies/PayNest_Contracting_Standards.md](../policies/PayNest_Contracting_Standards.md).
 
 ## Stack
 
@@ -26,6 +26,8 @@ lawyer sign off the risky findings, and issue the Issues List for negotiation.
 | Evals | Plain-Python accuracy + Ragas (`evals/`) |
 
 ## First run
+
+**On Windows (cmd):** follow `../docs/README.md` in order. The `make` commands below are shortcuts for Mac and Linux.
 
 Needs Python 3.11+, [Ollama](https://ollama.com) and about 8 GB of RAM free.
 

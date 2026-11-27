@@ -12,7 +12,7 @@ The copilot runs on one machine: **browser UI → FastAPI app (LangGraph review 
 optionally through the **Bifrost gateway**, with **Langfuse + Ragas** for observability. **Nothing talks to the internet.**
 
 > Diagrams use Mermaid. In VS Code, install *Markdown Preview Mermaid Support* to see them rendered.
-> Tools and the file-by-file walkthrough: [4_tech_stack.md](4_tech_stack.md). The rules themselves: [../policies/PayNest_Contracting_Standards.md](../policies/PayNest_Contracting_Standards.md).
+> Tools and the file-by-file walkthrough: [10_tech_stack.md](10_tech_stack.md). The rules themselves: [../policies/PayNest_Contracting_Standards.md](../policies/PayNest_Contracting_Standards.md).
 
 ---
 
