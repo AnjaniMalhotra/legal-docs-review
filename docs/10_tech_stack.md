@@ -1,4 +1,4 @@
-# 4 · Tech Stack and Code Walkthrough
+# 10 · Tech Stack and Code Walkthrough
 
 > **In simple words.** Each row in the first table is one tool: what it does here, and why we picked it. The rest of the
 > page shows where each idea lives in the code, so you can open the file and read it. Every file is short.
