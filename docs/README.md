@@ -11,3 +11,5 @@
 | - | `glossary.md` | Every word explained in one line | Open it whenever a word is new |
 
 Logins for Langfuse and Bifrost are in `../credentials.md`.
+
+**For the teacher:** `teaching_script_step1.md` is the step-by-step class script for the app code (which file to open, what to say, what to run).
