@@ -13,7 +13,7 @@ flowchart LR
 
 | Step | Branch / tag | What you learn | Run it | Notebook |
 |---|---|---|---|---|
-| **1** | `step-1-setup` / `v1-setup` | Talk to a local LLM through a gateway, and see every call traced | `make smoke` | `01_hello_llm.ipynb` |
+| **1** | `step-1-setup` / `v1-setup` | Talk to a local LLM through a gateway, and see every call traced | `make smoke` | `00_hello_ollama.ipynb`, `01_hello_llm.ipynb` |
 | **2** | `step-2-rag` / `v2-rag` | Turn a PDF into searchable clauses; answer questions with page citations | `make up` → http://localhost:8000/api/docs | `02_rag.ipynb` |
 | **3** | `step-3-review-agent` / `v3-review-agent` | Encode company policy; an agent applies it; Python verifies and scores; a lawyer signs off | `make up` → http://localhost:8000 (the full portal) | `03_review_agent.ipynb` |
 | **4** | `step-4-evals` / `v4-evals` | Prove the quality with an answer key, a judge model and Ragas | `make evals ARGS="--contract lexmore"` | `04_evals.ipynb` |
@@ -35,7 +35,7 @@ cd copilot && .venv/bin/pip install -r requirements.txt
 
 **Step 1 · Setup.** The model plumbing (`app/core/`), the gateway and tracing infrastructure (`infra/`),
 `config/settings.yaml` with two model roles (analyst, embed), the setup scripts, `SETUP.md`, the company background
-(`docs/1_company_and_clients.md`, `docs/glossary.md`), the marketing website and the first notebook (`notebooks/`).
+(`docs/1_company_and_clients.md`, `docs/glossary.md`), the marketing website and the first two notebooks (`notebooks/`).
 
 **Step 2 · Documents + RAG.** PDF ingestion and clause chunking (`app/ingest/`), embeddings and the vector
 store, hybrid retrieval, cited chat answers and the key-terms summary (`app/rag/`), the document API routes,

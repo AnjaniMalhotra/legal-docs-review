@@ -4,7 +4,6 @@
 
 app:
   name: PayNest Contract Copilot
-  standards_version: v1.0
   data_dir: data            # uploads, chroma, checkpoints, reports (git-ignored)
   max_upload_mb: 25
 
@@ -21,7 +20,7 @@ models:
   embed:
     model: nomic-embed-text
     base_url_env: EMBED_BASE_URL               # defaults to BIFROST_URL if unset
-    document_prefix: "search_document: "       # nomic-embed-text task prefixes
+    document_prefix: "search_document: "       # nomic-embed-text task prefixes (new in step 2: used by vector search)
     query_prefix: "search_query: "
 
 retrieval:
@@ -36,9 +35,7 @@ retrieval:
     delete: [return and deletion]
     pay: [invoice, payment]
   preamble_heading: Cover page, parties and recitals   # label for text before the first numbered clause
-  top_k_rule: 6
-  rule_candidates: 12       # semantic candidates re-ranked by the rule's look_for terms (hybrid retrieval)
-  keyword_boost: 0.06       # similarity bonus per look_for term found in a clause
+  keyword_boost: 0.06       # similarity bonus per question word found in a clause
   chunk_max_chars: 1200
   chunk_overlap_chars: 150
   min_chunk_chars: 40

@@ -1,9 +1,9 @@
-"""Finds the provisions most relevant to a question or a standard.
+"""Finds the provisions most relevant to a question.
 
-Both use hybrid retrieval: semantic search returns a wider set of candidates, which are then
-re-ranked by how many key terms each provision contains (the standard's `look_for` terms, or
-the question's own words). This lifts provisions with the exact drafting ("unlimited",
-"invoices") above definitions and boilerplate that are only loosely similar in meaning.
+Hybrid retrieval: semantic search returns a wider set of candidates, which are then
+re-ranked by how many of the question's own words each provision contains. This lifts
+provisions with the exact drafting ("unlimited", "invoices") above definitions and
+boilerplate that are only loosely similar in meaning.
 """
 import re
 
@@ -42,12 +42,3 @@ def for_question(doc_id: str, question: str) -> list[dict]:
     opening = vector_store.opening(doc_id, cfg["chat_opening_chunks"])
     seen = {h["text"] for h in hits}
     return hits + [h for h in opening if h["text"] not in seen]
-
-
-@traced("retrieve.rule")
-def for_rule(doc_id: str, rule: dict) -> list[dict]:
-    """The clauses most relevant to one standard: by meaning, then re-ranked by its look_for terms."""
-    cfg = settings()["retrieval"]
-    query = f"{rule['title']}. {', '.join(rule['look_for'])}. {rule['preferred']}"
-    candidates = vector_store.search(doc_id, query, cfg["rule_candidates"])
-    return _rerank(candidates, [t.lower() for t in rule["look_for"]], cfg["top_k_rule"])

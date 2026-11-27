@@ -10,15 +10,11 @@ This branch is **step 2** of the learning path in [../STEPS.md](../STEPS.md); `f
 - API: upload, page text, summary and questions at `/api/docs`.
 
 ## Run it
-First-time setup of tools, models and secrets: [../SETUP.md](../SETUP.md) (sections 1–6; the web portal arrives in step 3).
 
-```bash
-make gateway && make up        # → http://localhost:8000/api/docs
-make test
-```
+On Windows (cmd), follow `../docs/README.md` in order. The `make` commands and `scripts/run.sh` are shortcuts for Mac and Linux.
 
 ## Teaching notebook
-`../notebooks/02_rag.ipynb`: start it with `make notebook`.
+`../notebooks/02_rag.ipynb` (after `00_hello_ollama` and `01_hello_llm` from step 1).
 
 ## Next step
 `git checkout step-3-review-agent`: PayNest's policies, the review agent and the web portal.

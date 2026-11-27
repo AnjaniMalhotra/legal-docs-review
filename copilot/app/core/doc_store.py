@@ -1,7 +1,6 @@
-"""Stores each uploaded contract's page text, and each final report, on local disk.
+"""Stores each uploaded contract's page text, and its key-terms summary, on local disk.
 
-The grounding guard needs the original text to check quotes word for word.
-Final reports are kept as the audit record.
+Later steps read the original text back (for example to check quotes word for word).
 Nothing here leaves the machine.
 """
 import json
@@ -47,8 +46,3 @@ def load_summary(doc_id: str) -> dict | None:
     """The cached summary, or None if not generated yet."""
     path = data_dir("summaries") / f"{doc_id}.json"
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
-
-
-def save_report(review_id: str, report: dict) -> None:
-    """Store a finished review as the audit record."""
-    (data_dir("reports") / f"{review_id}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
