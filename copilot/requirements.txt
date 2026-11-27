@@ -6,6 +6,7 @@ pydantic>=2.7
 
 # Config
 pyyaml>=6.0
+python-dotenv>=1.0
 
 # Ingest + retrieval
 pypdf>=4.2

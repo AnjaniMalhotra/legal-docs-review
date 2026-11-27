@@ -79,7 +79,7 @@ Web UI (`copilot/web/js/`): single column, one tab bar (Summary · Agreement · 
 - Python 3.11, type hints, a module docstring explaining *why* the file exists, small functions.
 - Errors: raise a domain error from `app/core/errors.py` (`NotFoundError`, `GatewayError`, `DecisionError`,
   `UnreadablePdfError`); never a bare `KeyError`. Routes stay thin. `main.py` maps errors to HTTP codes.
-- Tech stack and file-by-file walkthrough: `docs/4_tech_stack.md`. Update it when adding a file.
+- Tech stack and file-by-file walkthrough: `docs/10_tech_stack.md`. Update it when adding a file.
 - JS: ES modules, `escapeHtml` for every dynamic value, no `innerHTML` with raw user or model text.
 - CSS: tokens in `web/css/base.css` (light + dark). Components in `components.css`.
 - Tests: deterministic logic (scoring, grounding, chunker, review) must stay covered. Golden scores must stay 49 / 43 / 3 / 29 / 18.

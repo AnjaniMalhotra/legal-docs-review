@@ -1,6 +1,6 @@
-"""Stores each uploaded contract's page text, and each final report, on local disk.
+"""Stores each uploaded contract's page text, its key-terms summary and each final review report, on local disk.
 
-The grounding guard needs the original text to check quotes word for word.
+The grounding guard (step 3) reads the original text back to check quotes word for word.
 Final reports are kept as the audit record.
 Nothing here leaves the machine.
 """
@@ -50,5 +50,5 @@ def load_summary(doc_id: str) -> dict | None:
 
 
 def save_report(review_id: str, report: dict) -> None:
-    """Store a finished review as the audit record."""
+    """Store a finished review as the audit record. New in step 3."""
     (data_dir("reports") / f"{review_id}.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
