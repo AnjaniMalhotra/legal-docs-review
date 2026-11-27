@@ -2,6 +2,7 @@
 # Run the copilot natively (Ollama on the Mac uses the GPU). Option B: add Bifrost + Langfuse
 # from infra/ and set SETTINGS_PROFILE=gateway in .env.local.
 #   ./scripts/run.sh                          → app at http://localhost:8000
+#   ./scripts/run.sh python scripts/smoke_test_roles.py  → any command with these settings
 # Requires: `ollama serve` running and the models pulled (`make setup`).
 set -euo pipefail
 cd "$(dirname "$0")/.."
