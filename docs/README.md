@@ -12,8 +12,9 @@
 | 6a | `6a_why_rag_by_hand.md` | Why RAG, and why we built it ourselves instead of using LangChain blocks or an agent | Read with doc 6 |
 | 7 | `7_case_studies.md` | Step 3: real payroll incidents, and why PayNest needs contracting rules | Nothing to run |
 | 8 | `8_architecture.md` | Step 3: how the whole system fits together: the review agent, the checks, the score | `notebooks/03_review_agent.ipynb` |
+| 9 | `9_review_agent_explained.md` | Step 3: the review agent: the model reads, Python checks and scores, a lawyer decides | The portal at http://127.0.0.1:8000, `notebooks/03_review_agent.ipynb` |
 | - | `glossary.md` | Every word explained in one line | Open it whenever a word is new |
 
 Logins for Langfuse and Bifrost are in `../credentials.md`.
 
-**For the teacher:** `teaching_script_step1.md` (step 1, the app code) and `teaching_script_step2.md` (step 2, documents and RAG) are the step-by-step class scripts: which file to open, what to say, what to run.
+**For the teacher:** `teaching_script_step1.md` (step 1, the app code), `teaching_script_step2.md` (step 2, documents and RAG) and `teaching_script_step3.md` (step 3, the review agent) are the step-by-step class scripts: which file to open, what to say, what to run.
