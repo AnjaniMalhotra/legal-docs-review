@@ -13,9 +13,9 @@ ROOT = Path(__file__).resolve().parents[2]  # the copilot/ folder
 CONFIG_DIR = ROOT / "config"
 
 
-# In:  base     = {"analyst": {"model": "qwen2.5:7b-instruct", "temperature": 0}}
-#      override = {"analyst": {"model": "ollama/qwen2.5:7b-instruct"}}
-# Out: {"analyst": {"model": "ollama/qwen2.5:7b-instruct", "temperature": 0}}   <- only the model changed
+# In:  base     = {"analyst": {"model": "<model>", "temperature": 0}}
+#      override = {"analyst": {"model": "ollama/<model>"}}
+# Out: {"analyst": {"model": "ollama/<model>", "temperature": 0}}   <- only the model changed
 def _merge(base: dict, override: dict) -> dict:
     """Deep-merge `override` into `base` (dicts merge, everything else replaces)."""
     out = dict(base)
@@ -25,9 +25,9 @@ def _merge(base: dict, override: dict) -> dict:
 
 
 # In:  nothing (reads config/settings.yaml, and the profile named in SETTINGS_PROFILE)
-# Out: {"models": {"analyst": {"model": "qwen2.5:7b-instruct", "temperature": 0,
+# Out: {"models": {"analyst": {"model": "<model>", "temperature": 0,
 #       "max_tokens": 700, "timeout_s": 600}, "embed": {...}}}
-#      With SETTINGS_PROFILE=gateway, the analyst model is "ollama/qwen2.5:7b-instruct" instead.
+#      With SETTINGS_PROFILE=gateway, the analyst model is "ollama/<model>" instead.
 @lru_cache
 def settings() -> dict:
     """settings.yaml, optionally overlaid by config/profiles/<SETTINGS_PROFILE>.yaml."""
