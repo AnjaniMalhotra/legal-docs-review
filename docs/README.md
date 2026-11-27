@@ -15,8 +15,9 @@
 | 9 | `9_review_agent_explained.md` | Step 3: the review agent: the model reads, Python checks and scores, a lawyer decides | The portal at http://127.0.0.1:8000, `notebooks/03_review_agent.ipynb` |
 | 10 | `10_tech_stack.md` | Step 4: every tool and every file, and how quality is measured (evals) | `notebooks/04_evals.ipynb` |
 | 11 | `11_evals_explained.md` | Step 4: the answer key, the metrics, the judge model and Ragas, and the release blocker | `notebooks/04_evals.ipynb` |
+| 12 | `12_tests_explained.md` | Step 5: nine short test files that protect real contracts, attacks, honesty and the project rules | `python -m pytest tests\step5 -v` |
 | - | `glossary.md` | Every word explained in one line | Open it whenever a word is new |
 
 Logins for Langfuse and Bifrost are in `../credentials.md`.
 
-**For the teacher:** `teaching_script_step1.md` (step 1, the app code), `teaching_script_step2.md` (step 2, documents and RAG), `teaching_script_step3.md` (step 3, the review agent) and `teaching_script_step4.md` (step 4, evals) are the step-by-step class scripts: which file to open, what to say, what to run.
+**For the teacher:** `teaching_script_step1.md` (step 1, the app code), `teaching_script_step2.md` (step 2, documents and RAG), `teaching_script_step3.md` (step 3, the review agent), `teaching_script_step4.md` (step 4, evals) and `teaching_script_step5.md` (step 5, tests) are the step-by-step class scripts: which file to open, what to say, what to run.
