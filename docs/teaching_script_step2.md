@@ -115,6 +115,36 @@ Invoices are payable within 60 days.
 - "Two new errors, each with its web code: `NotFoundError` is 404, `UnreadablePdfError` is 422. A model failure is 503."
 - "`tag_trace` adds the document id to the Langfuse record, and `current_trace_id` lets each answer point to its record."
 
+### Step 11a: One PDF through the ingest service
+**Open:** `app/ingest/ingest_service.py` and `app/ingest/chunker.py` side by side.
+
+**Say:** "Let's watch one contract go through the upload pipeline, first without the AI, then all the way into the search database."
+
+**Run part 1, pages and clauses (no model needed):**
+```
+python -c "from app.ingest.ingest_service import extract_pages; from app.ingest.chunker import chunk_pages; pages = extract_pages(open('sample_contracts/02_northstar_bank.pdf', 'rb').read()); print(len(pages), 'pages'); clauses = chunk_pages(pages); print(len(clauses), 'clauses'); print(next(c for c in clauses if c['clause_no'] == '9.3'))"
+```
+**Expect:**
+```
+11 pages
+75 clauses
+{'chunk_id': 'c0034', 'page': 5, 'clause_no': '9.3', 'heading': '9.3 INFORMATION SECURITY AND SECURITY INCIDENTS', 'text': '9.3 The Service Provider shall notify the Client within twelve (12) hours of confirming a Security Incident ...'}
+```
+**Say:** "The PDF became 11 pages of text, then 75 clauses. Each clause keeps its page and heading. That is what lets an answer cite `[p.5, 9.3 ...]`."
+
+**Run part 2, the full ingest, saved and searchable** (Ollama must be on):
+```
+set BIFROST_URL=http://localhost:11434/v1
+python -c "from app.ingest.ingest_service import ingest_pdf; print(ingest_pdf('02_northstar_bank.pdf', open('sample_contracts/02_northstar_bank.pdf', 'rb').read()))"
+```
+**Expect** (the `doc_id` is different every time):
+```
+{'doc_id': 'doc-08e02986bc', 'file_name': '02_northstar_bank.pdf', 'pages': 11, 'clauses': 75}
+```
+**Say:** "Same pipeline, but now every clause was turned into numbers by the embed model and saved in Chroma. Open `copilot/data`: a `documents` folder with the page text, and a `chroma` folder with the vectors. Uploading in the web app does exactly this."
+
+> Part 1 saves nothing. Part 2 saves into `copilot/data`, like a real upload; that folder is git-ignored, so nothing goes to GitHub.
+
 ---
 
 ## Part D: Asking questions
