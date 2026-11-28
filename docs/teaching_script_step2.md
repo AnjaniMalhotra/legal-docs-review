@@ -166,6 +166,48 @@ python -c "from app.ingest.ingest_service import ingest_pdf; print(ingest_pdf('0
 
 **Say:** "Search, fill the prompt, ask the analyst, return the answer. If no clause was found, we don't even call the model."
 
+### Step 14a: Run the retriever and the answerer
+Use the contract from step 11a. **Copy its `doc_id`** into a variable once (use your own id):
+```
+set DOC=doc-08e02986bc
+set BIFROST_URL=http://localhost:11434/v1
+```
+
+**Run the synonyms (no model needed):**
+```
+python -c "from app.rag.retriever import _contract_terms; print(_contract_terms(['breach', 'pay']))"
+```
+**Expect:** `['security incident', 'invoice', 'payment']`. **Say:** "Everyday words become the contract's words. They come from `question_synonyms` in `settings.yaml`."
+
+**Run the retriever:**
+```
+python -c "from app.rag.retriever import for_question; hits = for_question('%DOC%', 'How quickly must a data breach be reported?'); print(len(hits), 'clauses found'); [print(' p.' + str(h['page']), h['heading']) for h in hits]"
+```
+**Expect:** a short list of clauses, each with its page and heading. **Point out** `p.5 9.3 INFORMATION SECURITY AND SECURITY INCIDENTS` in the list, and the cover page / parties at the end (always added).
+
+**Say:** "We asked about a 'breach'. The contract never uses that word; it says 'Security Incident'. The search still found it. This list is all the model will ever see."
+
+**Run the answerer:**
+```
+python -c "from app.rag.answerer import answer; r = answer('%DOC%', 'How quickly must a data breach be reported?'); print(r['answer']); print('found:', r['found'])"
+```
+**Expect:**
+```
+The Service Provider shall notify the Client within twelve (12) hours of confirming a Security Incident affecting Client Data. [p.5, 9.3 INFORMATION SECURITY AND SECURITY INCIDENTS]
+found: True
+```
+
+**Run a question the contract cannot answer:**
+```
+python -c "from app.rag.answerer import answer; r = answer('%DOC%', 'What is the cafeteria menu?'); print(r['answer']); print('found:', r['found'])"
+```
+**Expect:**
+```
+Not found in the document.
+found: False
+```
+**Say:** "Retriever finds the clauses, answerer turns them into a cited answer, or an honest 'Not found'."
+
 ### Step 15: `app/rag/summariser.py` and `prompts/summarise_agreement.md`
 **Open:** both.
 
@@ -173,6 +215,23 @@ python -c "from app.ingest.ingest_service import ingest_pdf; print(ingest_pdf('0
 - "For each of the 9 sections it searches for clauses, then asks the model **once** for all 9 summaries, as JSON."
 - "The sources, clause and page, are attached by **Python** from the search, never by the model. So a page number can't be made up."
 - "It's saved after the first time, so the second request is instant."
+
+### Step 15a: Run the summariser
+Same window as step 14a (`DOC` and `BIFROST_URL` still set).
+
+**Run:**
+```
+python -c "import time; from app.rag.summariser import summarise; t = time.time(); s = summarise('%DOC%'); print(s['overview']); [print('-', x['name'] + ':', x['summary'], x['sources'][:1]) for x in s['sections']]; print(len(s['sections']), 'sections in', round(time.time() - t), 'seconds')"
+```
+**Expect:** a 2 to 3 sentence overview of the Northstar agreement, then **9 sections** (Parties and purpose, Term and renewal, Services, Fees and payment, ...), each with a short summary and its source clause and page. About a minute.
+
+**Say:** "Look at the sources: they came from the search, not from the model. And any section the contract doesn't cover says 'Not stated in the agreement.'"
+
+**Run it again:**
+```
+python -c "import time; from app.rag.summariser import summarise; t = time.time(); summarise('%DOC%'); print('second time:', round(time.time() - t, 2), 'seconds (saved)')"
+```
+**Expect:** `second time: 0.0 seconds (saved)`, or close to it. **Say:** "Saved after the first time, in `copilot/data/summaries`. No model call."
 
 ---
 
